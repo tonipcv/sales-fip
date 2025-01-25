@@ -1,6 +1,6 @@
 "use client";
 
-import { BarChart, Briefcase, Book, ChevronDown, PieChart, TrendingUp } from "lucide-react";
+import { BarChart, Briefcase, Book, ChevronDown, PieChart, TrendingUp, ChevronRight } from "lucide-react";
 import { useState } from "react";
 import Image from "next/image";
 import Link from 'next/link';
@@ -36,6 +36,19 @@ export default function Home() {
       {/* Hero Section */}
       <section className="py-16 px-4">
         <div className="max-w-4xl mx-auto text-center">
+          {/* Área de Membros Link */}
+          <div className="flex justify-end mb-4">
+            <a
+              href="https://ai.futurostech.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-xs text-neutral-400 hover:text-white transition-colors flex items-center gap-2"
+            >
+              Área VIP
+              <ChevronRight className="h-3 w-3" />
+            </a>
+          </div>
+
           <Image
             src="/logo.jpg"
             alt="Futuros Tech"

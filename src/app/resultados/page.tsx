@@ -9,7 +9,8 @@ import {
   TrendingUp,
   Filter,
   LineChart,
-  X
+  X,
+  ChevronRight
 } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -429,7 +430,7 @@ export default function Home() {
     <div className="min-h-screen bg-black text-gray-200">
       {/* Header com Logo */}
       <header className="py-8 px-4">
-        <div className="max-w-7xl mx-auto flex justify-center">
+        <div className="max-w-7xl mx-auto flex justify-between items-center">
           <Link href="/" className="inline-block">
             <Image
               src="/logo.jpg"
@@ -439,6 +440,16 @@ export default function Home() {
               className="rounded"
             />
           </Link>
+          
+          <a
+            href="https://ai.futurostech.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-xs text-neutral-400 hover:text-white transition-colors flex items-center gap-2"
+          >
+            Área VIP
+            <ChevronRight className="h-3 w-3" />
+          </a>
         </div>
       </header>
 
