@@ -49,6 +49,11 @@ export const metadata: Metadata = {
   verification: {
     google: 'seu-código-de-verificação-aqui',
   },
+  icons: {
+    icon: '/logo.jpg',
+    shortcut: '/logo.jpg',
+    apple: '/logo.jpg',
+  },
 };
 
 export default function RootLayout({
@@ -59,6 +64,9 @@ export default function RootLayout({
   return (
     <html lang="pt-BR">
       <head>
+        <link rel="icon" href="/logo.jpg" />
+        <link rel="apple-touch-icon" href="/logo.jpg" />
+        <link rel="shortcut icon" href="/logo.jpg" />
         <link rel="canonical" href="https://futurostech.com" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="theme-color" content="#000000" />
