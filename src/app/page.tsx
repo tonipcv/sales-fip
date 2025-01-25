@@ -47,7 +47,7 @@ export default function Home() {
             Transforme Seu Investimento em Resultados Concretos
           </h1>
           <p className="text-neutral-400 mb-8 bg-gradient-to-r from-neutral-400 to-white bg-clip-text text-transparent">
-            Sinais Diários com Relatórios de Alta Performance
+            Aplicativo de Entradas com Relatórios de Alta Performance
           </p>
           <div className="flex items-center justify-center gap-4">
             <a href="#planos" className="bg-white/10 backdrop-blur-sm text-white px-8 py-2 rounded-full text-sm hover:bg-white/20 transition">
@@ -111,7 +111,7 @@ export default function Home() {
             <div className="bg-black border border-neutral-800 rounded-lg p-6">
               <div className="flex items-center gap-2 mb-1">
                 <BarChart className="h-4 w-4 text-green-400" strokeWidth={1.5} />
-                <span className="text-sm text-neutral-400">Total de Sinais</span>
+                <span className="text-sm text-neutral-400">Total de Entradas</span>
               </div>
               <div className="flex items-baseline gap-2">
                 <span className="text-2xl font-light text-white">{currentResults.wins.split('/')[1]}</span>
@@ -190,20 +190,31 @@ export default function Home() {
                   6x
                 </div>
                 <div className="text-3xl font-light text-white">
-                  R$396
+                  R$405
                 </div>
               </div>
               <ul className="text-neutral-500 text-xs space-y-3 mb-8 text-left">
-                <li>✓ Acesso a sinais por 6 meses</li>
+                <li>✓ Acesso ao aplicativo por 6 meses</li>
                 <li>✓ Relatórios diários</li>
                 <li>✓ Suporte completo</li>
               </ul>
-              <a href="#" className="inline-block border border-neutral-800 text-neutral-300 px-6 py-2 text-xs hover:bg-white/5 transition-colors">
+              <a 
+                href="https://checkout.k17.com.br/subscribe/semestral-ft" 
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block border border-neutral-800 text-neutral-300 px-6 py-2 text-xs hover:bg-white/5 transition-colors"
+              >
                 Assinar
               </a>
             </div>
 
-            <div className="border-[0.5px] border-neutral-800 p-8 rounded-lg text-center">
+            <div className="relative border-[0.5px] border-green-100/20 bg-green-100/[0.02] p-8 rounded-lg text-center">
+              <div className="absolute -top-3 left-1/2 -translate-x-1/2">
+                <span className="bg-green-100/10 backdrop-blur-sm text-green-100 px-4 py-1 rounded-full text-xs border border-green-100/20">
+                  Mais Popular
+                </span>
+              </div>
+
               <h3 className="text-sm font-light mb-8 text-neutral-400">
                 Plano Anual
               </h3>
@@ -220,7 +231,12 @@ export default function Home() {
                 <li>✓ Acesso por 12 meses</li>
                 <li>✓ Bônus: treinamento avançado</li>
               </ul>
-              <a href="#" className="inline-block border border-neutral-800 text-neutral-300 px-6 py-2 text-xs hover:bg-white/5 transition-colors">
+              <a 
+                href="https://checkout.k17.com.br/subscribe/anual-ft-promocional" 
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block border border-neutral-800 text-neutral-300 px-6 py-2 text-xs hover:bg-white/5 transition-colors"
+              >
                 Assinar
               </a>
             </div>
@@ -238,12 +254,12 @@ export default function Home() {
           <div className="space-y-4">
             {[
               {
-                question: "O que são sinais?",
-                answer: "Sinais são recomendações de compra ou venda baseadas em análises técnicas e fundamentalistas do mercado."
+                question: "Como funciona o aplicativo?",
+                answer: "Nosso aplicativo fornece recomendações de compra ou venda baseadas em análises técnicas e fundamentalistas do mercado."
               },
               {
                 question: "Preciso de experiência?",
-                answer: "Não, nosso serviço atende tanto iniciantes quanto investidores experientes com recomendações claras."
+                answer: "Não, nosso aplicativo atende tanto iniciantes quanto investidores experientes com recomendações claras."
               },
               {
                 question: "Posso cancelar quando quiser?",

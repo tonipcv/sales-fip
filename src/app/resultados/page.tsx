@@ -444,6 +444,16 @@ export default function Home() {
 
       <main className="pb-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8">
+          {/* Botão Assinar */}
+          <div className="flex justify-center mb-12">
+            <Link 
+              href="/#planos"
+              className="bg-white/10 backdrop-blur-sm text-white px-8 py-2 rounded-full text-sm hover:bg-white/20 transition"
+            >
+              Assine Agora
+            </Link>
+          </div>
+
           {/* Filtros */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
             <div>

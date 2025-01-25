@@ -13,28 +13,23 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'Futuros Tech - Sinais e Análises para Day Trade',
-  description: 'Entradas Diárias com Relatórios de Alta Performance Comprovada. Utilizado por +10.000 investidores ao redor do mundo. Taxa de acerto superior a 80%.',
-  keywords: 'day trade, sinais, análise técnica, mercado financeiro, investimentos, futuros, trading',
+  title: 'Futuros Tech | Aplicativo de Entradas para Trading',
+  description: 'Aplicativo de Entradas com Relatórios de Alta Performance. Transforme seu investimento em resultados concretos com nosso aplicativo de recomendações.',
+  keywords: 'aplicativo de trading, entradas de trading, recomendações de mercado, análise técnica, relatórios de trading, futuros tech',
   openGraph: {
-    title: 'Futuros Tech - Sinais e Análises para Day Trade',
-    description: 'Entradas Diárias com Relatórios de Alta Performance Comprovada. Utilizado por +10.000 investidores ao redor do mundo.',
-    type: 'website',
-    locale: 'pt_BR',
+    title: 'Futuros Tech | Aplicativo de Entradas para Trading',
+    description: 'Aplicativo de Entradas com Relatórios de Alta Performance. Transforme seu investimento em resultados concretos.',
+    url: 'https://futurostech.com',
+    siteName: 'Futuros Tech',
     images: [
       {
         url: '/logo.jpg',
-        width: 60,
-        height: 18,
-        alt: 'Futuros Tech Logo',
+        width: 800,
+        height: 600,
       },
     ],
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Futuros Tech - Sinais e Análises para Day Trade',
-    description: 'Entradas Diárias com Relatórios de Alta Performance Comprovada. Utilizado por +10.000 investidores ao redor do mundo.',
-    images: ['/logo.jpg'],
+    locale: 'pt_BR',
+    type: 'website',
   },
   robots: {
     index: true,
@@ -46,6 +41,13 @@ export const metadata: Metadata = {
       'max-image-preview': 'large',
       'max-snippet': -1,
     },
+  },
+  twitter: {
+    title: 'Futuros Tech | Aplicativo de Entradas para Trading',
+    card: 'summary_large_image',
+  },
+  verification: {
+    google: 'seu-código-de-verificação-aqui',
   },
 };
 
