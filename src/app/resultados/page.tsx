@@ -10,10 +10,12 @@ import {
   Filter,
   LineChart,
   X,
-  ChevronRight
+  ChevronRight,
+  Globe
 } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { translations } from '@/translations';
 
 // Interface para o tipo Trade
 interface Trade {
@@ -50,6 +52,8 @@ export default function Home() {
   const [capital, setCapital] = useState<string>('');
   const [selectedTarget, setSelectedTarget] = useState<string>('');
   const [result, setResult] = useState<number | null>(null);
+  const [language, setLanguage] = useState<'pt' | 'en'>('pt');
+  const t = translations[language];
 
   useEffect(() => {
     async function getTrades() {
@@ -591,6 +595,17 @@ export default function Home() {
           </div>
         </div>
       </main>
+
+      {/* Language Selector */}
+      <div className="absolute top-4 left-4">
+        <button
+          onClick={() => setLanguage(language === 'pt' ? 'en' : 'pt')}
+          className="flex items-center gap-1 text-xs text-neutral-400 hover:text-white transition-colors"
+        >
+          <Globe className="h-3 w-3" />
+          {language.toUpperCase()}
+        </button>
+      </div>
     </div>
   );
 }

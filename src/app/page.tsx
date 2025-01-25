@@ -1,13 +1,16 @@
 "use client";
 
-import { BarChart, Briefcase, Book, ChevronDown, PieChart, TrendingUp, ChevronRight } from "lucide-react";
+import { BarChart, Briefcase, Book, ChevronDown, PieChart, TrendingUp, ChevronRight, Globe } from "lucide-react";
 import { useState } from "react";
 import Image from "next/image";
 import Link from 'next/link';
+import { translations } from '@/translations';
 
 export default function Home() {
   const [activeQuestion, setActiveQuestion] = useState<number | null>(null);
   const [selectedMonth, setSelectedMonth] = useState<number>(12);
+  const [language, setLanguage] = useState<'pt' | 'en'>('pt');
+  const t = translations[language];
 
   const months = [
     { number: 8, name: 'Agosto' },
@@ -33,6 +36,17 @@ export default function Home() {
 
   return (
     <div className="font-montserrat bg-black text-white min-h-screen">
+      {/* Language Selector */}
+      <div className="absolute top-4 left-4">
+        <button
+          onClick={() => setLanguage(language === 'pt' ? 'en' : 'pt')}
+          className="flex items-center gap-1 text-xs text-neutral-400 hover:text-white transition-colors"
+        >
+          <Globe className="h-3 w-3" />
+          {language.toUpperCase()}
+        </button>
+      </div>
+
       {/* Hero Section */}
       <section className="py-16 px-4">
         <div className="max-w-4xl mx-auto text-center">
@@ -44,7 +58,7 @@ export default function Home() {
               rel="noopener noreferrer"
               className="text-xs text-neutral-400 hover:text-white transition-colors flex items-center gap-2"
             >
-              Área VIP
+              {language === 'pt' ? 'Área VIP' : 'VIP Area'}
               <ChevronRight className="h-3 w-3" />
             </a>
           </div>
@@ -57,21 +71,21 @@ export default function Home() {
             className="mx-auto mb-8"
           />
           <h1 className="text-3xl font-light mb-4 bg-gradient-to-r from-neutral-400 to-white bg-clip-text text-transparent">
-            Transforme Seu Investimento em Resultados Concretos
+            {t.hero.title}
           </h1>
           <p className="text-neutral-400 mb-8 bg-gradient-to-r from-neutral-400 to-white bg-clip-text text-transparent">
-            Aplicativo de Entradas com Relatórios de Alta Performance
+            {t.hero.subtitle}
           </p>
           <div className="flex items-center justify-center gap-4">
             <a href="#planos" className="bg-white/10 backdrop-blur-sm text-white px-8 py-2 rounded-full text-sm hover:bg-white/20 transition">
-              Assine Agora
+              {language === 'pt' ? 'Assine Agora' : 'Subscribe Now'}
             </a>
             <Link 
               href="/resultados" 
               className="border border-neutral-800 text-neutral-300 px-6 py-2 text-xs hover:bg-white/5 transition-colors flex items-center gap-2"
             >
               <BarChart className="h-4 w-4" />
-              Ver Resultados
+              {language === 'pt' ? 'Ver Resultados' : 'View Results'}
             </Link>
           </div>
         </div>
@@ -81,7 +95,7 @@ export default function Home() {
       <section className="py-16 px-4 bg-black">
         <div className="max-w-4xl mx-auto">
           <h2 className="text-2xl font-light text-center mb-12 bg-gradient-to-r from-neutral-400 to-white bg-clip-text text-transparent">
-            Resultados Comprovados
+            {language === 'pt' ? 'Resultados Comprovados' : 'Verified Results'}
           </h2>
 
           {/* Seletor de Mês */}
@@ -139,7 +153,7 @@ export default function Home() {
               className="inline-flex items-center gap-2 border border-neutral-800 text-neutral-300 px-6 py-2 text-xs hover:bg-white/5 transition-colors"
             >
               <BarChart className="h-4 w-4" />
-              Ver Relatório Completo
+              {language === 'pt' ? 'Ver Relatório Completo' : 'View Full Report'}
             </Link>
           </div>
         </div>
@@ -149,37 +163,37 @@ export default function Home() {
       <section className="py-16 px-4 bg-black">
         <div className="max-w-4xl mx-auto">
           <h2 className="text-2xl font-light text-center mb-12 bg-gradient-to-r from-neutral-400 to-white bg-clip-text text-transparent">
-            Por que Escolher o Futuros Tech?
+            {language === 'pt' ? 'Por que Escolher o Futuros Tech?' : 'Why Choose Futuros Tech?'}
           </h2>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="text-center">
               <BarChart className="h-6 w-6 mx-auto mb-4 text-neutral-400" />
               <h3 className="text-lg mb-2 bg-gradient-to-r from-neutral-400 to-white bg-clip-text text-transparent">
-                Relatórios Diários
+                {language === 'pt' ? 'Relatórios Diários' : 'Daily Reports'}
               </h3>
               <p className="text-neutral-400 text-sm">
-                Relatórios com clareza absoluta para maximizar seus resultados.
+                {language === 'pt' ? 'Relatórios com clareza absoluta para maximizar seus resultados.' : 'Relatórios with absolute clarity to maximize your results.'}
               </p>
             </div>
 
             <div className="text-center">
               <Briefcase className="h-6 w-6 mx-auto mb-4 text-neutral-400" />
               <h3 className="text-lg mb-2 bg-gradient-to-r from-neutral-400 to-white bg-clip-text text-transparent">
-                Lucros Consistentes
+                {language === 'pt' ? 'Lucros Consistentes' : 'Consistent Profits'}
               </h3>
               <p className="text-neutral-400 text-sm">
-                Resultados consistentes seguindo nossos sinais.
+                {language === 'pt' ? 'Resultados consistentes seguindo nossos sinais.' : 'Consistent results following our signals.'}
               </p>
             </div>
 
             <div className="text-center">
               <Book className="h-6 w-6 mx-auto mb-4 text-neutral-400" />
               <h3 className="text-lg mb-2 bg-gradient-to-r from-neutral-400 to-white bg-clip-text text-transparent">
-                Para Todos os Níveis
+                {language === 'pt' ? 'Para Todos os Níveis' : 'For All Levels'}
               </h3>
               <p className="text-neutral-400 text-sm">
-                Recomendações estratégicas para iniciantes e avançados.
+                {language === 'pt' ? 'Recomendações estratégicas para iniciantes e avançados.' : 'Strategic recommendations for beginners and advanced users.'}
               </p>
             </div>
           </div>
@@ -190,13 +204,13 @@ export default function Home() {
       <section id="planos" className="py-16 px-4 bg-black">
         <div className="max-w-4xl mx-auto">
           <h2 className="text-2xl font-light text-center mb-12 bg-gradient-to-r from-neutral-400 to-white bg-clip-text text-transparent">
-            Escolha seu plano
+            {language === 'pt' ? 'Escolha seu plano' : 'Choose your plan'}
           </h2>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div className="border-[0.5px] border-neutral-800 p-8 rounded-lg text-center">
               <h3 className="text-sm font-light mb-8 text-neutral-400">
-                Plano Semestral
+                {language === 'pt' ? 'Plano Semestral' : 'Semester Plan'}
               </h3>
               <div className="mb-8">
                 <div className="text-sm font-light text-neutral-500">
@@ -217,19 +231,19 @@ export default function Home() {
                 rel="noopener noreferrer"
                 className="inline-block border border-neutral-800 text-neutral-300 px-6 py-2 text-xs hover:bg-white/5 transition-colors"
               >
-                Assinar
+                {language === 'pt' ? 'Assinar' : 'Subscribe'}
               </a>
             </div>
 
             <div className="relative border-[0.5px] border-green-100/20 bg-green-100/[0.02] p-8 rounded-lg text-center">
               <div className="absolute -top-3 left-1/2 -translate-x-1/2">
                 <span className="bg-green-100/10 backdrop-blur-sm text-green-100 px-4 py-1 rounded-full text-xs border border-green-100/20">
-                  Mais Popular
+                  {language === 'pt' ? 'Mais Popular' : 'Most Popular'}
                 </span>
               </div>
 
               <h3 className="text-sm font-light mb-8 text-neutral-400">
-                Plano Anual
+                {language === 'pt' ? 'Plano Anual' : 'Annual Plan'}
               </h3>
               <div className="mb-8">
                 <div className="text-sm font-light text-neutral-500">
@@ -250,7 +264,7 @@ export default function Home() {
                 rel="noopener noreferrer"
                 className="inline-block border border-neutral-800 text-neutral-300 px-6 py-2 text-xs hover:bg-white/5 transition-colors"
               >
-                Assinar
+                {language === 'pt' ? 'Assinar' : 'Subscribe'}
               </a>
             </div>
           </div>
@@ -261,7 +275,7 @@ export default function Home() {
       <section className="py-16 px-4 bg-black">
         <div className="max-w-2xl mx-auto">
           <h2 className="text-2xl font-light text-center mb-12 bg-gradient-to-r from-neutral-400 to-white bg-clip-text text-transparent">
-            Perguntas Frequentes
+            {language === 'pt' ? 'Perguntas Frequentes' : 'Frequently Asked Questions'}
           </h2>
 
           <div className="space-y-4">
