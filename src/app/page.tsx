@@ -5,6 +5,7 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from 'next/link';
 import { translations } from '@/translations';
+import * as fbq from '@/lib/fpixel';
 
 export default function Home() {
   const [activeQuestion, setActiveQuestion] = useState<number | null>(null);
@@ -32,6 +33,15 @@ export default function Home() {
 
   const toggleQuestion = (index: number) => {
     setActiveQuestion(activeQuestion === index ? null : index);
+  };
+
+  const handleSubscribeClick = (plan: string) => {
+    // Track the subscription event
+    fbq.event('InitiateCheckout', {
+      content_name: plan,
+      currency: 'BRL',
+      value: plan === 'annual' ? 297 : 405
+    });
   };
 
   return (
@@ -229,6 +239,7 @@ export default function Home() {
                 href="https://checkout.k17.com.br/subscribe/semestral-ft" 
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => handleSubscribeClick('semester')}
                 className="inline-block border border-neutral-800 text-neutral-300 px-6 py-2 text-xs hover:bg-white/5 transition-colors"
               >
                 {language === 'pt' ? 'Assinar' : 'Subscribe'}
@@ -262,6 +273,7 @@ export default function Home() {
                 href="https://checkout.k17.com.br/subscribe/anual-ft-promocional" 
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => handleSubscribeClick('annual')}
                 className="inline-block border border-neutral-800 text-neutral-300 px-6 py-2 text-xs hover:bg-white/5 transition-colors"
               >
                 {language === 'pt' ? 'Assinar' : 'Subscribe'}
