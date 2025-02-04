@@ -19,3 +19,194 @@ body {
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-scroll {
+  animation: scroll 20s linear infinite;
+  min-width: fit-content;
+  display: flex;
+  gap: 2rem;
+}
+
+.animate-scroll:hover {
+  animation-play-state: paused;
+}
+
+@keyframes pulse-slow {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.4);
+  }
+  50% {
+    transform: scale(1.02);
+    box-shadow: 0 0 20px 10px rgba(34, 197, 94, 0.2);
+  }
+}
+
+.animate-pulse-slow {
+  animation: pulse-slow 3s infinite;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0) scale(1);
+    opacity: 0.3;
+  }
+  50% {
+    transform: translateY(-100px) scale(1.1);
+    opacity: 0.5;
+  }
+}
+
+@keyframes float-delayed {
+  0%, 100% {
+    transform: translateY(0) scale(1);
+    opacity: 0.3;
+  }
+  50% {
+    transform: translateY(100px) scale(1.1);
+    opacity: 0.5;
+  }
+}
+
+@keyframes float-alt {
+  0%, 100% {
+    transform: translateX(0) scale(1);
+    opacity: 0.3;
+  }
+  50% {
+    transform: translateX(100px) scale(1.1);
+    opacity: 0.5;
+  }
+}
+
+.animate-float {
+  animation: float 45s ease-in-out infinite;
+}
+
+.animate-float-delayed {
+  animation: float-delayed 50s ease-in-out infinite;
+}
+
+.animate-float-alt {
+  animation: float-alt 55s ease-in-out infinite;
+}
+
+@keyframes float-slow {
+  0%, 100% {
+    transform: rotate(45deg) translateY(0);
+    opacity: 0.2;
+  }
+  50% {
+    transform: rotate(45deg) translateY(-30px);
+    opacity: 0.4;
+  }
+}
+
+@keyframes float-slower {
+  0%, 100% {
+    transform: rotate(45deg) translateY(0);
+    opacity: 0.1;
+  }
+  50% {
+    transform: rotate(45deg) translateY(30px);
+    opacity: 0.3;
+  }
+}
+
+.animate-float-slow {
+  animation: float-slow 60s ease-in-out infinite;
+}
+
+.animate-float-slower {
+  animation: float-slower 70s ease-in-out infinite;
+}
+
+/* Noise background */
+.bg-noise {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}
+
+@keyframes glow {
+  0%, 100% {
+    opacity: 0.2;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.4;
+    transform: scale(1.5);
+  }
+}
+
+@keyframes glow-delayed {
+  0%, 100% {
+    opacity: 0.1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.3;
+    transform: scale(1.5);
+  }
+}
+
+@keyframes pulse-slower {
+  0%, 100% {
+    opacity: 0.05;
+  }
+  50% {
+    opacity: 0.15;
+  }
+}
+
+@keyframes spin-slow {
+  from {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+.animate-glow {
+  animation: glow 4s ease-in-out infinite;
+}
+
+.animate-glow-delayed {
+  animation: glow-delayed 4s ease-in-out infinite 2s;
+}
+
+.animate-spin-slow {
+  animation: spin-slow 60s linear infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 0.1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.3;
+    transform: scale(1.5);
+  }
+}
+
+@keyframes slow-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-slow-spin {
+  animation: slow-spin 60s linear infinite;
+}
