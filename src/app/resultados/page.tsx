@@ -595,9 +595,21 @@ export default function Home() {
         
         <a 
           href="https://checkout.k17.com.br/pay/fip-promocional"
-          className="px-6 py-3 bg-green-500 hover:bg-green-600 rounded-xl text-white text-sm font-medium transition-colors"
+          className="group relative overflow-hidden px-6 py-3 bg-green-500/20 backdrop-blur-sm border border-green-500/30 hover:border-green-400 rounded-xl transition-all duration-300 animate-pulse-slow"
         >
-          Assinar Agora
+          {/* Glow effect */}
+          <div className="absolute inset-0 bg-green-500/20 blur-xl group-hover:bg-green-400/30 transition-colors duration-300" />
+          
+          {/* Gradient line */}
+          <div className="absolute bottom-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-green-400 to-transparent transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500" />
+          
+          {/* Shine effect */}
+          <div className="absolute inset-0 opacity-0 group-hover:opacity-20 bg-gradient-to-r from-transparent via-green-300 to-transparent -translate-x-full group-hover:translate-x-full transition-all duration-700 ease-out" />
+          
+          {/* Button text */}
+          <span className="relative text-xs font-medium tracking-wider uppercase text-green-300 group-hover:text-green-200 transition-colors duration-300">
+            ADQUIRIR OFERTA!
+          </span>
         </a>
       </div>
 
