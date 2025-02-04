@@ -11,7 +11,8 @@ import {
   LineChart,
   X,
   ChevronRight,
-  Globe
+  Globe,
+  ChevronDown
 } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -431,31 +432,18 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen bg-black text-gray-200">
-      {/* Header com Logo */}
-      <header className="py-8 px-4">
-        <div className="max-w-7xl mx-auto flex justify-between items-center">
-          <Link href="/" className="inline-block">
-            <Image
-              src="/logo.jpg"
-              alt="Futuros Tech"
-              width={80}
-              height={80}
-              className="rounded"
-            />
-          </Link>
-          
-          <a
-            href="https://ai.futurostech.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-xs text-neutral-400 hover:text-white transition-colors flex items-center gap-2"
-          >
-            Área VIP
-            <ChevronRight className="h-3 w-3" />
-          </a>
-        </div>
-      </header>
+    <div className="min-h-screen bg-black text-white">
+      {/* Logo */}
+      <div className="w-full flex justify-center pt-8">
+        <Image
+          src="/logo.png"
+          alt="Futuros Tech"
+          width={120}
+          height={120}
+          className="mx-auto"
+          priority
+        />
+      </div>
 
       <main className="pb-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8">
@@ -595,6 +583,23 @@ export default function Home() {
           </div>
         </div>
       </main>
+
+      {/* Botões de Ação */}
+      <div className="fixed bottom-4 left-0 right-0 flex justify-center gap-4 px-4 z-50">
+        <Link 
+          href="/#planos"
+          className="px-6 py-3 bg-white/10 hover:bg-white/20 rounded-xl text-white text-sm font-medium transition-colors"
+        >
+          Ver Planos
+        </Link>
+        
+        <a 
+          href="https://checkout.k17.com.br/pay/fip-promocional"
+          className="px-6 py-3 bg-green-500 hover:bg-green-600 rounded-xl text-white text-sm font-medium transition-colors"
+        >
+          Assinar Agora
+        </a>
+      </div>
 
       {/* Language Selector */}
       <div className="absolute top-4 left-4">

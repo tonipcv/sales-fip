@@ -159,30 +159,44 @@ export default function Page() {
         </div>
 
         {/* Brokers Carousel */}
-        <div className="w-full overflow-hidden py-8 bg-black/50">
-          <div className="flex animate-scroll">
-            {/* Primeiro conjunto de imagens */}
-            {[0, 1, 2].map((index) => (
-              <Image
-                key={`first-${index}`}
-                src="/corretoras.webp"
-                alt="Corretoras parceiras"
-                width={800}
-                height={60}
-                className="object-contain mx-4 h-[45px] md:h-[60px] w-auto"
-              />
-            ))}
-            {/* Segundo conjunto de imagens (duplicado para loop) */}
-            {[0, 1, 2].map((index) => (
-              <Image
-                key={`second-${index}`}
-                src="/corretoras.webp"
-                alt="Corretoras parceiras"
-                width={800}
-                height={60}
-                className="object-contain mx-4 h-[45px] md:h-[60px] w-auto"
-              />
-            ))}
+        <div className="w-full overflow-hidden py-4 bg-black/50">
+          <div className="max-w-[1200px] mx-auto relative">
+            {/* Desktop e Mobile: carrossel infinito */}
+            <div className="flex animate-scroll-infinite">
+              {/* Primeiro conjunto */}
+              {[1, 2, 3, 4, 5].map((num) => (
+                <Image
+                  key={`first-${num}`}
+                  src={`/corretora${num}.webp`}
+                  alt={`Corretora ${num}`}
+                  width={240}
+                  height={45}
+                  className="object-contain mx-4 h-[25px] md:h-[45px] w-auto"
+                />
+              ))}
+              {/* Segundo conjunto para loop */}
+              {[1, 2, 3, 4, 5].map((num) => (
+                <Image
+                  key={`second-${num}`}
+                  src={`/corretora${num}.webp`}
+                  alt={`Corretora ${num}`}
+                  width={240}
+                  height={45}
+                  className="object-contain mx-4 h-[25px] md:h-[45px] w-auto"
+                />
+              ))}
+              {/* Terceiro conjunto para loop mais suave */}
+              {[1, 2, 3, 4, 5].map((num) => (
+                <Image
+                  key={`third-${num}`}
+                  src={`/corretora${num}.webp`}
+                  alt={`Corretora ${num}`}
+                  width={240}
+                  height={45}
+                  className="object-contain mx-4 h-[25px] md:h-[45px] w-auto"
+                />
+              ))}
+            </div>
           </div>
         </div>
 
@@ -219,7 +233,7 @@ export default function Page() {
                       className="w-1/2 md:w-1/3 flex-shrink-0 px-2"
                     >
                       <Image
-                        src={`/depoimento${num}.png`}
+                        src={`/depoimento${num}.webp`}
                         alt={`Depoimento ${num}`}
                         width={400}
                         height={300}
@@ -408,7 +422,7 @@ export default function Page() {
               <div className="group relative p-2 md:p-4 border border-neutral-800/50 rounded-xl bg-black/30 backdrop-blur-sm hover:border-neutral-700 transition-all duration-300">
                 <div className="absolute inset-0 bg-gradient-to-b from-neutral-800/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl" />
                 <Image
-                  src="/beneficio1.png"
+                  src="/beneficio1.webp"
                   alt="Benefício 1"
                   width={300}
                   height={580}
@@ -419,7 +433,7 @@ export default function Page() {
               <div className="group relative p-2 md:p-4 border border-neutral-800/50 rounded-xl bg-black/30 backdrop-blur-sm hover:border-neutral-700 transition-all duration-300">
                 <div className="absolute inset-0 bg-gradient-to-b from-neutral-800/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl" />
                 <Image
-                  src="/beneficio2.png"
+                  src="/beneficio2.webp"
                   alt="Benefício 2"
                   width={300}
                   height={580}
@@ -430,7 +444,7 @@ export default function Page() {
               <div className="group relative p-2 md:p-4 border border-neutral-800/50 rounded-xl bg-black/30 backdrop-blur-sm hover:border-neutral-700 transition-all duration-300">
                 <div className="absolute inset-0 bg-gradient-to-b from-neutral-800/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl" />
                 <Image
-                  src="/beneficio3.png"
+                  src="/beneficio3.webp"
                   alt="Benefício 3"
                   width={300}
                   height={580}
@@ -644,7 +658,7 @@ export default function Page() {
                       className="w-1/2 md:w-1/3 flex-shrink-0 px-3"
                     >
                       <Image
-                        src={`/depoimento${num}.png`}
+                        src={`/depoimento${num}.webp`}
                         alt={`Depoimento ${num}`}
                         width={600}
                         height={450}
