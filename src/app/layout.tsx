@@ -13,48 +13,26 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
-  title: 'Futuros Tech | Aplicativo de Entradas para Trading',
-  description: 'Aplicativo de Entradas com Relatórios de Alta Performance. Transforme seu investimento em resultados concretos com nosso aplicativo de recomendações.',
-  keywords: 'aplicativo de trading, entradas de trading, recomendações de mercado, análise técnica, relatórios de trading, futuros tech',
+export const metadata = {
+  title: 'FIP - Formação para Investidor Profissional + Acesso ao APP',
+  description: 'Formação completa do zero ao avançado com acesso ao APP exclusivo para sinais de operações todos os dias da semana.',
   openGraph: {
-    title: 'Futuros Tech | Aplicativo de Entradas para Trading',
-    description: 'Aplicativo de Entradas com Relatórios de Alta Performance. Transforme seu investimento em resultados concretos.',
-    url: 'https://futurostech.com',
-    siteName: 'Futuros Tech',
+    title: 'FIP - Formação para Investidor Profissional + Acesso ao APP',
+    description: 'Formação completa do zero ao avançado com acesso ao APP exclusivo para sinais de operações todos os dias da semana.',
     images: [
       {
-        url: '/logo.jpg',
-        width: 800,
-        height: 600,
+        url: '/og-image.png',
+        width: 1200,
+        height: 630,
+        alt: 'FIP - Formação para Investidor Profissional',
       },
     ],
-    locale: 'pt_BR',
-    type: 'website',
-  },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      'max-video-preview': -1,
-      'max-image-preview': 'large',
-      'max-snippet': -1,
-    },
   },
   twitter: {
-    title: 'Futuros Tech | Aplicativo de Entradas para Trading',
     card: 'summary_large_image',
-  },
-  verification: {
-    google: 'seu-código-de-verificação-aqui',
-  },
-  icons: {
-    icon: '/logo.jpg',
-    shortcut: '/logo.jpg',
-    apple: '/logo.jpg',
-  },
+    title: 'FIP - Formação para Investidor Profissional + Acesso ao APP',
+    description: 'Formação completa do zero ao avançado com acesso ao APP exclusivo para sinais de operações todos os dias da semana.',
+  }
 };
 
 export default function RootLayout({
