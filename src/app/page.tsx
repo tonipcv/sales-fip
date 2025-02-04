@@ -128,7 +128,7 @@ export default function Page() {
 
           <div className="relative pb-[56.25%] h-0">
             <iframe
-              src="https://player-vz-7b6cf9e4-8bf.tv.pandavideo.com.br/embed/?v=5979f31c-e718-4f70-a44e-4003f48abbdb"
+              src="https://player-vz-7b6cf9e4-8bf.tv.pandavideo.com.br/embed/?v=5979f31c-e718-4f70-a44e-4003f48abbdb&autoplay=1&loop=1&muted=1"
               className="absolute top-0 left-0 w-full h-full rounded-xl"
               allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
@@ -361,8 +361,8 @@ export default function Page() {
                 
                 <div className="relative">
                   <div className="w-12 h-12 mb-4 mx-auto relative">
-                    <div className="absolute inset-0 bg-emerald-500/20 rounded-full blur-md group-hover:bg-emerald-500/30 transition-colors duration-300" />
-                    <BarChart className="w-full h-full text-emerald-400 group-hover:scale-110 transition-transform duration-300" />
+                    <div className="absolute inset-0 bg-green-500/20 rounded-full blur-md group-hover:bg-green-500/30 transition-colors duration-300" />
+                    <BarChart className="w-full h-full text-green-400 group-hover:scale-110 transition-transform duration-300" />
                   </div>
                   
                   <h3 className="text-lg mb-3 text-center bg-gradient-to-r from-neutral-200 to-white bg-clip-text text-transparent font-medium">
@@ -380,8 +380,8 @@ export default function Page() {
                 
                 <div className="relative">
                   <div className="w-12 h-12 mb-4 mx-auto relative">
-                    <div className="absolute inset-0 bg-blue-500/20 rounded-full blur-md group-hover:bg-blue-500/30 transition-colors duration-300" />
-                    <Briefcase className="w-full h-full text-blue-400 group-hover:scale-110 transition-transform duration-300" />
+                    <div className="absolute inset-0 bg-green-500/20 rounded-full blur-md group-hover:bg-green-500/30 transition-colors duration-300" />
+                    <Briefcase className="w-full h-full text-green-400 group-hover:scale-110 transition-transform duration-300" />
                   </div>
 
                   <h3 className="text-lg mb-3 text-center bg-gradient-to-r from-neutral-200 to-white bg-clip-text text-transparent font-medium">
@@ -440,9 +440,9 @@ export default function Page() {
             </div>
 
             {/* Preços e Aviso */}
-            <div className="max-w-4xl mx-auto bg-black/30 border border-neutral-800/50 rounded-2xl p-8 mb-12 backdrop-blur-sm">
-              {/* Preços */}
-              <div className="space-y-8 md:space-y-10">
+            <div className="max-w-4xl mx-auto bg-black/30 border border-neutral-800/50 rounded-2xl p-8 mb-8">
+              {/* Preços em formato destacado */}
+              <div className="space-y-8">
                 {/* Black Book */}
                 <div className="flex flex-col md:flex-row items-center justify-center gap-3 md:gap-6">
                   <span className="text-neutral-400 text-sm md:text-base">Black Book:</span>
@@ -471,6 +471,11 @@ export default function Page() {
                   </div>
                 </div>
               </div>
+
+              {/* Aviso */}
+              <p className="text-neutral-300/80 text-sm text-center max-w-3xl mx-auto border-t border-neutral-800/50 pt-4 mt-8">
+                Atenção: O valor especial ainda está disponível, recomendamos não atualizar a página pois caso as vagas se encerre o link sairá do ar, clique em confirmar sua inscrição e finalize sua inscrição com direito a todos os bônus.
+              </p>
             </div>
           </div>
         </section>
@@ -478,128 +483,107 @@ export default function Page() {
         {/* Planos */}
         <section id="planos" className="py-16 px-4 bg-black">
           <div className="max-w-5xl mx-auto">
-            {/* Disclaimer mais minimalista */}
-            <div className="text-center mb-12">
-              <p className="text-neutral-300/80 text-sm md:text-base max-w-3xl mx-auto leading-relaxed border border-neutral-800/50 rounded-lg p-4 bg-black/30 backdrop-blur-sm">
-                Atenção: O valor especial ainda está disponível, recomendamos não atualizar a página pois caso as vagas se encerre o link sairá do ar, clique em confirmar sua inscrição e finalize sua inscrição com direito a todos os bônus.
-              </p>
-            </div>
-
             {/* Grid de Planos */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {/* Plano Original */}
               <div className="order-2 md:order-1 border border-neutral-800/50 rounded-2xl p-8 bg-black/30 backdrop-blur-sm">
                 <div className="text-center mb-6">
-                  <h3 className="text-lg font-medium text-neutral-200">OFERTA ORIGINAL</h3>
+                  <h3 className="text-lg font-medium text-white">OFERTA ORIGINAL</h3>
                   <div className="mt-2 text-xs text-neutral-500">Disponibilidade limitada</div>
                 </div>
                 
                 <ul className="space-y-4 mb-8">
                   <li className="flex items-start gap-3 text-sm">
-                    <span className="text-green-400 mt-1">✓</span>
-                    <span className="text-neutral-300">Formação Completa do Zero ao Avançado <span className="block text-green-400/80 text-xs mt-1">(Valor Original: R$1.997)</span></span>
+                    <span className="text-white mt-1">✓</span>
+                    <span className="text-white">Formação Completa do Zero ao Avançado <span className="block text-white/80 text-xs mt-1">(Valor Original: R$1.997)</span></span>
                   </li>
                   <li className="flex items-start gap-3 text-sm">
-                    <span className="text-green-400 mt-1">✓</span>
-                    <span className="text-neutral-300">Acesso a Plataforma da K17 <span className="block text-green-400/80 text-xs mt-1">(Valor Original: R$997)</span></span>
+                    <span className="text-white mt-1">✓</span>
+                    <span className="text-white">Acesso a Plataforma da K17 <span className="block text-white/80 text-xs mt-1">(Valor Original: R$997)</span></span>
                   </li>
                   <li className="flex items-start gap-3 text-sm opacity-40">
-                    <span className="text-red-400 mt-1">✕</span>
-                    <span className="text-neutral-400">1 ano de acesso ao Futuros Tech <span className="block text-xs mt-1">(Valor Original: R$2.997)</span></span>
+                    <span className="text-white mt-1">✕</span>
+                    <span className="text-white">1 ano de acesso ao Futuros Tech <span className="block text-white/80 text-xs mt-1">(Valor Original: R$2.997)</span></span>
                   </li>
                   <li className="flex items-start gap-3 text-sm opacity-40">
-                    <span className="text-red-400 mt-1">✕</span>
-                    <span className="text-neutral-400">BlackBook <span className="block text-xs mt-1">(Valor Original: R$897)</span></span>
+                    <span className="text-white mt-1">✕</span>
+                    <span className="text-white">BlackBook <span className="block text-white/80 text-xs mt-1">(Valor Original: R$897)</span></span>
                   </li>
                   <li className="flex items-start gap-3 text-sm opacity-40">
-                    <span className="text-red-400 mt-1">✕</span>
-                    <span className="text-neutral-400">Bônus Secreto para Caixa Rápido <span className="block text-xs mt-1">(Valor Original: R$4.000)</span></span>
+                    <span className="text-white mt-1">✕</span>
+                    <span className="text-white">Bônus Secreto para Caixa Rápido <span className="block text-white/80 text-xs mt-1">(Valor Original: R$4.000)</span></span>
                   </li>
                 </ul>
 
                 <div className="text-center pt-6 border-t border-neutral-800/30">
-                  <div className="text-2xl font-light text-neutral-300">R$1.997</div>
+                  <div className="text-2xl font-light text-white">R$1.997</div>
                   <div className="text-sm text-neutral-500 mt-1">ou 12x de R$197</div>
                   <div className="text-sm text-neutral-500 mt-6">Em breve...</div>
                 </div>
               </div>
 
               {/* Plano Promocional */}
-              <div className="order-1 md:order-2 relative border-2 border-green-500/20 rounded-2xl p-8 bg-gradient-to-b from-green-500/[0.03] to-transparent backdrop-blur-sm">
+              <div className="order-1 md:order-2 relative border-2 border-white/20 rounded-2xl p-8 bg-gradient-to-b from-white/[0.03] to-transparent backdrop-blur-sm">
                 {/* Tag de Oferta */}
                 <div className="absolute -top-4 left-1/2 -translate-x-1/2">
-                  <div className="bg-black/80 backdrop-blur-sm border border-red-500/20 px-4 py-0.5 rounded-full text-[11px] font-light text-red-400/90">
+                  <div className="bg-black/80 backdrop-blur-sm border border-white/20 px-4 py-0.5 rounded-full text-[11px] font-light text-white/90">
                     Acabando Rápido!
                   </div>
                 </div>
 
-                {/* Porcentagem */}
-                <div className="mt-6 text-center">
-                  <div className="flex items-center justify-center gap-2">
-                    <div className="h-[2px] w-12 bg-black/50 rounded-full overflow-hidden">
-                      <div className="h-full w-[94%] bg-gradient-to-r from-red-500/40 to-red-400/40 transition-all duration-1000" />
-                    </div>
-                    <span className="text-[10px] text-red-400/80">94%</span>
-                  </div>
-                </div>
-
-                {/* Título */}
+                {/* Título com mais destaque */}
                 <div className="text-center mt-8 mb-8">
-                  <h3 className="text-lg font-medium text-green-300">VALOR REDUZIDO + TODOS BÔNUS</h3>
-                  <div className="mt-2 text-xs text-green-400/80">Oferta por tempo limitado</div>
+                  <h3 className="text-2xl font-semibold bg-gradient-to-r from-white via-white to-white/90 bg-clip-text text-transparent">
+                    VALOR REDUZIDO
+                  </h3>
+                  <h3 className="text-2xl font-semibold bg-gradient-to-r from-white via-white to-white/90 bg-clip-text text-transparent mt-1">
+                    + TODOS BÔNUS
+                  </h3>
+                  <div className="w-32 h-[2px] bg-gradient-to-r from-transparent via-white to-transparent mx-auto mt-3" />
                 </div>
                 
                 <ul className="space-y-4 mb-8">
                   <li className="flex items-start gap-3 text-sm">
                     <span className="text-green-400 mt-1">✓</span>
-                    <span className="text-neutral-300">Formação Completa do Zero ao Avançado <span className="block text-green-400/80 text-xs mt-1">(Valor Original: R$1.997)</span></span>
+                    <span className="text-white">Formação Completa do Zero ao Avançado <span className="block text-white/80 text-xs mt-1">(Valor Original: R$1.997)</span></span>
                   </li>
                   <li className="flex items-start gap-3 text-sm">
                     <span className="text-green-400 mt-1">✓</span>
-                    <span className="text-neutral-300">Acesso a Plataforma da K17 <span className="block text-green-400/80 text-xs mt-1">(Valor Original: R$997)</span></span>
+                    <span className="text-white">Acesso a Plataforma da K17 <span className="block text-white/80 text-xs mt-1">(Valor Original: R$997)</span></span>
                   </li>
                   <li className="flex items-start gap-3 text-sm">
                     <span className="text-green-400 mt-1">✓</span>
-                    <span className="text-neutral-300">1 ano de acesso ao Futuros Tech <span className="block text-green-400/80 text-xs mt-1">(Valor Original: R$2.997)</span></span>
+                    <span className="text-white">1 ano de acesso ao Futuros Tech <span className="block text-white/80 text-xs mt-1">(Valor Original: R$2.997)</span></span>
                   </li>
                   <li className="flex items-start gap-3 text-sm">
                     <span className="text-green-400 mt-1">✓</span>
-                    <span className="text-neutral-300">BlackBook <span className="block text-green-400/80 text-xs mt-1">(Valor Original: R$897)</span></span>
+                    <span className="text-white">BlackBook <span className="block text-white/80 text-xs mt-1">(Valor Original: R$897)</span></span>
                   </li>
                   <li className="flex items-start gap-3 text-sm">
                     <span className="text-green-400 mt-1">✓</span>
-                    <span className="text-neutral-300">Bônus Secreto para Caixa Rápido <span className="block text-green-400/80 text-xs mt-1">(Valor Original: R$4.000)</span></span>
+                    <span className="text-white">Bônus Secreto para Caixa Rápido <span className="block text-white/80 text-xs mt-1">(Valor Original: R$4.000)</span></span>
                   </li>
                 </ul>
 
-                <div className="text-center pt-6 border-t border-green-500/20">
+                {/* Preços e botão */}
+                <div className="text-center pt-6 border-t border-white/20">
                   <div className="text-neutral-400 line-through text-sm">De: R$2.997</div>
                   <div className="text-3xl font-light text-green-400 mt-2">12x R$97,04</div>
                   <div className="text-sm text-neutral-400 mt-1">ou R$997 à vista (10% off)</div>
                   
-                  {/* Botão com margens ajustadas */}
+                  {/* Botão simplificado */}
                   <div className="mt-8 mb-4 w-full">
                     <a 
                       href="https://checkout.k17.com.br/pay/fip-promocional"
-                      className="group relative overflow-hidden w-full inline-flex justify-center px-8 py-4 bg-green-500/20 backdrop-blur-sm border border-green-500/30 hover:border-green-400 rounded-xl font-medium transition-all duration-300 animate-pulse-slow"
+                      className="w-full inline-flex justify-center px-8 py-4 bg-green-500 hover:bg-green-600 rounded-xl text-white font-medium transition-colors duration-200"
                     >
-                      {/* Glow effect */}
-                      <div className="absolute inset-0 bg-green-500/20 blur-xl group-hover:bg-green-400/30 transition-colors duration-300" />
-                      
-                      {/* Gradient line */}
-                      <div className="absolute bottom-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-green-400 to-transparent transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500" />
-                      
-                      {/* Shine effect */}
-                      <div className="absolute inset-0 opacity-0 group-hover:opacity-20 bg-gradient-to-r from-transparent via-green-300 to-transparent -translate-x-full group-hover:translate-x-full transition-all duration-700 ease-out" />
-                      
-                      {/* Button text */}
-                      <span className="relative text-sm font-medium tracking-wider text-green-300 group-hover:text-green-200 transition-colors duration-300">
+                      <span className="text-sm font-medium tracking-wider">
                         CONFIRMAR INSCRIÇÃO
                       </span>
                     </a>
                   </div>
                   
-                  <p className="text-xs text-green-400/80">P.s. Todos benefícios inclusos</p>
+                  <p className="text-xs text-white/80">P.s. Todos benefícios inclusos</p>
                 </div>
               </div>
 
@@ -613,23 +597,23 @@ export default function Page() {
                 <ul className="space-y-4 mb-8">
                   <li className="flex items-start gap-3 text-sm">
                     <span className="text-green-400 mt-1">✓</span>
-                    <span className="text-neutral-300">Formação Completa do Zero ao Avançado <span className="block text-green-400/80 text-xs mt-1">(Valor Original: R$1.997)</span></span>
+                    <span className="text-white">Formação Completa do Zero ao Avançado <span className="block text-white/80 text-xs mt-1">(Valor Original: R$1.997)</span></span>
                   </li>
                   <li className="flex items-start gap-3 text-sm">
                     <span className="text-green-400 mt-1">✓</span>
-                    <span className="text-neutral-300">Acesso a Plataforma da K17 <span className="block text-green-400/80 text-xs mt-1">(Valor Original: R$997)</span></span>
+                    <span className="text-white">Acesso a Plataforma da K17 <span className="block text-white/80 text-xs mt-1">(Valor Original: R$997)</span></span>
                   </li>
                   <li className="flex items-start gap-3 text-sm opacity-40">
                     <span className="text-red-400 mt-1">✕</span>
-                    <span className="text-neutral-400">1 ano de acesso ao Futuros Tech <span className="block text-xs mt-1">(Valor Original: R$2.997)</span></span>
+                    <span className="text-white">1 ano de acesso ao Futuros Tech <span className="block text-white/80 text-xs mt-1">(Valor Original: R$2.997)</span></span>
                   </li>
                   <li className="flex items-start gap-3 text-sm opacity-40">
                     <span className="text-red-400 mt-1">✕</span>
-                    <span className="text-neutral-400">BlackBook <span className="block text-xs mt-1">(Valor Original: R$897)</span></span>
+                    <span className="text-white">BlackBook <span className="block text-white/80 text-xs mt-1">(Valor Original: R$897)</span></span>
                   </li>
                   <li className="flex items-start gap-3 text-sm opacity-40">
                     <span className="text-red-400 mt-1">✕</span>
-                    <span className="text-neutral-400">Bônus Secreto para Caixa Rápido <span className="block text-xs mt-1">(Valor Original: R$4.000)</span></span>
+                    <span className="text-white">Bônus Secreto para Caixa Rápido <span className="block text-white/80 text-xs mt-1">(Valor Original: R$4.000)</span></span>
                   </li>
                 </ul>
 
