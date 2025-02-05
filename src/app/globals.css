@@ -221,7 +221,7 @@ body {
 }
 
 .animate-scroll-infinite {
-  animation: scroll-infinite 30s linear infinite;
+  animation: scroll-infinite 15s linear infinite;
 }
 
 .animate-scroll-infinite:hover {

@@ -160,18 +160,32 @@ export default function Page() {
 
         {/* Brokers Carousel */}
         <div className="w-full overflow-hidden py-4 bg-black/50">
-          <div className="max-w-[1200px] mx-auto relative">
-            {/* Desktop e Mobile: carrossel infinito */}
-            <div className="flex animate-scroll-infinite">
+          <div className="max-w-[1000px] mx-auto relative">
+            {/* Desktop: fixo e centralizado */}
+            <div className="hidden md:flex justify-center items-center">
+              {[1, 2, 3, 4, 5].map((num) => (
+                <Image
+                  key={num}
+                  src={`/corretora${num}.webp`}
+                  alt={`Corretora ${num}`}
+                  width={180}
+                  height={35}
+                  className="object-contain mx-4 h-[35px] w-auto"
+                />
+              ))}
+            </div>
+
+            {/* Mobile: carrossel infinito */}
+            <div className="flex md:hidden animate-scroll-infinite">
               {/* Primeiro conjunto */}
               {[1, 2, 3, 4, 5].map((num) => (
                 <Image
                   key={`first-${num}`}
                   src={`/corretora${num}.webp`}
                   alt={`Corretora ${num}`}
-                  width={240}
-                  height={45}
-                  className="object-contain mx-4 h-[25px] md:h-[45px] w-auto"
+                  width={180}
+                  height={35}
+                  className="object-contain mx-4 h-[25px] w-auto"
                 />
               ))}
               {/* Segundo conjunto para loop */}
@@ -180,20 +194,9 @@ export default function Page() {
                   key={`second-${num}`}
                   src={`/corretora${num}.webp`}
                   alt={`Corretora ${num}`}
-                  width={240}
-                  height={45}
-                  className="object-contain mx-4 h-[25px] md:h-[45px] w-auto"
-                />
-              ))}
-              {/* Terceiro conjunto para loop mais suave */}
-              {[1, 2, 3, 4, 5].map((num) => (
-                <Image
-                  key={`third-${num}`}
-                  src={`/corretora${num}.webp`}
-                  alt={`Corretora ${num}`}
-                  width={240}
-                  height={45}
-                  className="object-contain mx-4 h-[25px] md:h-[45px] w-auto"
+                  width={180}
+                  height={35}
+                  className="object-contain mx-4 h-[25px] w-auto"
                 />
               ))}
             </div>
@@ -205,14 +208,11 @@ export default function Page() {
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-16 relative">
               <div className="absolute inset-0 bg-gradient-to-r from-neutral-800/10 via-white/5 to-neutral-800/10 blur-3xl -z-10" />
-              <h2 className="text-2xl md:text-3xl font-light relative">
-                <span className="bg-gradient-to-r from-neutral-400 via-white to-neutral-400 bg-clip-text text-transparent">
-                  Resultados Acima da Média
-                </span>
-                <br />
-                <span className="text-lg md:text-xl text-neutral-400 mt-2 block">
-                  em Tempo Recorde
-                </span>
+              <h1 className="text-xl md:text-2xl font-medium text-white">
+                Resultados Acima da Média
+              </h1>
+              <h2 className="text-lg md:text-xl mt-2 font-medium text-neutral-100/90">
+                em Tempo Recorde
               </h2>
               <div className="w-24 h-[1px] bg-gradient-to-r from-transparent via-green-500/50 to-transparent mx-auto mt-4">
                 <div className="w-full h-full bg-gradient-to-r from-transparent via-green-400/30 to-transparent animate-pulse" />
