@@ -5,13 +5,14 @@ const prisma = new PrismaClient();
 
 export async function POST(request: Request) {
   try {
-    const { whatsapp } = await request.json();
+    const { whatsapp, source, country } = await request.json();
 
     // Salva no banco
     await prisma.whatsappLead.create({
       data: {
         whatsapp,
-        source: 'cronograma',
+        source: source || 'funil',
+        country,
         createdAt: new Date(),
       },
     });
