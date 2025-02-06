@@ -47,10 +47,13 @@ export default function AdminPage() {
         if (new Date(lead.createdAt) > new Date(acc[key].createdAt)) {
           acc[key] = {
             ...lead,
-            count: acc[key].count + 1,
+            count: (acc[key]?.count || 0) + 1,
           };
         } else {
-          acc[key].count = (acc[key].count || 0) + 1;
+          acc[key] = {
+            ...acc[key],
+            count: (acc[key]?.count || 0) + 1,
+          };
         }
       }
       return acc;
