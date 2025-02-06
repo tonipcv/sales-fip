@@ -75,16 +75,16 @@ export default function Page() {
     <div className="font-montserrat bg-black text-white min-h-screen relative overflow-hidden">
       {/* Content wrapper */}
       <div className="relative z-10">
-        {/* Language Selector */}
-        <div className="absolute top-4 left-4">
-          <button
-            onClick={() => setLanguage(language === 'pt' ? 'en' : 'pt')}
-            className="flex items-center gap-1 text-xs text-neutral-400 hover:text-white transition-colors"
-          >
-            <Globe className="h-3 w-3" />
-            {language.toUpperCase()}
-          </button>
-        </div>
+      {/* Language Selector */}
+      <div className="absolute top-4 left-4">
+        <button
+          onClick={() => setLanguage(language === 'pt' ? 'en' : 'pt')}
+          className="flex items-center gap-1 text-xs text-neutral-400 hover:text-white transition-colors"
+        >
+          <Globe className="h-3 w-3" />
+          {language.toUpperCase()}
+        </button>
+      </div>
 
         {/* Logo Section */}
         <div className="w-full flex justify-center pt-8">
@@ -274,82 +274,82 @@ export default function Page() {
           </div>
         </div>
 
-        {/* Preview dos Resultados */}
-        <section className="py-16 px-4 bg-black">
-          <div className="max-w-4xl mx-auto">
-            <h2 className="text-2xl font-light text-center mb-12 bg-gradient-to-r from-neutral-400 to-white bg-clip-text text-transparent">
+      {/* Preview dos Resultados */}
+      <section className="py-16 px-4 bg-black">
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-2xl font-light text-center mb-12 bg-gradient-to-r from-neutral-400 to-white bg-clip-text text-transparent">
                 {language === 'pt' ? 'Relatórios Comprovados' : 'Verified Results'}
-            </h2>
+          </h2>
 
-            {/* Seletor de Mês */}
-            <div className="flex justify-center mb-8">
-              <select
-                value={selectedMonth}
-                onChange={(e) => setSelectedMonth(Number(e.target.value))}
-                className="bg-transparent border border-neutral-800 text-neutral-300 px-4 py-2 text-xs rounded-lg focus:outline-none focus:border-neutral-700"
-              >
-                {months.map((month) => (
-                  <option key={month.number} value={month.number} className="bg-black">
-                    {month.name}
-                  </option>
-                ))}
-              </select>
-            </div>
-            
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
-              <div className="bg-black border border-neutral-800 rounded-lg p-6">
-                <div className="flex items-center gap-2 mb-1">
-                  <PieChart className="h-4 w-4 text-green-400" strokeWidth={1.5} />
-                  <span className="text-sm text-neutral-400">Win Rate</span>
-                </div>
-                <div className="flex items-baseline gap-2">
-                  <span className="text-2xl font-light text-white">{currentResults.winRate}%</span>
-                  <span className="text-xs text-neutral-500">{currentResults.wins}</span>
-                </div>
+          {/* Seletor de Mês */}
+          <div className="flex justify-center mb-8">
+            <select
+              value={selectedMonth}
+              onChange={(e) => setSelectedMonth(Number(e.target.value))}
+              className="bg-transparent border border-neutral-800 text-neutral-300 px-4 py-2 text-xs rounded-lg focus:outline-none focus:border-neutral-700"
+            >
+              {months.map((month) => (
+                <option key={month.number} value={month.number} className="bg-black">
+                  {month.name}
+                </option>
+              ))}
+            </select>
+          </div>
+          
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
+            <div className="bg-black border border-neutral-800 rounded-lg p-6">
+              <div className="flex items-center gap-2 mb-1">
+                <PieChart className="h-4 w-4 text-green-400" strokeWidth={1.5} />
+                <span className="text-sm text-neutral-400">Win Rate</span>
               </div>
-
-              <div className="bg-black border border-neutral-800 rounded-lg p-6">
-                <div className="flex items-center gap-2 mb-1">
-                  <TrendingUp className="h-4 w-4 text-emerald-400" strokeWidth={1.5} />
-                  <span className="text-sm text-neutral-400">Resultado Total</span>
-                </div>
-                <div className="text-2xl font-light text-white">
-                  +{currentResults.total}%
-                </div>
-              </div>
-
-              <div className="bg-black border border-neutral-800 rounded-lg p-6">
-                <div className="flex items-center gap-2 mb-1">
-                  <BarChart className="h-4 w-4 text-green-400" strokeWidth={1.5} />
-                  <span className="text-sm text-neutral-400">Total de Entradas</span>
-                </div>
-                <div className="flex items-baseline gap-2">
-                  <span className="text-2xl font-light text-white">{currentResults.wins.split('/')[1]}</span>
-                  <span className="text-xs text-neutral-500">operações</span>
-                </div>
+              <div className="flex items-baseline gap-2">
+                <span className="text-2xl font-light text-white">{currentResults.winRate}%</span>
+                <span className="text-xs text-neutral-500">{currentResults.wins}</span>
               </div>
             </div>
 
-            <div className="text-center">
-              <Link 
-                href="/resultados" 
-                className="inline-flex items-center gap-2 border border-neutral-800 text-neutral-300 px-6 py-2 text-xs hover:bg-white/5 transition-colors"
-              >
-                <BarChart className="h-4 w-4" />
-                {language === 'pt' ? 'Ver Relatório Completo' : 'View Full Report'}
-              </Link>
+            <div className="bg-black border border-neutral-800 rounded-lg p-6">
+              <div className="flex items-center gap-2 mb-1">
+                <TrendingUp className="h-4 w-4 text-emerald-400" strokeWidth={1.5} />
+                <span className="text-sm text-neutral-400">Resultado Total</span>
+              </div>
+              <div className="text-2xl font-light text-white">
+                +{currentResults.total}%
+              </div>
+            </div>
+
+            <div className="bg-black border border-neutral-800 rounded-lg p-6">
+              <div className="flex items-center gap-2 mb-1">
+                <BarChart className="h-4 w-4 text-green-400" strokeWidth={1.5} />
+                <span className="text-sm text-neutral-400">Total de Entradas</span>
+              </div>
+              <div className="flex items-baseline gap-2">
+                <span className="text-2xl font-light text-white">{currentResults.wins.split('/')[1]}</span>
+                <span className="text-xs text-neutral-500">operações</span>
+              </div>
             </div>
           </div>
-        </section>
 
-        {/* Benefícios */}
-        <section className="py-16 px-4 bg-black">
-          <div className="max-w-4xl mx-auto">
-            <h2 className="text-2xl font-light text-center mb-12 bg-gradient-to-r from-neutral-400 to-white bg-clip-text text-transparent">
+          <div className="text-center">
+            <Link 
+              href="/resultados" 
+              className="inline-flex items-center gap-2 border border-neutral-800 text-neutral-300 px-6 py-2 text-xs hover:bg-white/5 transition-colors"
+            >
+              <BarChart className="h-4 w-4" />
+              {language === 'pt' ? 'Ver Relatório Completo' : 'View Full Report'}
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Benefícios */}
+      <section className="py-16 px-4 bg-black">
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-2xl font-light text-center mb-12 bg-gradient-to-r from-neutral-400 to-white bg-clip-text text-transparent">
               Tudo que você precisa para lucrar todo dia
-            </h2>
-            
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          </h2>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {/* Conteúdo de Alto Nível */}
               <div className="group relative p-6 border border-neutral-800/50 rounded-xl bg-black/30 backdrop-blur-sm hover:border-neutral-700 transition-all duration-300">
                 <div className="absolute inset-0 bg-gradient-to-b from-neutral-800/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl" />
@@ -381,11 +381,11 @@ export default function Page() {
                   
                   <h3 className="text-lg mb-3 text-center bg-gradient-to-r from-neutral-200 to-white bg-clip-text text-transparent font-medium">
                     Sinais Todo Dia
-                  </h3>
+              </h3>
                   <p className="text-neutral-400 text-sm text-center leading-relaxed">
                     Acesso a Tecnologia do Futuros Tech e ter acesso a sinais lucrativos de operações todo dia da semana de domingo a domingo por 1 ano.
-                  </p>
-                </div>
+              </p>
+            </div>
               </div>
 
               {/* Suporte Especializado */}
@@ -400,7 +400,7 @@ export default function Page() {
 
                   <h3 className="text-lg mb-3 text-center bg-gradient-to-r from-neutral-200 to-white bg-clip-text text-transparent font-medium">
                     Suporte Especializado
-                  </h3>
+              </h3>
                   <p className="text-neutral-400 text-sm text-center leading-relaxed">
                     Conteúdo sem aplicação não gera resultado, tenha ao seu lado o acesso a especialistas para escalar os seus lucros.
                   </p>
@@ -490,12 +490,12 @@ export default function Page() {
               <p className="text-neutral-300/80 text-sm text-center max-w-3xl mx-auto border-t border-neutral-800/50 pt-4 mt-8">
                 Atenção: O valor especial ainda está disponível, recomendamos não atualizar a página pois caso as vagas se encerre o link sairá do ar, clique em confirmar sua inscrição e finalize sua inscrição com direito a todos os bônus.
               </p>
-            </div>
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* Planos */}
-        <section id="planos" className="py-16 px-4 bg-black">
+      {/* Planos */}
+      <section id="planos" className="py-16 px-4 bg-black">
           <div className="max-w-5xl mx-auto">
             {/* Grid de Planos */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -577,7 +577,7 @@ export default function Page() {
                     <span className="text-green-400 mt-1">✓</span>
                     <span className="text-white">Bônus Secreto para Caixa Rápido <span className="block text-white/80 text-xs mt-1">(Valor Original: R$4.000)</span></span>
                   </li>
-                </ul>
+              </ul>
 
                 {/* Preços e botão */}
                 <div className="text-center pt-6 border-t border-white/20">
@@ -594,9 +594,9 @@ export default function Page() {
                       <span className="text-sm font-medium tracking-wider">
                         CONFIRMAR INSCRIÇÃO
                       </span>
-                    </a>
-                  </div>
-                  
+              </a>
+            </div>
+
                   <p className="text-xs text-white/80">P.s. Todos benefícios inclusos</p>
                 </div>
               </div>
@@ -695,20 +695,20 @@ export default function Page() {
                   />
                 ))}
               </div>
-            </div>
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* FAQ */}
-        <section className="py-16 px-4 bg-black">
+      {/* FAQ */}
+      <section className="py-16 px-4 bg-black">
           <div className="max-w-3xl mx-auto">
-            <h2 className="text-2xl font-light text-center mb-12 bg-gradient-to-r from-neutral-400 to-white bg-clip-text text-transparent">
+          <h2 className="text-2xl font-light text-center mb-12 bg-gradient-to-r from-neutral-400 to-white bg-clip-text text-transparent">
                 Perguntas Frequentes
-            </h2>
+          </h2>
 
-            <div className="space-y-4">
-              {[
-                {
+          <div className="space-y-4">
+            {[
+              {
                     question: "O que é o FIP?",
                     answer: "O FIP (Formação para Investidor Profissional) é um curso completo que leva o aluno do zero até a certificação, com conteúdo didático e liberado por etapas baseado na metodologia de investimentos de Daniel Katsu. Será revelado tudo que ele utilizou para ganhar milhões com mercado do zero ao avançado."
                   },
@@ -736,31 +736,31 @@ export default function Page() {
                   question: "E se eu não gostar do FIP?",
                   answer: "Se você não ficar completamente satisfeito em 7 dias, garantimos a devolução total do seu investimento. Basta enviar um e-mail para contato@k17.com.br e faremos o resto."
               }
-              ].map((item, index) => (
-                <div key={index} className="border-b border-neutral-800">
-                  <button
-                    onClick={() => toggleQuestion(index)}
+            ].map((item, index) => (
+              <div key={index} className="border-b border-neutral-800">
+                <button
+                  onClick={() => toggleQuestion(index)}
                       className="w-full flex justify-between items-center py-4 text-left group"
-                  >
+                >
                       <span className="text-sm bg-gradient-to-r from-neutral-200 to-white bg-clip-text text-transparent font-medium group-hover:from-white group-hover:to-white transition-all duration-300">
-                      {item.question}
-                    </span>
-                    <ChevronDown 
+                    {item.question}
+                  </span>
+                  <ChevronDown 
                         className={`w-4 h-4 text-neutral-400 transition-transform duration-300 ${
-                        activeQuestion === index ? "rotate-180" : ""
-                      }`}
-                    />
-                  </button>
-                  {activeQuestion === index && (
+                      activeQuestion === index ? "rotate-180" : ""
+                    }`}
+                  />
+                </button>
+                {activeQuestion === index && (
                       <p className="text-neutral-400 text-sm pb-4 leading-relaxed">
                         {item.answer}
                       </p>
-                  )}
-                </div>
-              ))}
-            </div>
+                )}
+              </div>
+            ))}
           </div>
-        </section>
+        </div>
+      </section>
 
         {/* Botões de Ação */}
         <div className="flex justify-center gap-4 px-4 pb-16">
@@ -791,10 +791,10 @@ export default function Page() {
           </a>
         </div>
 
-        {/* Footer */}
-        <footer className="py-8 px-4 text-center bg-black">
-          <p className="text-neutral-500 text-xs">Futuros Tech - Todos os direitos reservados</p>
-        </footer>
+      {/* Footer */}
+      <footer className="py-8 px-4 text-center bg-black">
+        <p className="text-neutral-500 text-xs">Futuros Tech - Todos os direitos reservados</p>
+      </footer>
       </div>
     </div>
   );
