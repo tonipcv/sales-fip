@@ -16,7 +16,7 @@ export default function Page() {
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
   const [windowWidth, setWindowWidth] = useState(0);
-  const [showModal, setShowModal] = useState(true);
+  const [showModal, setShowModal] = useState(false);
 
   const months = [
     { number: 8, name: 'Agosto' },
@@ -49,6 +49,14 @@ export default function Page() {
     });
   };
 
+  useEffect(() => {
+    // Verifica se já forneceu WhatsApp antes
+    const hasProvidedWhatsapp = localStorage.getItem('whatsappProvided');
+    if (!hasProvidedWhatsapp) {
+      setShowModal(true);
+    }
+  }, []); // Executa apenas na montagem
+
   const handleWhatsappSubmit = async (whatsapp: string) => {
     try {
       const response = await fetch('/api/capture-whatsapp', {
@@ -61,6 +69,8 @@ export default function Page() {
 
       if (!response.ok) throw new Error('Erro ao salvar');
       
+      // Salva no localStorage que já forneceu o WhatsApp
+      localStorage.setItem('whatsappProvided', 'true');
       setShowModal(false);
     } catch (error) {
       throw error;

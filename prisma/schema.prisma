@@ -16,6 +16,7 @@ model WhatsappLead {
   source    String   // 'funil', 'cronograma', etc
   country   String?  // Código do país detectado
   createdAt DateTime @default(now())
+  checked   Boolean  @default(false)
 
   @@map("whatsapp_leads")
 } 

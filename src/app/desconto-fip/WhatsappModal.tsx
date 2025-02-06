@@ -25,37 +25,24 @@ export default function WhatsappModal({ isOpen, onSubmit }: WhatsappModalProps) 
   const [whatsapp, setWhatsapp] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-  const [countdown, setCountdown] = useState(600); // 10 minutos em segundos
+  const [countdown, setCountdown] = useState(600);
+  const [shouldShow, setShouldShow] = useState(false);
 
-  // Detectar país do usuário
+  // Verifica o localStorage na montagem do componente e quando isOpen muda
   useEffect(() => {
-    async function detectCountry() {
-      try {
-        const response = await fetch('https://ipapi.co/json/');
-        const data = await response.json();
-        const countryCode = data.country_code;
-        
-        if (countryCode && countryCodes[countryCode]) {
-          setPrefix(countryCodes[countryCode]);
-        }
-      } catch (error) {
-        console.error('Erro ao detectar país:', error);
-        // Mantém +55 como fallback
-      }
-    }
-
-    detectCountry();
-  }, []);
+    const hasProvidedWhatsapp = localStorage.getItem('whatsappProvided');
+    setShouldShow(isOpen && !hasProvidedWhatsapp);
+  }, [isOpen]);
 
   useEffect(() => {
-    if (!isOpen) return;
+    if (!shouldShow) return;
     
     const timer = setInterval(() => {
       setCountdown((prev) => (prev > 0 ? prev - 1 : 0));
     }, 1000);
 
     return () => clearInterval(timer);
-  }, [isOpen]);
+  }, [shouldShow]);
 
   const formatTime = (seconds: number) => {
     const minutes = Math.floor(seconds / 60);
@@ -76,6 +63,7 @@ export default function WhatsappModal({ isOpen, onSubmit }: WhatsappModalProps) 
 
     try {
       await onSubmit(`${prefix}${whatsapp}`);
+      setShouldShow(false);
     } catch (err) {
       setError('Erro ao processar sua solicitação');
     } finally {
@@ -83,7 +71,7 @@ export default function WhatsappModal({ isOpen, onSubmit }: WhatsappModalProps) 
     }
   };
 
-  if (!isOpen) return null;
+  if (!shouldShow) return null;
 
   return (
     <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
