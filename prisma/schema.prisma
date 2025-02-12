@@ -19,4 +19,13 @@ model WhatsappLead {
   checked   Boolean  @default(false)
 
   @@map("whatsapp_leads")
+}
+
+model WaitingList {
+  id        String   @id @default(cuid())
+  whatsapp  String
+  source    String   // 'encerrado', etc
+  createdAt DateTime @default(now())
+
+  @@map("waiting_list")
 } 

@@ -572,12 +572,12 @@ export default function Page() {
                   </div>
                 </div>
 
-                {/* Plano Promocional */}
-                <div className="order-1 md:order-2 relative border-2 border-white/20 rounded-2xl p-8 bg-gradient-to-b from-white/[0.03] to-transparent backdrop-blur-sm">
+                {/* Plano Promocional - Agora Encerrado */}
+                <div className="order-1 md:order-2 relative border-2 border-neutral-800/50 rounded-2xl p-8 bg-gradient-to-b from-neutral-900/30 to-transparent backdrop-blur-sm opacity-50">
                   {/* Tag de Oferta */}
                   <div className="absolute -top-4 left-1/2 -translate-x-1/2">
-                    <div className="bg-black/80 backdrop-blur-sm border border-white/20 px-4 py-0.5 rounded-full text-[11px] font-light text-white/90">
-                      Acabando Rápido!
+                    <div className="bg-red-500/10 backdrop-blur-sm border border-red-500/20 px-4 py-0.5 rounded-full text-[11px] font-light text-red-400">
+                      Vagas Encerradas
                     </div>
                   </div>
 
@@ -616,32 +616,39 @@ export default function Page() {
                   </ul>
 
                   {/* Preços e botão */}
-                  <div className="text-center pt-6 border-t border-white/20">
+                  <div className="text-center pt-6 border-t border-neutral-800/30">
                     <div className="text-neutral-400 line-through text-sm">De: R$2.997</div>
-                    <div className="text-3xl font-light text-green-400 mt-2">12x R$97,04</div>
-                    <div className="text-sm text-neutral-400 mt-1">ou R$997 à vista (10% off)</div>
+                    <div className="text-3xl font-light text-neutral-400 mt-2">12x R$97,04</div>
+                    <div className="text-sm text-neutral-400 mt-1">ou R$997 à vista</div>
                     
-                    {/* Botão simplificado */}
+                    {/* Botão desabilitado */}
                     <div className="mt-8 mb-4 w-full">
-                      <a 
-                        href="https://checkout.k17.com.br/pay/fip-promocional"
-                        className="w-full inline-flex justify-center px-8 py-4 bg-green-500 hover:bg-green-600 rounded-xl text-white font-medium transition-colors duration-200"
+                      <button 
+                        disabled
+                        className="w-full inline-flex justify-center px-8 py-4 bg-neutral-800 rounded-xl text-neutral-400 font-medium cursor-not-allowed"
                       >
                         <span className="text-sm font-medium tracking-wider">
-                          CONFIRMAR INSCRIÇÃO
+                          VAGAS ENCERRADAS
                         </span>
-                      </a>
+                      </button>
                     </div>
                     
-                    <p className="text-xs text-white/80">P.s. Todos benefícios inclusos</p>
+                    <p className="text-xs text-neutral-500">Promoção não disponível</p>
                   </div>
                 </div>
 
-                {/* Plano Após Vagas */}
-                <div className="order-3 border border-neutral-800/50 rounded-2xl p-8 bg-black/30 backdrop-blur-sm">
+                {/* Plano Após Vagas - Agora Liberado */}
+                <div className="order-3 relative border-2 border-white/20 rounded-2xl p-8 bg-gradient-to-b from-white/[0.03] to-transparent backdrop-blur-sm">
+                  {/* Tag de Disponível */}
+                  <div className="absolute -top-4 left-1/2 -translate-x-1/2">
+                    <div className="bg-green-500/10 backdrop-blur-sm border border-green-500/20 px-4 py-0.5 rounded-full text-[11px] font-light text-green-400">
+                      Disponível Agora
+                    </div>
+                  </div>
+
                   <div className="text-center mb-6">
-                    <h3 className="text-lg font-medium text-neutral-200">APÓS VAGAS SE ENCERRAR</h3>
-                    <div className="mt-2 text-xs text-neutral-500">Valor normal após promoção</div>
+                    <h3 className="text-lg font-medium text-white">VALOR ATUAL</h3>
+                    <div className="mt-2 text-xs text-neutral-400">Acesso Imediato</div>
                   </div>
                   
                   <ul className="space-y-4 mb-8">
@@ -667,10 +674,23 @@ export default function Page() {
                     </li>
                   </ul>
 
-                  <div className="text-center pt-6 border-t border-neutral-800/30">
-                    <div className="text-2xl font-light text-neutral-300">R$2.997</div>
-                    <div className="text-sm text-neutral-500 mt-1">ou 12x de R$297</div>
-                    <div className="text-sm text-neutral-500 mt-6">Em breve...</div>
+                  <div className="text-center pt-6 border-t border-white/20">
+                    <div className="text-3xl font-light text-green-400">12x R$297</div>
+                    <div className="text-sm text-neutral-400 mt-1">ou R$2.997 à vista</div>
+                    
+                    {/* Botão de compra ativo */}
+                    <div className="mt-8 mb-4 w-full">
+                      <a 
+                        href="https://checkout.k17.com.br/pay/fip"
+                        className="w-full inline-flex justify-center px-8 py-4 bg-green-500 hover:bg-green-600 rounded-xl text-white font-medium transition-colors duration-200"
+                      >
+                        <span className="text-sm font-medium tracking-wider">
+                          GARANTIR MINHA VAGA
+                        </span>
+                      </a>
+                    </div>
+                    
+                    <p className="text-xs text-white/80">Acesso imediato ao conteúdo</p>
                   </div>
                 </div>
               </div>
