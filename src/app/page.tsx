@@ -1,13 +1,22 @@
 "use client";
 
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { BarChart, Briefcase, Book, ChevronDown, PieChart, TrendingUp, ChevronRight, Globe, ChevronLeft } from "lucide-react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Image from "next/image";
 import Link from 'next/link';
 import { translations } from '@/translations';
 import * as fbq from '@/lib/fpixel';
 
 export default function Page() {
+  const router = useRouter();
+
+  useEffect(() => {
+    // Redireciona para /encerrado
+    router.push("/encerrado");
+  }, [router]);
+
   const [activeQuestion, setActiveQuestion] = useState<number | null>(null);
   const [selectedMonth, setSelectedMonth] = useState<number>(12);
   const [language, setLanguage] = useState<'pt' | 'en'>('pt');
@@ -18,7 +27,7 @@ export default function Page() {
 
   const months = [
     { number: 8, name: 'Agosto' },
-    { number: 9, name: 'Setembro' },
+    { number: 9, name:  'Setembro' },
     { number: 10, name: 'Outubro' },
     { number: 11, name: 'Novembro' },
     { number: 12, name: 'Dezembro' }
