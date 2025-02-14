@@ -26,6 +26,7 @@ model WaitingList {
   whatsapp  String
   source    String   // 'encerrado', etc
   createdAt DateTime @default(now())
+  checked   Boolean  @default(false)
 
   @@map("waiting_list")
 } 

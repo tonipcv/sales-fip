@@ -1,3 +1,4 @@
 # Prisma Migrate Lock File v1
 
-20240318000000_add_waiting_list 
+20240318000000_add_waiting_list
+20240319000000_add_checked_to_waiting_list 
