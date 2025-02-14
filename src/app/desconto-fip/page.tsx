@@ -1,23 +1,13 @@
 "use client";
 
-import { useEffect } from "react";
-import { useRouter } from "next/navigation";
 import { BarChart, Briefcase, Book, ChevronDown, PieChart, TrendingUp, ChevronRight, Globe, ChevronLeft } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from 'next/link';
 import { translations } from '@/translations';
 import * as fbq from '@/lib/fpixel';
-import WhatsappModal from './WhatsappModal';
 
 export default function Page() {
-  const router = useRouter();
-
-  useEffect(() => {
-    // Redireciona para /encerrado
-    router.push("/encerrado");
-  }, [router]);
-
   const [activeQuestion, setActiveQuestion] = useState<number | null>(null);
   const [selectedMonth, setSelectedMonth] = useState<number>(12);
   const [language, setLanguage] = useState<'pt' | 'en'>('pt');
@@ -25,7 +15,6 @@ export default function Page() {
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
   const [windowWidth, setWindowWidth] = useState(0);
-  const [showModal, setShowModal] = useState(false);
 
   const months = [
     { number: 8, name: 'Agosto' },
@@ -59,34 +48,6 @@ export default function Page() {
   };
 
   useEffect(() => {
-    // Verifica se já forneceu WhatsApp antes
-    const hasProvidedWhatsapp = localStorage.getItem('whatsappProvided');
-    if (!hasProvidedWhatsapp) {
-      setShowModal(true);
-    }
-  }, []); // Executa apenas na montagem
-
-  const handleWhatsappSubmit = async (whatsapp: string) => {
-    try {
-      const response = await fetch('/api/capture-whatsapp', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ whatsapp, source: 'funil' }),
-      });
-
-      if (!response.ok) throw new Error('Erro ao salvar');
-      
-      // Salva no localStorage que já forneceu o WhatsApp
-      localStorage.setItem('whatsappProvided', 'true');
-      setShowModal(false);
-    } catch (error) {
-      throw error;
-    }
-  };
-
-  useEffect(() => {
     // Inicializa a largura da janela
     setWindowWidth(window.innerWidth);
 
@@ -112,11 +73,6 @@ export default function Page() {
 
   return (
     <>
-      <WhatsappModal 
-        isOpen={showModal} 
-        onSubmit={handleWhatsappSubmit} 
-      />
-      
       <div className="font-montserrat bg-black text-white min-h-screen relative overflow-hidden">
         {/* Content wrapper */}
         <div className="relative z-10">
