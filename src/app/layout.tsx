@@ -1,37 +1,29 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist } from "next/font/google";
 import "./globals.css";
 import FacebookPixel from '@/components/FacebookPixel';
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
+const geist = Geist({ subsets: ["latin"] });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
-export const metadata = {
-  title: 'FIP - Formação para Investidor Profissional + Acesso ao APP',
-  description: 'Formação completa do zero ao avançado com acesso ao APP exclusivo para sinais de operações todos os dias da semana.',
+export const metadata: Metadata = {
+  title: "FIP - K17",
+  description: "Formação para Investidor Profissional - K17",
+  icons: {
+    icon: "/favicon.svg",
+    shortcut: "/favicon.svg",
+    apple: "/favicon.svg",
+  },
   openGraph: {
-    title: 'FIP - Formação para Investidor Profissional + Acesso ao APP',
-    description: 'Formação completa do zero ao avançado com acesso ao APP exclusivo para sinais de operações todos os dias da semana.',
+    title: "FIP - K17",
+    description: "Formação para Investidor Profissional - K17",
     images: [
       {
-        url: '/og-image.png',
+        url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: 'FIP - Formação para Investidor Profissional',
+        alt: "FIP - K17",
       },
     ],
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'FIP - Formação para Investidor Profissional + Acesso ao APP',
-    description: 'Formação completa do zero ao avançado com acesso ao APP exclusivo para sinais de operações todos os dias da semana.',
   }
 };
 
@@ -43,15 +35,13 @@ export default function RootLayout({
   return (
     <html lang="pt-BR">
       <head>
-        <link rel="icon" href="/logo.jpg" />
-        <link rel="apple-touch-icon" href="/logo.jpg" />
-        <link rel="shortcut icon" href="/logo.jpg" />
-        <link rel="canonical" href="https://futurostech.com" />
+        <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+        <link rel="shortcut icon" href="/favicon.svg" type="image/svg+xml" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="theme-color" content="#000000" />
+        <meta name="theme-color" content="#4ADE80" />
         <FacebookPixel />
       </head>
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+      <body className={`${geist.className} antialiased`}>
         {children}
       </body>
     </html>

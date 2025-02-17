@@ -29,4 +29,22 @@ model WaitingList {
   checked   Boolean  @default(false)
 
   @@map("waiting_list")
+}
+
+// Nova tabela para os leads do quiz
+model QuizLead {
+  id           String   @id @default(cuid())
+  name         String
+  email        String
+  whatsapp     String
+  capital      String
+  utm_source   String?
+  utm_medium   String?
+  utm_campaign String?
+  utm_content  String?
+  utm_term     String?
+  createdAt    DateTime @default(now())
+  checked      Boolean  @default(false)
+
+  @@map("quiz_leads")
 } 

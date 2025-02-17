@@ -1,0 +1,7 @@
+-- AlterTable
+ALTER TABLE "quiz_leads" 
+DROP COLUMN IF EXISTS "country",
+DROP COLUMN IF EXISTS "state",
+DROP COLUMN IF EXISTS "city",
+DROP COLUMN IF EXISTS "latitude",
+DROP COLUMN IF EXISTS "longitude"; 
