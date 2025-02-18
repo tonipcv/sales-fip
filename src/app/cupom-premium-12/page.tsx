@@ -653,7 +653,7 @@ export default function Page() {
                   {/* Botão ativo */}
                   <div className="mt-8 mb-4 w-full">
                     <a 
-                      href="https://checkout.k17.com.br/subscribe/anual-ft-promocional"
+                      href="https://checkout.k17.com.br/pay/fip-promocional"
                       className="w-full inline-flex justify-center px-8 py-4 bg-green-500 hover:bg-green-600 rounded-xl text-white font-medium transition-colors duration-200 animate-pulse-slow"
                     >
                       <span className="text-sm font-medium tracking-wider">
