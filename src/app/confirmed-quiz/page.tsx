@@ -65,7 +65,7 @@ export default function ConfirmedQuiz() {
         {/* Video Container */}
         <div className="relative pb-[56.25%] h-0 bg-neutral-900 rounded-xl overflow-hidden mb-8">
           <iframe
-            src="https://player-vz-7b6cf9e4-8bf.tv.pandavideo.com.br/embed/?v=5b1dc85d-7194-488e-ab46-18af519a3164"
+            src="https://player-vz-7b6cf9e4-8bf.tv.pandavideo.com.br/embed/?v=c689c709-5643-4fb6-be32-6f080a5f5066"
             className="absolute top-0 left-0 w-full h-full"
             allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
             allowFullScreen
