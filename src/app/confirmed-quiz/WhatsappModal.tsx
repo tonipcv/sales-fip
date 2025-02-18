@@ -13,7 +13,9 @@ export default function WhatsappModal({ onClose }: WhatsappModalProps) {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
 
+  // Removida a formatação específica do Brasil
   const handleWhatsappChange = (value: string) => {
+    // Remove tudo que não for número
     const numbers = value.replace(/\D/g, '');
     setWhatsapp(numbers);
   };
@@ -23,7 +25,8 @@ export default function WhatsappModal({ onClose }: WhatsappModalProps) {
     setLoading(true);
     setError('');
 
-    if (!whatsapp || whatsapp.length < 6) {
+    // Validação mais flexível para números internacionais
+    if (!whatsapp || whatsapp.length < 6) { // Mínimo de 6 dígitos para números internacionais
       setError('Por favor, insira um número válido');
       setLoading(false);
       return;
