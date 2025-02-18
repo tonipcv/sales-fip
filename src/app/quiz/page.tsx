@@ -60,8 +60,8 @@ export default function Quiz() {
         utm_campaign: formData.utm_campaign
       });
 
-      // Redirect to the promotional page
-      window.location.href = '/desconto';
+      // Redirect to the confirmation page
+      window.location.href = '/confirmed-quiz';
     } catch (error) {
       console.error('Error:', error);
     }
