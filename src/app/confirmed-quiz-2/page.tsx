@@ -87,7 +87,7 @@ export default function ConfirmedQuiz2() {
         {/* CTA Button */}
         <div className="flex justify-center">
           <a 
-            href="https://ai.futurostech.com/register"
+            href="https://x.k17.com.br/register"
             target="_blank"
             rel="noopener noreferrer"
             className="group relative overflow-hidden px-8 py-4 bg-green-500/20 backdrop-blur-sm border border-green-500/30 hover:border-green-400 rounded-xl transition-all duration-300"
