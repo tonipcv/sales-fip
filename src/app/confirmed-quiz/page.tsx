@@ -42,7 +42,7 @@ export default function ConfirmedQuiz() {
       {/* Logo */}
       <div className="w-full flex justify-center pt-8">
         <Image
-          src="/logo.png"
+          src="/logo.jpg"
           alt="K17"
           width={120}
           height={120}
@@ -52,16 +52,6 @@ export default function ConfirmedQuiz() {
       </div>
 
       <main className="max-w-4xl mx-auto px-4 py-12">
-        {/* Título */}
-        <div className="text-center mb-8">
-          <h1 className="text-2xl md:text-3xl font-light text-white/90 mb-4">
-            Parabéns! Seu acesso foi confirmado
-          </h1>
-          <p className="text-neutral-400 text-sm md:text-base">
-            Assista o vídeo completo abaixo para liberar a próxima etapa
-          </p>
-        </div>
-
         {/* Video Container */}
         <div className="relative pb-[56.25%] h-0 bg-neutral-900 rounded-xl overflow-hidden mb-8">
           <iframe
@@ -120,7 +110,7 @@ export default function ConfirmedQuiz() {
       {/* Footer */}
       <footer className="py-8 px-4 text-center">
         <p className="text-neutral-500 text-xs">
-          K17 - Todos os direitos reservados
+          Made by KRX
         </p>
       </footer>
     </div>

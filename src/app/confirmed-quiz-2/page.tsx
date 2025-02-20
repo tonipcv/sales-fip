@@ -35,7 +35,7 @@ export default function ConfirmedQuiz2() {
       {/* Logo */}
       <div className="w-full flex justify-center pt-8">
         <Image
-          src="/logo.png"
+          src="/logo.jpg"
           alt="K17"
           width={120}
           height={120}
@@ -112,7 +112,7 @@ export default function ConfirmedQuiz2() {
       {/* Footer */}
       <footer className="py-8 px-4 text-center">
         <p className="text-neutral-500 text-xs">
-          K17 - Todos os direitos reservados
+          Made by KRX
         </p>
       </footer>
     </div>

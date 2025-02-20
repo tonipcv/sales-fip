@@ -101,19 +101,9 @@ export default function Quiz() {
             className="mx-auto mb-8 md:mb-12 w-24 md:w-32"
           />
           
-          <div className="max-w-3xl mx-auto mb-8 md:mb-12">
-            <div className="bg-gradient-to-r from-green-500/10 via-emerald-500/10 to-green-500/10 border border-green-500/20 rounded-xl md:rounded-2xl p-6 md:p-8">
-              <span className="inline-block px-3 md:px-4 py-1 bg-green-500/10 text-green-400 text-xs md:text-sm rounded-full border border-green-500/20 mb-4 md:mb-6">
-                {language === 'pt' ? 'Curso 100% Gratuito' : 'Free Course'}
-              </span>
-              
-              <h2 className="text-xl md:text-3xl font-light mb-4 md:mb-6 text-white/90">
-                {language === 'pt' 
-                  ? '10.000% de Valorização no Mercado de Criptomoedas Começando do Zero' 
-                  : '10.000% of Cryptocurrency Market Value Starting from Zero'}
-              </h2>
-            </div>
-          </div>
+          <span className="inline-block px-3 md:px-4 py-1 bg-green-500/10 text-green-400 text-xs md:text-sm rounded-full border border-green-500/20 mb-4 md:mb-6">
+            {language === 'pt' ? 'Curso 100% Gratuito' : 'Free Course'}
+          </span>
 
           {/* Formulário Simplificado */}
           <div className="max-w-xl mx-auto bg-white/5 border border-white/10 rounded-xl md:rounded-2xl p-6 md:p-8">
@@ -210,7 +200,7 @@ export default function Quiz() {
       {/* Footer */}
       <footer className="py-8 px-4 text-center bg-black">
         <p className="text-neutral-500 text-xs">
-          Futuros Tech - Todos os direitos reservados
+          Made by KRX
         </p>
       </footer>
     </div>
