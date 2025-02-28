@@ -17,7 +17,7 @@ import {
   PaginationItem,
   PaginationLink,
 } from "@/components/ui/pagination";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, Download, CheckSquare, Square } from "lucide-react";
 
 interface QuizLead {
   id: string;
@@ -55,6 +55,7 @@ export default function QuizLeadsAdmin() {
   const [isLoading, setIsLoading] = useState(false);
   const [quizStats, setQuizStats] = useState<QuizStats | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
+  const [selectedLeads, setSelectedLeads] = useState<Set<string>>(new Set());
   const router = useRouter();
 
   useEffect(() => {
@@ -140,11 +141,108 @@ export default function QuizLeadsAdmin() {
     }
   };
 
+  const exportToCSV = () => {
+    if (!quizStats?.leads) return;
+
+    // Cabeçalhos do CSV
+    const headers = [
+      'Nome',
+      'Email',
+      'WhatsApp',
+      'Capital',
+      'UTM Source',
+      'UTM Medium',
+      'UTM Campaign',
+      'UTM Content',
+      'UTM Term',
+      'Data',
+      'Status'
+    ];
+
+    // Converter dados para linhas do CSV
+    const rows = quizStats.leads.map(lead => [
+      lead.name,
+      lead.email,
+      lead.whatsapp,
+      lead.capital,
+      lead.utm_source || '',
+      lead.utm_medium || '',
+      lead.utm_campaign || '',
+      lead.utm_content || '',
+      lead.utm_term || '',
+      new Date(lead.createdAt).toLocaleDateString('pt-BR'),
+      lead.checked ? 'Convertido' : 'Pendente'
+    ]);
+
+    // Combinar cabeçalhos e linhas
+    const csvContent = [
+      headers.join(','),
+      ...rows.map(row => row.map(cell => `"${cell}"`).join(','))
+    ].join('\n');
+
+    // Criar e baixar o arquivo
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+    const url = URL.createObjectURL(blob);
+    link.setAttribute('href', url);
+    link.setAttribute('download', `leads-quiz-${new Date().toISOString().split('T')[0]}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   const totalPages = Math.ceil((quizStats?.leads?.length || 0) / ITEMS_PER_PAGE);
   const paginatedLeads = quizStats?.leads?.slice(
     (currentPage - 1) * ITEMS_PER_PAGE,
     currentPage * ITEMS_PER_PAGE
   );
+
+  // Função para selecionar/deselecionar todos
+  const toggleSelectAll = () => {
+    if (selectedLeads.size === (quizStats?.leads?.length || 0)) {
+      setSelectedLeads(new Set());
+    } else {
+      setSelectedLeads(new Set(quizStats?.leads?.map(lead => lead.id) || []));
+    }
+  };
+
+  // Função para selecionar/deselecionar um lead
+  const toggleSelectLead = (id: string) => {
+    const newSelected = new Set(selectedLeads);
+    if (newSelected.has(id)) {
+      newSelected.delete(id);
+    } else {
+      newSelected.add(id);
+    }
+    setSelectedLeads(newSelected);
+  };
+
+  // Função para marcar todos selecionados como verificados
+  const markSelectedAsChecked = async (checked: boolean) => {
+    try {
+      const savedToken = localStorage.getItem('admin_token');
+      
+      // Fazer requisições em paralelo para cada lead selecionado
+      await Promise.all(
+        Array.from(selectedLeads).map(id =>
+          fetch('/api/admin/quiz-leads/toggle-check', {
+            method: 'POST',
+            headers: {
+              'Authorization': `Bearer ${savedToken}`,
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ id, checked }),
+          })
+        )
+      );
+
+      // Recarregar dados e limpar seleção
+      fetchStats();
+      setSelectedLeads(new Set());
+    } catch (error) {
+      console.error('Error updating leads:', error);
+    }
+  };
 
   if (!isAuthenticated) {
     return (
@@ -232,16 +330,59 @@ export default function QuizLeadsAdmin() {
 
         {/* Leads Table */}
         <div className="bg-[#111111] rounded-xl overflow-hidden">
-          <div className="p-6 border-b border-[#222222] flex items-center justify-between">
-            <h2 className={`text-lg font-medium text-white ${fontStyles.primary}`}>Leads do Quiz</h2>
-            <span className={`text-sm text-gray-400 ${fontStyles.secondary}`}>
-              Total: {quizStats?.leads?.length || 0}
-            </span>
+          <div className="p-6 border-b border-[#222222] space-y-4">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-4">
+                <h2 className={`text-lg font-medium text-white ${fontStyles.primary}`}>Leads do Quiz</h2>
+                <button
+                  onClick={exportToCSV}
+                  className="flex items-center gap-2 px-3 py-1.5 bg-green-500/10 hover:bg-green-500/20 text-green-400 rounded-lg text-sm transition-colors"
+                >
+                  <Download className="w-4 h-4" />
+                  Exportar CSV
+                </button>
+              </div>
+              <span className={`text-sm text-gray-400 ${fontStyles.secondary}`}>
+                Total: {quizStats?.leads?.length || 0}
+              </span>
+            </div>
+
+            {selectedLeads.size > 0 && (
+              <div className="flex items-center gap-3 py-2">
+                <span className="text-sm text-gray-400">
+                  {selectedLeads.size} leads selecionados
+                </span>
+                <button
+                  onClick={() => markSelectedAsChecked(true)}
+                  className="px-3 py-1.5 bg-green-500/10 hover:bg-green-500/20 text-green-400 rounded-lg text-sm transition-colors"
+                >
+                  Marcar como verificado
+                </button>
+                <button
+                  onClick={() => markSelectedAsChecked(false)}
+                  className="px-3 py-1.5 bg-red-500/10 hover:bg-red-500/20 text-red-400 rounded-lg text-sm transition-colors"
+                >
+                  Marcar como não verificado
+                </button>
+              </div>
+            )}
           </div>
           <div className="overflow-x-auto">
             <Table>
               <TableHeader>
-                <TableRow className="border-[#222222] hover:bg-transparent">
+                <TableRow>
+                  <TableHead className="w-12">
+                    <button
+                      onClick={toggleSelectAll}
+                      className="text-gray-400 hover:text-white transition-colors"
+                    >
+                      {selectedLeads.size === (quizStats?.leads?.length || 0) ? (
+                        <CheckSquare className="w-5 h-5" />
+                      ) : (
+                        <Square className="w-5 h-5" />
+                      )}
+                    </button>
+                  </TableHead>
                   <TableHead className={`text-gray-400 ${fontStyles.secondary}`}>Status</TableHead>
                   <TableHead className={`text-gray-400 ${fontStyles.secondary}`}>Nome</TableHead>
                   <TableHead className={`text-gray-400 ${fontStyles.secondary}`}>Email</TableHead>
@@ -257,6 +398,18 @@ export default function QuizLeadsAdmin() {
                     key={lead.id} 
                     className="border-[#222222] hover:bg-[#1A1A1A] transition-colors"
                   >
+                    <TableCell>
+                      <button
+                        onClick={() => toggleSelectLead(lead.id)}
+                        className="text-gray-400 hover:text-white transition-colors"
+                      >
+                        {selectedLeads.has(lead.id) ? (
+                          <CheckSquare className="w-5 h-5" />
+                        ) : (
+                          <Square className="w-5 h-5" />
+                        )}
+                      </button>
+                    </TableCell>
                     <TableCell>
                       <label className="relative inline-flex items-center cursor-pointer">
                         <input
