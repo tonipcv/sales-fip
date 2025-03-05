@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import {
@@ -40,6 +40,11 @@ interface QuizStats {
   checkedLeads: number;
   conversionRate: number;
   leads?: QuizLead[];
+  stats?: {
+    uniqueCount: number;
+    total?: number;
+    checked?: number;
+  };
 }
 
 const ITEMS_PER_PAGE = 10;
@@ -95,21 +100,37 @@ export default function QuizLeadsAdmin() {
   const fetchStats = async () => {
     try {
       const savedToken = localStorage.getItem('admin_token');
-      
       const response = await fetch('/api/admin/quiz-leads', {
         headers: {
           'Authorization': `Bearer ${savedToken}`
         }
       });
-
-      if (response.ok) {
-        const data = await response.json();
-        setQuizStats(data);
-      } else if (response.status === 401) {
-        handleLogout();
+      const data = await response.json();
+      
+      // Log para depuração
+      console.log('Dados recebidos da API:', data);
+      
+      // Filtrar leads para manter apenas o mais recente de cada e-mail
+      if (data.leads && Array.isArray(data.leads)) {
+        const uniqueLeads = new Map<string, QuizLead>();
+        
+        // Para cada lead, armazena apenas o mais recente por e-mail
+        data.leads.forEach((lead: QuizLead) => {
+          const existingLead = uniqueLeads.get(lead.email);
+          if (!existingLead || new Date(lead.createdAt) > new Date(existingLead.createdAt)) {
+            uniqueLeads.set(lead.email, lead);
+          }
+        });
+        
+        // Converte o Map de volta para array
+        data.leads = Array.from(uniqueLeads.values());
       }
+      
+      setQuizStats(data);
+      setIsLoading(false);
     } catch (error) {
       console.error('Error fetching stats:', error);
+      setIsLoading(false);
     }
   };
 
@@ -314,10 +335,22 @@ export default function QuizLeadsAdmin() {
         {/* Stats */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           {[
-            { label: 'Total de Leads', value: quizStats?.totalLeads || 0 },
-            { label: 'Leads Hoje', value: quizStats?.todayLeads || 0 },
-            { label: 'Leads Verificados', value: quizStats?.checkedLeads || 0 },
-            { label: 'Taxa de Conversão', value: `${(quizStats?.conversionRate || 0).toFixed(1)}%` }
+            { 
+              label: 'Total de Leads', 
+              value: quizStats?.totalLeads || quizStats?.stats?.total || 0 
+            },
+            { 
+              label: 'Leads Hoje', 
+              value: quizStats?.todayLeads || 0 
+            },
+            { 
+              label: 'Leads Verificados', 
+              value: quizStats?.checkedLeads || quizStats?.stats?.checked || 0 
+            },
+            { 
+              label: 'Taxa de Conversão', 
+              value: `${((quizStats?.conversionRate || 0).toFixed(1))}%` 
+            }
           ].map((stat) => (
             <div key={stat.label} className="bg-[#111111] rounded-xl p-6">
               <p className={`text-sm text-gray-400 ${fontStyles.secondary}`}>{stat.label}</p>
@@ -342,9 +375,16 @@ export default function QuizLeadsAdmin() {
                   Exportar CSV
                 </button>
               </div>
-              <span className={`text-sm text-gray-400 ${fontStyles.secondary}`}>
-                Total: {quizStats?.leads?.length || 0}
-              </span>
+              <div className="flex flex-col items-end">
+                <span className={`text-sm text-gray-400 ${fontStyles.secondary}`}>
+                  Total: {quizStats?.leads?.length || 0}
+                </span>
+                {quizStats?.stats?.uniqueCount && (
+                  <span className={`text-sm text-gray-400 ${fontStyles.secondary}`}>
+                    E-mails únicos: {quizStats.stats.uniqueCount}
+                  </span>
+                )}
+              </div>
             </div>
 
             {selectedLeads.size > 0 && (
@@ -440,7 +480,7 @@ export default function QuizLeadsAdmin() {
           {/* Pagination */}
           <div className="p-6 border-t border-[#222222]">
             <Pagination>
-              <PaginationContent className={fontStyles.secondary}>
+              <PaginationContent className={`${fontStyles.secondary} flex-wrap`}>
                 <PaginationItem>
                   <button
                     onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
@@ -454,21 +494,59 @@ export default function QuizLeadsAdmin() {
                   </button>
                 </PaginationItem>
                 
-                {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-                  <PaginationItem key={page}>
-                    <PaginationLink
-                      onClick={() => setCurrentPage(page)}
-                      isActive={currentPage === page}
-                      className={`${
-                        currentPage === page 
-                          ? 'bg-highlight text-white' 
-                          : 'text-gray-400 hover:text-white'
-                      }`}
-                    >
-                      {page}
-                    </PaginationLink>
-                  </PaginationItem>
-                ))}
+                {/* Paginação melhorada com formato 1, 2, 3, ..., n-1, n */}
+                {Array.from({ length: totalPages }, (_, i) => i + 1)
+                  .filter(page => {
+                    // Sempre mostrar primeira e última página
+                    if (page === 1 || page === totalPages) return true;
+                    
+                    // Mostrar páginas próximas à atual
+                    if (Math.abs(page - currentPage) <= 1) return true;
+                    
+                    // Não mostrar outras páginas
+                    return false;
+                  })
+                  .map((page, index, array) => {
+                    // Adicionar reticências quando há saltos na sequência
+                    if (index > 0 && page - array[index - 1] > 1) {
+                      return (
+                        <React.Fragment key={`ellipsis-${page}`}>
+                          <PaginationItem>
+                            <span className="px-3 py-1.5 text-gray-500">...</span>
+                          </PaginationItem>
+                          <PaginationItem>
+                            <PaginationLink
+                              onClick={() => setCurrentPage(page)}
+                              isActive={currentPage === page}
+                              className={`${
+                                currentPage === page 
+                                  ? 'bg-highlight text-white' 
+                                  : 'text-gray-400 hover:text-white'
+                              }`}
+                            >
+                              {page}
+                            </PaginationLink>
+                          </PaginationItem>
+                        </React.Fragment>
+                      );
+                    }
+                    
+                    return (
+                      <PaginationItem key={page}>
+                        <PaginationLink
+                          onClick={() => setCurrentPage(page)}
+                          isActive={currentPage === page}
+                          className={`${
+                            currentPage === page 
+                              ? 'bg-highlight text-white' 
+                              : 'text-gray-400 hover:text-white'
+                          }`}
+                        >
+                          {page}
+                        </PaginationLink>
+                      </PaginationItem>
+                    );
+                  })}
 
                 <PaginationItem>
                   <button
@@ -503,4 +581,4 @@ export default function QuizLeadsAdmin() {
       </footer>
     </div>
   );
-} 
+}
