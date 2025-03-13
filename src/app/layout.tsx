@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist } from "next/font/google";
 import "./globals.css";
 import FacebookPixel from '@/components/FacebookPixel';
+import GoogleAnalytics from '@/components/GoogleAnalytics';
 
 const geist = Geist({ subsets: ["latin"] });
 
@@ -40,6 +41,7 @@ export default function RootLayout({
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="theme-color" content="#4ADE80" />
         <FacebookPixel />
+        <GoogleAnalytics />
       </head>
       <body className={`${geist.className} antialiased`}>
         {children}
