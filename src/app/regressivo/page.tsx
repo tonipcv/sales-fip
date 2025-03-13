@@ -137,7 +137,39 @@ export default function Page() {
             </button>
           </div>
 
-          {/* Countdown Timer */}
+          {/* Countdown Timer - Fixed on scroll */}
+          <div className={`w-full fixed top-0 left-0 right-0 z-50 bg-gradient-to-r from-black via-green-950/20 to-black border-b border-green-900/20 transform transition-all duration-300 ${isScrolled ? 'translate-y-0 bg-black/90 backdrop-blur-md' : '-translate-y-full'}`}>
+            <div className="max-w-4xl mx-auto py-3 px-4">
+              <div className="flex flex-col items-center justify-center">
+                <h3 className="text-xs md:text-sm text-green-400 mb-2 text-center px-2 max-w-[280px] md:max-w-none">
+                  Valor Especial + Bônus de 1 ano de acesso ao Futuros Tech será aberto em:
+                </h3>
+                <div className="flex gap-2 md:gap-4 text-center">
+                  <div className="flex flex-col">
+                    <span className="text-xl md:text-2xl font-light text-white">{String(timeLeft.days).padStart(2, '0')}</span>
+                    <span className="text-[10px] md:text-xs text-neutral-400">Dias</span>
+                  </div>
+                  <div className="text-xl md:text-2xl font-light text-white">:</div>
+                  <div className="flex flex-col">
+                    <span className="text-xl md:text-2xl font-light text-white">{String(timeLeft.hours).padStart(2, '0')}</span>
+                    <span className="text-[10px] md:text-xs text-neutral-400">Horas</span>
+                  </div>
+                  <div className="text-xl md:text-2xl font-light text-white">:</div>
+                  <div className="flex flex-col">
+                    <span className="text-xl md:text-2xl font-light text-white">{String(timeLeft.minutes).padStart(2, '0')}</span>
+                    <span className="text-[10px] md:text-xs text-neutral-400">Min</span>
+                  </div>
+                  <div className="text-xl md:text-2xl font-light text-white">:</div>
+                  <div className="flex flex-col">
+                    <span className="text-xl md:text-2xl font-light text-white">{String(timeLeft.seconds).padStart(2, '0')}</span>
+                    <span className="text-[10px] md:text-xs text-neutral-400">Seg</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Static Countdown Timer (for spacing) */}
           <div className="w-full bg-gradient-to-r from-black via-green-950/20 to-black border-b border-green-900/20">
             <div className="max-w-4xl mx-auto py-4 px-4">
               <div className="flex flex-col items-center justify-center">
@@ -221,31 +253,9 @@ export default function Page() {
             {/* CTA Buttons - Updated with smaller size and fixed position */}
             <div className="flex flex-col gap-3 mt-8">
               <a
-                href="#planos"
-                className="group relative overflow-hidden px-6 py-3 bg-emerald-500/20 backdrop-blur-sm border border-emerald-500/30 hover:border-emerald-400 rounded-lg transition-all duration-300 animate-pulse-slow"
-              >
-                {/* Glow effect */}
-                <div className="absolute inset-0 bg-emerald-500/20 blur-xl group-hover:bg-emerald-400/30 transition-colors duration-300" />
-                
-                {/* Gradient line */}
-                <div className="absolute bottom-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-emerald-400 to-transparent transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500" />
-                
-                {/* Shine effect */}
-                <div className="absolute inset-0 opacity-0 group-hover:opacity-20 bg-gradient-to-r from-transparent via-emerald-300 to-transparent -translate-x-full group-hover:translate-x-full transition-all duration-700 ease-out" />
-                
-                {/* Button text */}
-                <div className="relative flex flex-col items-center">
-                  <span className="text-base font-medium tracking-wider uppercase text-emerald-300 group-hover:text-emerald-200 transition-colors duration-300">
-                    ENTRAR NO GRUPO DE ESPERA!
-                  </span>
-                  <span className="text-xs text-emerald-400/80 mt-0.5">
-                    (5 MIL MEMBROS)
-                  </span>
-                </div>
-              </a>
-
-              <a
-                href="#planos"
+                href="https://t.me/+tOj6h-B6rrM0MDYx"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="group relative overflow-hidden px-6 py-3 bg-green-600/20 backdrop-blur-sm border border-green-600/30 hover:border-green-500 rounded-lg transition-all duration-300"
               >
                 {/* Glow effect */}
@@ -267,29 +277,59 @@ export default function Page() {
                   </span>
                 </div>
               </a>
+
+              <a
+                href="https://t.me/+mZs1t5_biYFmMTBh"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group relative overflow-hidden px-6 py-3 bg-emerald-500/20 backdrop-blur-sm border border-emerald-500/30 hover:border-emerald-400 rounded-lg transition-all duration-300 animate-pulse-slow"
+              >
+                {/* Glow effect */}
+                <div className="absolute inset-0 bg-emerald-500/20 blur-xl group-hover:bg-emerald-400/30 transition-colors duration-300" />
+                
+                {/* Gradient line */}
+                <div className="absolute bottom-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-emerald-400 to-transparent transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500" />
+                
+                {/* Shine effect */}
+                <div className="absolute inset-0 opacity-0 group-hover:opacity-20 bg-gradient-to-r from-transparent via-emerald-300 to-transparent -translate-x-full group-hover:translate-x-full transition-all duration-700 ease-out" />
+                
+                {/* Button text */}
+                <div className="relative flex flex-col items-center">
+                  <span className="text-base font-medium tracking-wider uppercase text-emerald-300 group-hover:text-emerald-200 transition-colors duration-300">
+                    ENTRAR NO GRUPO DE ESPERA!
+                  </span>
+                  <span className="text-xs text-emerald-400/80 mt-0.5">
+                    (5 MIL MEMBROS)
+                  </span>
+                </div>
+              </a>
             </div>
 
             {/* Fixed bottom buttons when scrolled */}
             <div className={`fixed bottom-0 left-0 right-0 bg-black/90 backdrop-blur-md transform transition-transform duration-300 z-50 ${isScrolled ? 'translate-y-0' : 'translate-y-full'}`}>
               <div className="max-w-lg mx-auto flex flex-col gap-2 p-2 md:p-3">
                 <a
-                  href="#planos"
-                  className="group relative overflow-hidden px-3 py-2 bg-emerald-500/20 backdrop-blur-sm border border-emerald-500/30 hover:border-emerald-400 rounded-md transition-all duration-300 animate-pulse-slow"
-                >
-                  <div className="relative flex flex-col items-center">
-                    <span className="text-[11px] md:text-sm font-medium tracking-wider uppercase text-emerald-300 group-hover:text-emerald-200 transition-colors duration-300">
-                      ENTRAR NO GRUPO DE ESPERA! (5 MIL MEMBROS)
-                    </span>
-                  </div>
-                </a>
-
-                <a
-                  href="#planos"
+                  href="https://t.me/+tOj6h-B6rrM0MDYx"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="group relative overflow-hidden px-3 py-2 bg-green-600/20 backdrop-blur-sm border border-green-600/30 hover:border-green-500 rounded-md transition-all duration-300"
                 >
                   <div className="relative flex flex-col items-center">
                     <span className="text-[11px] md:text-sm font-medium tracking-wider uppercase text-green-300 group-hover:text-green-200 transition-colors duration-300">
                       ENTRAR NO GRUPO EXCLUSIVO (200 MEMBROS)
+                    </span>
+                  </div>
+                </a>
+
+                <a
+                  href="https://t.me/+mZs1t5_biYFmMTBh"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group relative overflow-hidden px-3 py-2 bg-emerald-500/20 backdrop-blur-sm border border-emerald-500/30 hover:border-emerald-400 rounded-md transition-all duration-300 animate-pulse-slow"
+                >
+                  <div className="relative flex flex-col items-center">
+                    <span className="text-[11px] md:text-sm font-medium tracking-wider uppercase text-emerald-300 group-hover:text-emerald-200 transition-colors duration-300">
+                      ENTRAR NO GRUPO DE ESPERA! (5 MIL MEMBROS)
                     </span>
                   </div>
                 </a>
@@ -955,35 +995,7 @@ export default function Page() {
             </div>
           </section>
 
-          {/* Botões de Ação */}
-          <div className="flex justify-center gap-4 px-4 pb-16">
-            <Link 
-              href="/#planos"
-              className="px-6 py-3 bg-white/10 hover:bg-white/20 rounded-xl text-white text-sm font-medium transition-colors"
-            >
-              Ver Planos
-            </Link>
-            
-            <a 
-              href="https://checkout.k17.com.br/pay/fip-promocional"
-              className="group relative overflow-hidden px-6 py-3 bg-green-500/20 backdrop-blur-sm border border-green-500/30 hover:border-green-400 rounded-xl transition-all duration-300 animate-pulse-slow"
-            >
-              {/* Glow effect */}
-              <div className="absolute inset-0 bg-green-500/20 blur-xl group-hover:bg-green-400/30 transition-colors duration-300" />
-              
-              {/* Gradient line */}
-              <div className="absolute bottom-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-green-400 to-transparent transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500" />
-              
-              {/* Shine effect */}
-              <div className="absolute inset-0 opacity-0 group-hover:opacity-20 bg-gradient-to-r from-transparent via-green-300 to-transparent -translate-x-full group-hover:translate-x-full transition-all duration-700 ease-out" />
-              
-              {/* Button text */}
-              <span className="relative text-xs font-medium tracking-wider uppercase text-green-300 group-hover:text-green-200 transition-colors duration-300">
-                ADQUIRIR OFERTA!
-              </span>
-            </a>
-          </div>
-
+         
           {/* Footer */}
           <footer className="py-8 px-4 text-center bg-black">
             <p className="text-neutral-500 text-xs">Futuros Tech - Todos os direitos reservados</p>
