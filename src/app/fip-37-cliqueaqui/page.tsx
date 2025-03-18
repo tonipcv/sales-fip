@@ -18,6 +18,7 @@ export default function Page() {
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
   const [windowWidth, setWindowWidth] = useState(0);
+  const [timeLeft, setTimeLeft] = useState(600); // 10 minutes in seconds
 
   const months = [
     { number: 8, name: 'Agosto' },
@@ -74,8 +75,37 @@ export default function Page() {
     return () => clearInterval(timer);
   }, [isMobile]);
 
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setTimeLeft((prevTime) => {
+        if (prevTime <= 0) {
+          clearInterval(timer);
+          return 0;
+        }
+        return prevTime - 1;
+      });
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, []);
+
+  const minutes = Math.floor(timeLeft / 60);
+  const seconds = timeLeft % 60;
+
   return (
     <div className="font-montserrat bg-black text-white min-h-screen relative overflow-hidden">
+      {/* VIP Notice and Countdown */}
+      <div className="bg-gradient-to-r from-green-500/20 via-green-400/20 to-green-500/20 border-b border-green-500/30 backdrop-blur-sm">
+        <div className="max-w-4xl mx-auto px-4 py-3 text-center">
+          <div className="text-green-400 font-medium mb-1">
+            Link exclusivo para o grupo VIP!
+          </div>
+          <div className="text-white/90 text-sm">
+           <span className="font-mono text-gray-400">{String(minutes).padStart(2, '0')}:{String(seconds).padStart(2, '0')}</span>
+          </div>
+        </div>
+      </div>
+
       {/* Content wrapper */}
       <div className="relative z-10">
       {/* Language Selector */}
