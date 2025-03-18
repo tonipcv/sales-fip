@@ -632,6 +632,9 @@ export default function Page() {
 
                   <p className="text-xs text-white/80">P.s. Todos benefícios inclusos</p>
                 </div>
+                <div className="text-white/90 text-sm">
+           <span className="font-mono text-gray-400">{String(minutes).padStart(2, '0')}:{String(seconds).padStart(2, '0')}</span>
+          </div>
               </div>
 
               {/* Plano Após Vagas */}

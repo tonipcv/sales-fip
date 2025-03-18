@@ -1,13 +1,11 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { Globe } from "lucide-react";
 import * as fbq from '@/lib/fpixel';
 
 export default function Quiz() {
-  const router = useRouter();
   const [language, setLanguage] = useState<'pt' | 'en'>('pt');
   const [formData, setFormData] = useState({
     name: '',
@@ -20,11 +18,6 @@ export default function Quiz() {
     utm_content: '',
     utm_term: ''
   });
-
-  // Redirect to /fip-37
-  useEffect(() => {
-    router.push("/fip-37");
-  }, [router]);
 
   // Função para capturar UTMs da URL
   useEffect(() => {
