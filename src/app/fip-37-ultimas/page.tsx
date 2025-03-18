@@ -625,7 +625,7 @@ export default function Page() {
                       className="w-full inline-flex justify-center px-8 py-4 bg-green-500 hover:bg-green-600 rounded-xl text-white font-medium transition-colors duration-200"
                     >
                       <span className="text-sm font-medium tracking-wider">
-                        CONFIRMAR INSCRIÇÃO
+                        ENTRAR AGORA!
                       </span>
               </a>
             </div>
