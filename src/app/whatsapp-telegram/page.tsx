@@ -1,28 +1,8 @@
 "use client";
 
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 
 export default function WhatsAppTelegram() {
-  const router = useRouter();
-  const [countdown, setCountdown] = useState(10);
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setCountdown((prev) => {
-        if (prev <= 1) {
-          clearInterval(timer);
-          router.push('https://t.me/+tOj6h-B6rrM0MDYx');
-          return 0;
-        }
-        return prev - 1;
-      });
-    }, 1000);
-
-    return () => clearInterval(timer);
-  }, [router]);
-
   return (
     <div className="min-h-screen bg-black flex flex-col items-center justify-center p-4">
       {/* Logo */}
@@ -37,13 +17,13 @@ export default function WhatsAppTelegram() {
         />
       </div>
 
-      {/* Countdown */}
-      <div className="text-center mb-8">
-        <h1 className="text-2xl md:text-3xl font-light text-white mb-4">
-          Redirecionando em {countdown} segundos...
+      {/* Message */}
+      <div className="text-center mb-12 max-w-xl">
+        <h1 className="text-2xl md:text-3xl font-light text-white mb-6">
+          Bem-vindo ao Grupo Exclusivo!
         </h1>
-        <p className="text-neutral-400 text-sm md:text-base max-w-md mx-auto">
-          Você será redirecionado automaticamente para o grupo exclusivo do Telegram
+        <p className="text-neutral-400 text-sm md:text-base leading-relaxed">
+          Clique no botão abaixo para entrar no grupo do Telegram:
         </p>
       </div>
 
