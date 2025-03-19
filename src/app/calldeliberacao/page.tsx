@@ -1,10 +1,10 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
 
-export default function CallDeliberacao() {
+function CallDeliberacaoContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [formData, setFormData] = useState({
@@ -171,5 +171,21 @@ export default function CallDeliberacao() {
         </p>
       </footer>
     </div>
+  );
+}
+
+// Componente principal com Suspense
+export default function CallDeliberacao() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-black text-white flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-green-500 mx-auto mb-4"></div>
+          <p className="text-neutral-400">Carregando...</p>
+        </div>
+      </div>
+    }>
+      <CallDeliberacaoContent />
+    </Suspense>
   );
 } 
