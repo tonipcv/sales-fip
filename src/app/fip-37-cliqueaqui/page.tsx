@@ -621,7 +621,7 @@ export default function Page() {
                   {/* Botão simplificado */}
                   <div className="mt-8 mb-4 w-full">
                     <a 
-                      href="https://checkout.k17.com.br/pay/fip-promocional"
+                      href="https://checkout.k17.com.br/pay/fip-desconto-com-bonus-17"
                       className="w-full inline-flex justify-center px-8 py-4 bg-green-500 hover:bg-green-600 rounded-xl text-white font-medium transition-colors duration-200"
                     >
                       <span className="text-sm font-medium tracking-wider">
@@ -808,7 +808,7 @@ export default function Page() {
           </Link>
           
           <a 
-            href="https://checkout.k17.com.br/pay/fip-promocional"
+            href="https://checkout.k17.com.br/pay/fip-desconto-com-bonus-17"
             className="group relative overflow-hidden px-6 py-3 bg-green-500/20 backdrop-blur-sm border border-green-500/30 hover:border-green-400 rounded-xl transition-all duration-300 animate-pulse-slow"
           >
             {/* Glow effect */}
