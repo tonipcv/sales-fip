@@ -49,4 +49,18 @@ model QuizLead {
   checked      Boolean  @default(false)
 
   @@map("quiz_leads")
+}
+
+model CallLiberacao {
+  id        String   @id @default(cuid())
+  name      String   @db.VarChar(255)
+  email     String   @db.VarChar(255)
+  os        String   @db.VarChar(10)  // 'android' ou 'iphone'
+  meta      String   @db.VarChar(10)  // '10k', '50k', '100k', '100k+'
+  createdAt DateTime @default(now()) @db.Timestamp(6)
+  checked   Boolean  @default(false)
+
+  @@index([email])
+  @@index([createdAt])
+  @@map("call_liberacao")
 } 
