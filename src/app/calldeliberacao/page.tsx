@@ -26,6 +26,11 @@ function CallDeliberacaoContent() {
       const data = { name, email, os, meta };
       setFormData(data);
       
+      if (os === 'iphone') {
+        router.push('/calldeliberacao/ios');
+        return;
+      }
+
       // Enviar o formulário automaticamente
       fetch('/api/call-liberacao', {
         method: 'POST',
@@ -46,6 +51,12 @@ function CallDeliberacaoContent() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
+    // Se for iPhone, redireciona para página de iOS
+    if (formData.os === 'iphone') {
+      router.push('/calldeliberacao/ios');
+      return;
+    }
+
     try {
       const response = await fetch('/api/call-liberacao', {
         method: 'POST',
