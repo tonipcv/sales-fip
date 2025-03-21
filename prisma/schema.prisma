@@ -63,4 +63,23 @@ model CallLiberacao {
   @@index([email])
   @@index([createdAt])
   @@map("call_liberacao")
+}
+
+model ProtectionFormLead {
+  id        String   @id @default(cuid())
+  name      String   @db.VarChar(255)
+  email     String   @db.VarChar(255)
+  whatsapp  String   @db.VarChar(20)
+  utm_source   String?
+  utm_medium   String?
+  utm_campaign String?
+  utm_content  String?
+  utm_term     String?
+  createdAt DateTime @default(now()) @db.Timestamp(6)
+  checked   Boolean  @default(false)
+
+  @@index([email])
+  @@index([whatsapp])
+  @@index([createdAt])
+  @@map("protection_form_leads")
 } 

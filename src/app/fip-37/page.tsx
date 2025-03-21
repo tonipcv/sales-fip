@@ -14,6 +14,12 @@ export default function Page() {
   const [activeQuestion, setActiveQuestion] = useState<number | null>(null);
   const [selectedMonth, setSelectedMonth] = useState<number>(12);
   const [language, setLanguage] = useState<'pt' | 'en'>('pt');
+  const [showProtectionModal, setShowProtectionModal] = useState(true);
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    whatsapp: ''
+  });
   const t = translations[language];
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
@@ -105,15 +111,152 @@ export default function Page() {
     return () => clearInterval(timer);
   }, []);
 
+  useEffect(() => {
+    // Check if user already filled the form
+    const hasFilledForm = localStorage.getItem('hasFilledForm');
+    if (hasFilledForm) {
+      setShowProtectionModal(false);
+    }
+  }, []);
+
+  const handleFormSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      const response = await fetch('/api/protection-form', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to submit form');
+      }
+
+      // Save to localStorage to prevent showing modal again
+      localStorage.setItem('hasFilledForm', 'true');
+      // Close the modal
+      setShowProtectionModal(false);
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      // You might want to show an error message to the user here
+    }
+  };
+
+  const handleWhatsAppChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let value = e.target.value.replace(/\D/g, '');
+    if (value.length <= 11) {
+      // Format: (00) 00000-0000
+      value = value.replace(/^(\d{2})(\d)/g, '($1) $2');
+      value = value.replace(/(\d)(\d{4})$/, '$1-$2');
+      setFormData({ ...formData, whatsapp: value });
+    }
+  };
+
+  if (showProtectionModal) {
+    return (
+      <div className="fixed inset-0 z-50">
+        {/* Dark background */}
+        <div className="absolute inset-0 bg-black/95" />
+        
+        {/* Content */}
+        <div className="relative h-full flex items-center justify-center p-4">
+          <div className="bg-black border border-neutral-800 rounded-2xl p-8 max-w-md w-full">
+            {/* Logo */}
+            <div className="flex justify-center mb-8">
+              <Image
+                src="/logo.jpg"
+                alt="Futuros Tech"
+                width={120}
+                height={120}
+                className="mx-auto"
+                priority
+              />
+            </div>
+
+            <div className="text-center mb-8">
+              <h2 className="text-xl font-medium bg-gradient-to-r from-neutral-200 to-white bg-clip-text text-transparent mb-2">
+                Infelizmente as vagas foram Encerradas
+              </h2>
+              <p className="text-sm text-neutral-400">
+                Preencha seus dados para caso aja outra disponibilidade
+              </p>
+            </div>
+
+            <form onSubmit={handleFormSubmit} className="space-y-6">
+              <div>
+                <label htmlFor="name" className="block text-sm text-neutral-400 mb-2">
+                  Nome Completo
+                </label>
+                <input
+                  type="text"
+                  id="name"
+                  required
+                  value={formData.name}
+                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                  className="w-full bg-neutral-900 border border-neutral-800 rounded-lg px-4 py-2.5 text-white text-sm focus:outline-none focus:border-neutral-700 transition-colors"
+                  placeholder="Digite seu nome completo"
+                />
+              </div>
+
+              <div>
+                <label htmlFor="email" className="block text-sm text-neutral-400 mb-2">
+                  E-mail
+                </label>
+                <input
+                  type="email"
+                  id="email"
+                  required
+                  value={formData.email}
+                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                  className="w-full bg-neutral-900 border border-neutral-800 rounded-lg px-4 py-2.5 text-white text-sm focus:outline-none focus:border-neutral-700 transition-colors"
+                  placeholder="Digite seu melhor e-mail"
+                />
+              </div>
+
+              <div>
+                <label htmlFor="whatsapp" className="block text-sm text-neutral-400 mb-2">
+                  WhatsApp
+                </label>
+                <input
+                  type="tel"
+                  id="whatsapp"
+                  required
+                  value={formData.whatsapp}
+                  onChange={handleWhatsAppChange}
+                  maxLength={15}
+                  className="w-full bg-neutral-900 border border-neutral-800 rounded-lg px-4 py-2.5 text-white text-sm focus:outline-none focus:border-neutral-700 transition-colors"
+                  placeholder="(00) 00000-0000"
+                />
+              </div>
+
+              <button
+                type="submit"
+                className="w-full bg-gradient-to-r from-neutral-700 to-neutral-600 hover:from-neutral-600 hover:to-neutral-500 text-white rounded-lg px-4 py-3 text-sm font-medium transition-all duration-200"
+              >
+                Entrar na Lista de Espera
+              </button>
+
+              <p className="text-xs text-neutral-500 text-center mt-4">
+                Seus dados estão seguros e não serão compartilhados.
+              </p>
+            </form>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="font-montserrat bg-black text-white min-h-screen relative overflow-hidden">
       {/* VIP Notice and Countdown */}
       <div className="fixed top-0 left-0 right-0 z-50 bg-gradient-to-r from-red-600 via-red-500 to-red-600 border-b border-red-400/30 backdrop-blur-sm">
         <div className="max-w-4xl mx-auto px-4 py-3 text-center">
           <div className="text-white/90 text-sm">
-            <span className="font-mono">Vagas se encerram hoje às 23:59</span>
+            <span className="font-mono">Vagas Encerradas</span>
             <span className="mx-2">•</span>
-            <span className="font-mono font-bold">{timeLeft}</span>
+            <span className="font-mono font-bold">Acesso Indisponível</span>
           </div>
         </div>
       </div>
@@ -136,7 +279,7 @@ export default function Page() {
           {/* Logo Section */}
           <div className="w-full flex justify-center pt-8">
             <Image
-              src="/logo.png"
+              src="/logo.jpg"
               alt="Futuros Tech"
               width={120}
               height={120}
@@ -182,24 +325,24 @@ export default function Page() {
               />
             </div>
             
-            {/* CTA Button - Updated with green pulse effect */}
+            {/* CTA Button - Updated with neutral colors */}
             <div className="flex justify-center mt-8">
               <a
                 href="#planos"
-                className="group relative overflow-hidden px-6 py-2.5 bg-green-500/20 backdrop-blur-sm border border-green-500/30 hover:border-green-400 rounded-md transition-all duration-300 animate-pulse-slow"
+                className="group relative overflow-hidden px-6 py-2.5 bg-neutral-500/20 backdrop-blur-sm border border-neutral-500/30 hover:border-neutral-400 rounded-md transition-all duration-300 animate-pulse-slow"
               >
                 {/* Glow effect */}
-                <div className="absolute inset-0 bg-green-500/20 blur-xl group-hover:bg-green-400/30 transition-colors duration-300" />
+                <div className="absolute inset-0 bg-neutral-500/20 blur-xl group-hover:bg-neutral-400/30 transition-colors duration-300" />
                 
                 {/* Gradient line */}
-                <div className="absolute bottom-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-green-400 to-transparent transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500" />
+                <div className="absolute bottom-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-neutral-400 to-transparent transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500" />
                 
                 {/* Shine effect */}
-                <div className="absolute inset-0 opacity-0 group-hover:opacity-20 bg-gradient-to-r from-transparent via-green-300 to-transparent -translate-x-full group-hover:translate-x-full transition-all duration-700 ease-out" />
+                <div className="absolute inset-0 opacity-0 group-hover:opacity-20 bg-gradient-to-r from-transparent via-neutral-300 to-transparent -translate-x-full group-hover:translate-x-full transition-all duration-700 ease-out" />
                 
                 {/* Button text */}
-                <span className="relative text-xs font-medium tracking-wider uppercase text-green-300 group-hover:text-green-200 transition-colors duration-300">
-                  {language === 'pt' ? 'ADQUIRIR OFERTA!' : 'GET OFFER!'}
+                <span className="relative text-xs font-medium tracking-wider uppercase text-neutral-300 group-hover:text-neutral-200 transition-colors duration-300">
+                  {language === 'pt' ? 'LISTA DE ESPERA' : 'WAITLIST'}
                 </span>
               </a>
             </div>
@@ -346,7 +489,7 @@ export default function Page() {
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
                 <div className="bg-black border border-neutral-800 rounded-lg p-6">
                   <div className="flex items-center gap-2 mb-1">
-                    <PieChart className="h-4 w-4 text-green-400" strokeWidth={1.5} />
+                    <PieChart className="h-4 w-4 text-neutral-400" strokeWidth={1.5} />
                     <span className="text-sm text-neutral-400">Win Rate</span>
                   </div>
                   <div className="flex items-baseline gap-2">
@@ -357,7 +500,7 @@ export default function Page() {
 
                 <div className="bg-black border border-neutral-800 rounded-lg p-6">
                   <div className="flex items-center gap-2 mb-1">
-                    <TrendingUp className="h-4 w-4 text-emerald-400" strokeWidth={1.5} />
+                    <TrendingUp className="h-4 w-4 text-neutral-400" strokeWidth={1.5} />
                     <span className="text-sm text-neutral-400">Resultado Total</span>
                   </div>
                   <div className="text-2xl font-light text-white">
@@ -367,7 +510,7 @@ export default function Page() {
 
                 <div className="bg-black border border-neutral-800 rounded-lg p-6">
                   <div className="flex items-center gap-2 mb-1">
-                    <BarChart className="h-4 w-4 text-green-400" strokeWidth={1.5} />
+                    <BarChart className="h-4 w-4 text-neutral-400" strokeWidth={1.5} />
                     <span className="text-sm text-neutral-400">Total de Entradas</span>
                   </div>
                   <div className="flex items-baseline gap-2">
@@ -403,8 +546,8 @@ export default function Page() {
                   
                   <div className="relative">
                     <div className="w-12 h-12 mb-4 mx-auto relative">
-                      <div className="absolute inset-0 bg-green-500/20 rounded-full blur-md group-hover:bg-green-500/30 transition-colors duration-300" />
-                      <Book className="w-full h-full text-green-400 group-hover:scale-110 transition-transform duration-300" />
+                      <div className="absolute inset-0 bg-neutral-500/20 rounded-full blur-md group-hover:bg-neutral-500/30 transition-colors duration-300" />
+                      <Book className="w-full h-full text-neutral-400 group-hover:scale-110 transition-transform duration-300" />
                     </div>
                     
                     <h3 className="text-lg mb-3 text-center bg-gradient-to-r from-neutral-200 to-white bg-clip-text text-transparent font-medium">
@@ -422,8 +565,8 @@ export default function Page() {
                   
                   <div className="relative">
                     <div className="w-12 h-12 mb-4 mx-auto relative">
-                      <div className="absolute inset-0 bg-green-500/20 rounded-full blur-md group-hover:bg-green-500/30 transition-colors duration-300" />
-                      <BarChart className="w-full h-full text-green-400 group-hover:scale-110 transition-transform duration-300" />
+                      <div className="absolute inset-0 bg-neutral-500/20 rounded-full blur-md group-hover:bg-neutral-500/30 transition-colors duration-300" />
+                      <BarChart className="w-full h-full text-neutral-400 group-hover:scale-110 transition-transform duration-300" />
                     </div>
                     
                     <h3 className="text-lg mb-3 text-center bg-gradient-to-r from-neutral-200 to-white bg-clip-text text-transparent font-medium">
@@ -441,8 +584,8 @@ export default function Page() {
                   
                   <div className="relative">
                     <div className="w-12 h-12 mb-4 mx-auto relative">
-                      <div className="absolute inset-0 bg-green-500/20 rounded-full blur-md group-hover:bg-green-500/30 transition-colors duration-300" />
-                      <Briefcase className="w-full h-full text-green-400 group-hover:scale-110 transition-transform duration-300" />
+                      <div className="absolute inset-0 bg-neutral-500/20 rounded-full blur-md group-hover:bg-neutral-500/30 transition-colors duration-300" />
+                      <Briefcase className="w-full h-full text-neutral-400 group-hover:scale-110 transition-transform duration-300" />
                     </div>
 
                     <h3 className="text-lg mb-3 text-center bg-gradient-to-r from-neutral-200 to-white bg-clip-text text-transparent font-medium">
@@ -512,8 +655,8 @@ export default function Page() {
                       <span className="line-through text-neutral-500 text-base md:text-lg">R$1.500</span>
                       <span className="text-neutral-400 text-sm md:text-base">por</span>
                       <div className="relative">
-                        <span className="text-green-400 text-2xl md:text-4xl font-light">R$0</span>
-                        <div className="absolute -bottom-1 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-green-500/30 to-transparent" />
+                        <span className="text-neutral-400 text-2xl md:text-4xl font-light">R$0</span>
+                        <div className="absolute -bottom-1 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-neutral-500/30 to-transparent" />
                       </div>
                     </div>
                   </div>
@@ -526,8 +669,8 @@ export default function Page() {
                       <span className="line-through text-neutral-500 text-base md:text-lg">R$2.997</span>
                       <span className="text-neutral-400 text-sm md:text-base">por</span>
                       <div className="relative">
-                        <span className="text-green-400 text-2xl md:text-4xl font-light">R$0</span>
-                        <div className="absolute -bottom-1 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-green-500/30 to-transparent" />
+                        <span className="text-neutral-400 text-2xl md:text-4xl font-light">R$0</span>
+                        <div className="absolute -bottom-1 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-neutral-500/30 to-transparent" />
                       </div>
                     </div>
                   </div>
@@ -549,90 +692,90 @@ export default function Page() {
                 {/* Plano Original */}
                 <div className="order-2 md:order-1 border border-neutral-800/50 rounded-2xl p-8 bg-black/30 backdrop-blur-sm">
                   <div className="text-center mb-6">
-                    <h3 className="text-lg font-medium text-white">OFERTA ORIGINAL</h3>
-                    <div className="mt-2 text-xs text-neutral-500">Disponibilidade limitada</div>
+                    <h3 className="text-lg font-medium text-neutral-400">OFERTA ORIGINAL</h3>
+                    <div className="mt-2 text-xs text-neutral-500">Vagas Encerradas</div>
                   </div>
                   
                   <ul className="space-y-4 mb-8">
-                    <li className="flex items-start gap-3 text-sm">
-                      <span className="text-white mt-1">✓</span>
+                    <li className="flex items-start gap-3 text-sm opacity-40">
+                      <span className="text-neutral-400 mt-1">✓</span>
                       <span className="text-white">Formação Completa do Zero ao Avançado <span className="block text-white/80 text-xs mt-1">(Valor Original: R$1.997)</span></span>
                     </li>
-                    <li className="flex items-start gap-3 text-sm">
-                      <span className="text-white mt-1">✓</span>
+                    <li className="flex items-start gap-3 text-sm opacity-40">
+                      <span className="text-neutral-400 mt-1">✓</span>
                       <span className="text-white">Acesso a Plataforma da K17 <span className="block text-white/80 text-xs mt-1">(Valor Original: R$997)</span></span>
                     </li>
                     <li className="flex items-start gap-3 text-sm opacity-40">
-                      <span className="text-white mt-1">✕</span>
+                      <span className="text-neutral-400 mt-1">✕</span>
                       <span className="text-white">1 ano de acesso ao Futuros Tech <span className="block text-white/80 text-xs mt-1">(Valor Original: R$2.997)</span></span>
                     </li>
                     <li className="flex items-start gap-3 text-sm opacity-40">
-                      <span className="text-white mt-1">✕</span>
+                      <span className="text-neutral-400 mt-1">✕</span>
                       <span className="text-white">BlackBook <span className="block text-white/80 text-xs mt-1">(Valor Original: R$897)</span></span>
                     </li>
                     <li className="flex items-start gap-3 text-sm opacity-40">
-                      <span className="text-white mt-1">✕</span>
+                      <span className="text-neutral-400 mt-1">✕</span>
                       <span className="text-white">Bônus Secreto para Caixa Rápido <span className="block text-white/80 text-xs mt-1">(Valor Original: R$4.000)</span></span>
                     </li>
                   </ul>
 
                   <div className="text-center pt-6 border-t border-neutral-800/30">
-                    <div className="text-2xl font-light text-white">R$1.997</div>
+                    <div className="text-2xl font-light text-neutral-400">R$1.997</div>
                     <div className="text-sm text-neutral-500 mt-1">ou 12x de R$197</div>
-                    <div className="text-sm text-neutral-500 mt-6">Em breve...</div>
+                    <div className="text-sm text-neutral-500 mt-6">Indisponível</div>
                   </div>
                 </div>
 
                 {/* Plano Promocional */}
-                <div className="order-1 md:order-2 relative border-2 border-white/20 rounded-2xl p-8 bg-gradient-to-b from-white/[0.03] to-transparent backdrop-blur-sm">
+                <div className="order-1 md:order-2 relative border-2 border-neutral-800 rounded-2xl p-8 bg-gradient-to-b from-white/[0.03] to-transparent backdrop-blur-sm">
                   {/* Tag de Oferta */}
                   <div className="absolute -top-4 left-1/2 -translate-x-1/2">
                     <div className="bg-black/80 backdrop-blur-sm border border-white/20 px-4 py-0.5 rounded-full text-[11px] font-light text-white/90">
-                      Acabando Rápido!
+                      Vagas Encerradas
                     </div>
                   </div>
 
                   {/* Título com mais destaque */}
                   <div className="text-center mt-8 mb-8">
-                    <h3 className="text-2xl font-semibold bg-gradient-to-r from-white via-white to-white/90 bg-clip-text text-transparent">
+                    <h3 className="text-2xl font-semibold bg-gradient-to-r from-neutral-400 via-neutral-300 to-neutral-400 bg-clip-text text-transparent">
                       VALOR REDUZIDO
                     </h3>
-                    <h3 className="text-2xl font-semibold bg-gradient-to-r from-white via-white to-white/90 bg-clip-text text-transparent mt-1">
+                    <h3 className="text-2xl font-semibold bg-gradient-to-r from-neutral-400 via-neutral-300 to-neutral-400 bg-clip-text text-transparent mt-1">
                       + TODOS BÔNUS
                     </h3>
-                    <div className="w-32 h-[2px] bg-gradient-to-r from-transparent via-white to-transparent mx-auto mt-3" />
+                    <div className="w-32 h-[2px] bg-gradient-to-r from-transparent via-neutral-400 to-transparent mx-auto mt-3" />
                     
                     {/* Barra de Progresso */}
                     <div className="mt-6">
                       <div className="flex justify-between text-xs text-neutral-400 mb-2">
                         <span>Vagas Preenchidas</span>
-                        <span>96%</span>
+                        <span>100%</span>
                       </div>
                       <div className="h-2 bg-neutral-800 rounded-full overflow-hidden">
-                        <div className="h-full w-[96%] bg-gradient-to-r from-red-500 to-red-400 rounded-full animate-pulse-slow" />
+                        <div className="h-full w-full bg-gradient-to-r from-neutral-600 to-neutral-500 rounded-full" />
                       </div>
                     </div>
                   </div>
                   
                   <ul className="space-y-4 mb-8">
-                    <li className="flex items-start gap-3 text-sm">
-                      <span className="text-green-400 mt-1">✓</span>
+                    <li className="flex items-start gap-3 text-sm opacity-40">
+                      <span className="text-neutral-400 mt-1">✓</span>
                       <span className="text-white">Formação Completa do Zero ao Avançado <span className="block text-white/80 text-xs mt-1">(Valor Original: R$1.997)</span></span>
                     </li>
-                    <li className="flex items-start gap-3 text-sm">
-                      <span className="text-green-400 mt-1">✓</span>
+                    <li className="flex items-start gap-3 text-sm opacity-40">
+                      <span className="text-neutral-400 mt-1">✓</span>
                       <span className="text-white">Acesso a Plataforma da K17 <span className="block text-white/80 text-xs mt-1">(Valor Original: R$997)</span></span>
                     </li>
-                    <li className="flex items-start gap-3 text-sm">
-                      <span className="text-green-400 mt-1">✓</span>
+                    <li className="flex items-start gap-3 text-sm opacity-40">
+                      <span className="text-neutral-400 mt-1">✓</span>
                       <span className="text-white">1 ano de acesso ao Futuros Tech <span className="block text-white/80 text-xs mt-1">(Valor Original: R$2.997)</span></span>
                     </li>
-                    <li className="flex items-start gap-3 text-sm">
-                      <span className="text-green-400 mt-1">✓</span>
+                    <li className="flex items-start gap-3 text-sm opacity-40">
+                      <span className="text-neutral-400 mt-1">✓</span>
                       <span className="text-white">BlackBook <span className="block text-white/80 text-xs mt-1">(Valor Original: R$897)</span></span>
                     </li>
-                    <li className="flex items-start gap-3 text-sm">
-                      <span className="text-green-400 mt-1">✓</span>
+                    <li className="flex items-start gap-3 text-sm opacity-40">
+                      <span className="text-neutral-400 mt-1">✓</span>
                       <span className="text-white">Bônus Secreto para Caixa Rápido <span className="block text-white/80 text-xs mt-1">(Valor Original: R$4.000)</span></span>
                     </li>
                   </ul>
@@ -640,59 +783,61 @@ export default function Page() {
                   {/* Preços e botão */}
                   <div className="text-center pt-6 border-t border-white/20">
                     <div className="text-neutral-400 line-through text-sm">De: R$2.997</div>
-                    <div className="text-3xl font-light text-green-400 mt-2">12x R$97,04</div>
-                    <div className="text-sm text-neutral-400 mt-1">ou R$997 à vista (10% off)</div>
+                    <div className="text-3xl font-light text-neutral-400">12x R$97,04</div>
+                    <div className="text-sm text-neutral-500 mt-1">ou R$997 à vista (10% off)</div>
                     
                     {/* Botão simplificado */}
                     <div className="mt-8 mb-4 w-full">
                       <a 
-                        href="https://checkout.k17.com.br/pay/fip-promocional"
-                        className="w-full inline-flex justify-center px-8 py-4 bg-green-500 hover:bg-green-600 rounded-xl text-white font-medium transition-colors duration-200"
+                        href="https://chat.whatsapp.com/GBjqpfmRoUt4eZCjc5pQYm"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="w-full inline-flex justify-center px-8 py-4 bg-neutral-800 hover:bg-neutral-700 rounded-xl text-neutral-400 hover:text-neutral-300 font-medium transition-all duration-200"
                       >
                         <span className="text-sm font-medium tracking-wider">
-                          CONFIRMAR INSCRIÇÃO
+                          LISTA DE ESPERA
                         </span>
-                    </a>
-                  </div>
+                      </a>
+                    </div>
 
-                    <p className="text-xs text-white/80">P.s. Todos benefícios inclusos</p>
+                    <p className="text-xs text-neutral-500">P.s. Vagas esgotadas</p>
                   </div>
                 </div>
 
                 {/* Plano Após Vagas */}
                 <div className="order-3 border border-neutral-800/50 rounded-2xl p-8 bg-black/30 backdrop-blur-sm">
                   <div className="text-center mb-6">
-                    <h3 className="text-lg font-medium text-neutral-200">APÓS VAGAS SE ENCERRAR</h3>
-                    <div className="mt-2 text-xs text-neutral-500">Valor normal após promoção</div>
+                    <h3 className="text-lg font-medium text-neutral-400">APÓS VAGAS SE ENCERRAR</h3>
+                    <div className="mt-2 text-xs text-neutral-500">Acesso Indisponível</div>
                   </div>
                   
                   <ul className="space-y-4 mb-8">
-                    <li className="flex items-start gap-3 text-sm">
-                      <span className="text-green-400 mt-1">✓</span>
+                    <li className="flex items-start gap-3 text-sm opacity-40">
+                      <span className="text-neutral-400 mt-1">✓</span>
                       <span className="text-white">Formação Completa do Zero ao Avançado <span className="block text-white/80 text-xs mt-1">(Valor Original: R$1.997)</span></span>
                     </li>
-                    <li className="flex items-start gap-3 text-sm">
-                      <span className="text-green-400 mt-1">✓</span>
+                    <li className="flex items-start gap-3 text-sm opacity-40">
+                      <span className="text-neutral-400 mt-1">✓</span>
                       <span className="text-white">Acesso a Plataforma da K17 <span className="block text-white/80 text-xs mt-1">(Valor Original: R$997)</span></span>
                     </li>
                     <li className="flex items-start gap-3 text-sm opacity-40">
-                      <span className="text-red-400 mt-1">✕</span>
+                      <span className="text-neutral-400 mt-1">✕</span>
                       <span className="text-white">1 ano de acesso ao Futuros Tech <span className="block text-white/80 text-xs mt-1">(Valor Original: R$2.997)</span></span>
                     </li>
                     <li className="flex items-start gap-3 text-sm opacity-40">
-                      <span className="text-red-400 mt-1">✕</span>
+                      <span className="text-neutral-400 mt-1">✕</span>
                       <span className="text-white">BlackBook <span className="block text-white/80 text-xs mt-1">(Valor Original: R$897)</span></span>
                     </li>
                     <li className="flex items-start gap-3 text-sm opacity-40">
-                      <span className="text-red-400 mt-1">✕</span>
+                      <span className="text-neutral-400 mt-1">✕</span>
                       <span className="text-white">Bônus Secreto para Caixa Rápido <span className="block text-white/80 text-xs mt-1">(Valor Original: R$4.000)</span></span>
                     </li>
                   </ul>
 
                   <div className="text-center pt-6 border-t border-neutral-800/30">
-                    <div className="text-2xl font-light text-neutral-300">R$2.997</div>
+                    <div className="text-2xl font-light text-neutral-400">R$2.997</div>
                     <div className="text-sm text-neutral-500 mt-1">ou 12x de R$297</div>
-                    <div className="text-sm text-neutral-500 mt-6">Em breve...</div>
+                    <div className="text-sm text-neutral-500 mt-6">Indisponível</div>
                   </div>
                 </div>
               </div>
