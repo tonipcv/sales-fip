@@ -47,7 +47,7 @@ export default function Page() {
     fbq.event('InitiateCheckout', {
       content_name: plan,
       currency: 'BRL',
-      value: plan === 'annual' ? 297 : 405
+      value: plan === 'annual' ? 297 : 340
     });
   };
 
