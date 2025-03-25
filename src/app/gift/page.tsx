@@ -14,6 +14,18 @@ type QuizQuestion = {
   max?: number;
 };
 
+type FormData = {
+  name: string;
+  email: string;
+  whatsapp: string;
+  gender: string;
+  age: string;
+  market_level: string;
+  net_worth: string;
+  is_premium: boolean;
+  interested: boolean;
+};
+
 const quizQuestions: QuizQuestion[] = [
   {
     id: 'gender',
@@ -81,7 +93,7 @@ const quizQuestions: QuizQuestion[] = [
 export default function GiftPage() {
   const [step, setStep] = useState<QuizStep>('initial');
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<FormData>({
     name: '',
     email: '',
     whatsapp: '',
@@ -130,9 +142,9 @@ export default function GiftPage() {
     const newFormData = { ...formData };
 
     if (question.type === 'radio') {
-      newFormData[question.id as keyof typeof formData] = value === 'true';
+      (newFormData as any)[question.id] = value === 'true';
     } else {
-      newFormData[question.id as keyof typeof formData] = value;
+      (newFormData as any)[question.id] = value;
     }
 
     setFormData(newFormData);
@@ -230,7 +242,7 @@ export default function GiftPage() {
 
   const renderQuiz = () => {
     const question = quizQuestions[currentQuestionIndex];
-    const currentValue = formData[question.id as keyof typeof formData];
+    const currentValue = formData[question.id as keyof FormData];
 
     return (
       <div className="space-y-6">
