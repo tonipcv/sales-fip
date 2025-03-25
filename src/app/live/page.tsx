@@ -69,6 +69,18 @@ function LiveContent() {
               LIBERAÇÃO DE ACESSO EXCLUSIVA PARA QUEM ESTIVER AO VIVO NO DIA 08/02 ÀS 19H
             </p>
             
+            {/* Progress Bar */}
+            <div className="max-w-md mx-auto mb-8">
+              <div className="flex justify-between text-sm mb-2">
+                <span className="text-green-400">Vagas Disponíveis</span>
+                <span className="text-green-400">89%</span>
+              </div>
+              <div className="h-2 bg-neutral-800 rounded-full overflow-hidden">
+                <div className="h-full bg-gradient-to-r from-green-500 to-emerald-500 w-[89%] animate-pulse"></div>
+              </div>
+              <p className="text-red-400 text-sm mt-2 font-medium">Vagas acabando! Garanta sua vaga agora!</p>
+            </div>
+            
             {/* Button with enhanced pulsing effect */}
             <div className="mb-12 relative">
               {/* Pulsing glow effect */}
