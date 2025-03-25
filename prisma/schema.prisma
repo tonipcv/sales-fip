@@ -82,4 +82,30 @@ model ProtectionFormLead {
   @@index([whatsapp])
   @@index([createdAt])
   @@map("protection_form_leads")
+}
+
+model GiftFormLead {
+  id           String   @id @default(cuid())
+  name         String   @db.VarChar(255)
+  email        String   @unique @db.VarChar(255)
+  whatsapp     String   @db.VarChar(20)
+  utm_source   String?
+  utm_medium   String?
+  utm_campaign String?
+  utm_content  String?
+  utm_term     String?
+  // Campos do quiz
+  gender       String?  @db.VarChar(20)
+  age          String?  @db.VarChar(10)  // Mudado para String para aceitar faixas etárias
+  market_level String?  @db.VarChar(50)
+  net_worth    String?  @db.VarChar(50)
+  is_premium   Boolean  @default(false)
+  interested   Boolean  @default(false)
+  createdAt    DateTime @default(now()) @db.Timestamp(6)
+  checked      Boolean  @default(false)
+
+  @@index([email])
+  @@index([whatsapp])
+  @@index([createdAt])
+  @@map("gift_form_leads")
 } 
