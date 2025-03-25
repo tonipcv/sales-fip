@@ -29,7 +29,7 @@ function LiveContent() {
         if (prevCount <= 1) {
           clearInterval(timer);
           // Redirect when countdown reaches 0
-          window.location.href = "https://chat.whatsapp.com/FqrPhw6D9NKFHSgYZ24GSA";
+          window.open("https://chat.whatsapp.com/FqrPhw6D9NKFHSgYZ24GSA", "_blank");
           return 0;
         }
         return prevCount - 1;
@@ -42,7 +42,7 @@ function LiveContent() {
   
   const handleEnterNow = () => {
     // Redirect to the WhatsApp group
-    window.location.href = "https://chat.whatsapp.com/FqrPhw6D9NKFHSgYZ24GSA";
+    window.open("https://chat.whatsapp.com/FqrPhw6D9NKFHSgYZ24GSA", "_blank");
   };
   
   return (
@@ -62,17 +62,18 @@ function LiveContent() {
           </div>
           <div className="text-center mb-8">
             <h1 className="text-[28px] md:text-4xl font-semibold mb-6 bg-gradient-to-b from-gray-300 to-white bg-clip-text text-transparent leading-tight tracking-tight px-2">
-              RECEBA ACESSO AO APP QUE ESTÁ MUDANDO O MERCADO
+              LIBERAÇÃO DE ACESSO EXCLUSIVA - 08/02 ÀS 20H
             </h1>
             
-            <p className="text-xl md:text-xl font-medium bg-gradient-to-b from-green-400 to-green-200 bg-clip-text text-transparent mb-10 px-3 leading-relaxed">
-              LIBERAÇÃO DE ACESSO EXCLUSIVA PARA QUEM ESTIVER AO VIVO NO DIA 08/02 ÀS 19H
+            <p className="text-white mb-8 text-base md:text-base font-medium leading-relaxed">
+              Entre no Grupo Silencioso onde irei só enviar o link:
             </p>
             
             {/* Button with enhanced pulsing effect */}
             <div className="mb-12 relative">
               {/* Pulsing glow effect */}
-              <div className="absolute inset-0 rounded-md bg-gradient-to-r from-green-500/20 to-emerald-500/20 opacity-70 blur-md animate-pulse"></div>
+              <div className="absolute inset-0 rounded-md bg-gradient-to-r from-green-500/30 to-emerald-500/30 opacity-100 blur-lg animate-pulse"></div>
+              <div className="absolute inset-0 rounded-md bg-gradient-to-r from-green-500/20 to-emerald-500/20 opacity-70 blur-md animate-pulse delay-75"></div>
               
               <button 
                 onClick={handleOpenModal}
@@ -90,10 +91,10 @@ function LiveContent() {
                   <div className="max-h-[80vh] overflow-y-auto pb-1">
                     <h3 className="text-2xl md:text-2xl font-semibold text-green-400 mb-5">Atenção:</h3>
                     <p className="text-white mb-6 text-base md:text-base font-medium leading-relaxed">
-                      Esse Aplicativo é a Tecnologia Mais Inovadora do Mercado que Manda Entradas no Mercado de Criptomoedas de Domingo a Domingo com Assertividade de até <span className="text-green-400 font-bold">91%</span>
+                      Esse Aplicativo é a Tecnologia Mais Inovadora do Mercado que Manda Entradas no Mercado de Criptomoedas de Domingo a Domingo com Assertividade de até <span className="text-green-400 font-bold">89%</span>
                     </p>
                     <p className="text-white mb-8 text-base md:text-base font-medium leading-relaxed">
-                      Deixaremos o grupo fechado e deixaremos um <span className="text-green-400 font-bold">presente exclusivo</span> para você antes da abertura, fica ligado na mensagem.
+                      O grupo será silencioso e você receberá apenas o link da reunião e o material do APP.
                     </p>
                     
                     <div className="flex flex-col space-y-4">
