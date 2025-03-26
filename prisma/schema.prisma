@@ -108,4 +108,13 @@ model GiftFormLead {
   @@index([whatsapp])
   @@index([createdAt])
   @@map("gift_form_leads")
+}
+
+model CriptoWhatsappLead {
+  id        String   @id @default(cuid())
+  whatsapp  String   @unique
+  createdAt DateTime @default(now())
+  checked   Boolean  @default(false)
+
+  @@map("cripto_whatsapp_leads")
 } 
