@@ -29,6 +29,31 @@ export default function AdminCallLiberacao() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [showModal, setShowModal] = useState(true);
 
+  const exportToCSV = () => {
+    const headers = ["ID", "Nome", "Email", "OS", "Meta", "Data de Criação", "Status"];
+    const csvContent = [
+      headers.join(","),
+      ...leads.map(lead => [
+        lead.id,
+        lead.name,
+        lead.email,
+        lead.os,
+        lead.meta,
+        new Date(lead.createdAt).toLocaleString("pt-BR"),
+        lead.checked ? "Verificado" : "Pendente"
+      ].join(","))
+    ].join("\n");
+
+    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+    const link = document.createElement("a");
+    const url = URL.createObjectURL(blob);
+    link.setAttribute("href", url);
+    link.setAttribute("download", `call-liberacao-leads-${new Date().toISOString().split("T")[0]}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   const handleAuth = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
@@ -158,16 +183,24 @@ export default function AdminCallLiberacao() {
       <div className="max-w-6xl mx-auto">
         <div className="flex justify-between items-center mb-8">
           <h1 className="text-2xl font-bold">Área Administrativa - Call Liberação</h1>
-          <button
-            onClick={() => {
-              setIsAuthenticated(false);
-              setShowModal(true);
-              setAdminToken("");
-            }}
-            className="px-4 py-2 text-sm text-red-400 border border-red-500/20 rounded-lg hover:bg-red-500/10 transition-colors"
-          >
-            Sair
-          </button>
+          <div className="flex gap-4">
+            <button
+              onClick={exportToCSV}
+              className="px-4 py-2 text-sm text-green-400 border border-green-500/20 rounded-lg hover:bg-green-500/10 transition-colors"
+            >
+              Exportar CSV
+            </button>
+            <button
+              onClick={() => {
+                setIsAuthenticated(false);
+                setShowModal(true);
+                setAdminToken("");
+              }}
+              className="px-4 py-2 text-sm text-red-400 border border-red-500/20 rounded-lg hover:bg-red-500/10 transition-colors"
+            >
+              Sair
+            </button>
+          </div>
         </div>
         
         {loading ? (
