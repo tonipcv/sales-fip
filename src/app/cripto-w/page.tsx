@@ -156,12 +156,12 @@ function LiveContent() {
             
             {/* WhatsApp Modal */}
             {showConfirmation && (
-              <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 px-4 py-6 overflow-y-auto">
-                <div className="bg-black border border-green-500/30 rounded-lg max-w-md w-full p-5 md:p-6 text-left my-auto mx-4 md:mx-auto">
-                  <div className="max-h-[80vh] overflow-y-auto pb-1">
-                    <h3 className="text-xl md:text-xl font-medium text-white-400 mb-5">Qual número você quer colocar no grupo:</h3>
+              <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4">
+                <div className="bg-black border border-green-500/30 rounded-lg w-full max-w-md">
+                  <div className="p-4">
+                    <h3 className="text-base md:text-lg font-medium text-green-400 mb-3">Qual número você quer colocar no grupo:</h3>
                     
-                    <form onSubmit={handleSubmit} className="space-y-4">
+                    <form onSubmit={handleSubmit} className="space-y-3">
                       <div>
                         <input
                           type="tel"
@@ -169,7 +169,7 @@ function LiveContent() {
                           value={whatsapp}
                           onChange={(e) => setWhatsapp(e.target.value)}
                           placeholder="(00) 00000-0000"
-                          className="w-full px-4 py-3 bg-neutral-800 border border-neutral-700 rounded-md text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 text-lg"
+                          className="w-full px-3 py-2.5 bg-neutral-800 border border-neutral-700 rounded-md text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 text-base"
                           required
                         />
                       </div>
@@ -178,11 +178,11 @@ function LiveContent() {
                         <p className="text-red-500 text-sm">{error}</p>
                       )}
                       
-                      <div className="flex flex-col space-y-4">
+                      <div className="flex flex-col space-y-3">
                         <button
                           type="submit"
                           disabled={loading}
-                          className="bg-gradient-to-r from-green-600 to-emerald-500 text-white py-4 px-8 rounded-md font-bold text-lg transition-all hover:from-green-500 hover:to-emerald-400 shadow-lg shadow-green-600/30 hover:shadow-green-500/50 transform hover:scale-105 uppercase tracking-wider disabled:opacity-50 disabled:cursor-not-allowed"
+                          className="w-full bg-gradient-to-r from-green-600 to-emerald-500 text-white py-2.5 px-4 rounded-md font-bold text-base transition-all hover:from-green-500 hover:to-emerald-400 shadow-lg shadow-green-600/30 hover:shadow-green-500/50 transform hover:scale-105 uppercase tracking-wider disabled:opacity-50 disabled:cursor-not-allowed"
                         >
                           {loading ? "Processando..." : "ENVIAR"}
                         </button>
@@ -232,7 +232,7 @@ function LiveContent() {
             {/* Video */}
             <div className="relative pb-[56.25%] h-0 mt-4">
               <iframe
-                src="https://player-vz-7b6cf9e4-8bf.tv.pandavideo.com.br/embed/?v=80d04525-0505-4563-84ab-38c7734b7e43&autoplay=1&loop=1&muted=1"
+                src="https://player-vz-7b6cf9e4-8bf.tv.pandavideo.com.br/embed/?v=5979f31c-e718-4f70-a44e-4003f48abbdb&autoplay=1&loop=1&muted=1"
                 className="absolute top-0 left-0 w-full h-full rounded-xl shadow-lg"
                 allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
