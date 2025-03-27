@@ -20,20 +20,58 @@ interface PaginationData {
   perPage: number;
 }
 
+interface PlatformStats {
+  android: number;
+  ios: number;
+  total: number;
+}
+
 export default function AdminCallLiberacao() {
   const [leads, setLeads] = useState<Lead[]>([]);
+  const [filteredLeads, setFilteredLeads] = useState<Lead[]>([]);
   const [pagination, setPagination] = useState<PaginationData>();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [adminToken, setAdminToken] = useState("");
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [showModal, setShowModal] = useState(true);
+  const [platformStats, setPlatformStats] = useState<PlatformStats>({
+    android: 0,
+    ios: 0,
+    total: 0
+  });
+
+  const filterDuplicatesAndCalculateStats = (leads: Lead[]) => {
+    // Filtrar duplicados mantendo apenas o mais recente
+    const emailMap = new Map<string, Lead>();
+    leads.forEach(lead => {
+      const existingLead = emailMap.get(lead.email);
+      if (!existingLead || new Date(lead.createdAt) > new Date(existingLead.createdAt)) {
+        emailMap.set(lead.email, lead);
+      }
+    });
+    const uniqueLeads = Array.from(emailMap.values());
+
+    // Calcular estatísticas de plataforma
+    const stats = uniqueLeads.reduce((acc, lead) => {
+      acc.total++;
+      if (lead.os.toLowerCase().includes('android')) {
+        acc.android++;
+      } else if (lead.os.toLowerCase().includes('ios') || lead.os.toLowerCase().includes('iphone')) {
+        acc.ios++;
+      }
+      return acc;
+    }, { android: 0, ios: 0, total: 0 });
+
+    setFilteredLeads(uniqueLeads);
+    setPlatformStats(stats);
+  };
 
   const exportToCSV = () => {
     const headers = ["ID", "Nome", "Email", "OS", "Meta", "Data de Criação", "Status"];
     const csvContent = [
       headers.join(","),
-      ...leads.map(lead => [
+      ...filteredLeads.map(lead => [
         lead.id,
         lead.name,
         lead.email,
@@ -73,6 +111,7 @@ export default function AdminCallLiberacao() {
 
       const data = await response.json();
       setLeads(data.leads);
+      filterDuplicatesAndCalculateStats(data.leads);
       setPagination(data.pagination);
       setIsAuthenticated(true);
       setShowModal(false);
@@ -104,6 +143,7 @@ export default function AdminCallLiberacao() {
 
       const data = await response.json();
       setLeads(data.leads);
+      filterDuplicatesAndCalculateStats(data.leads);
       setPagination(data.pagination);
       setError("");
     } catch (err) {
@@ -203,6 +243,32 @@ export default function AdminCallLiberacao() {
           </div>
         </div>
         
+        {/* Stats Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+          <div className="bg-white/5 border border-white/10 rounded-lg p-4">
+            <h3 className="text-sm text-neutral-400 mb-1">Total de Leads</h3>
+            <p className="text-2xl font-bold text-white">{platformStats.total}</p>
+          </div>
+          <div className="bg-white/5 border border-white/10 rounded-lg p-4">
+            <h3 className="text-sm text-neutral-400 mb-1">Android</h3>
+            <p className="text-2xl font-bold text-green-400">{platformStats.android}</p>
+            <p className="text-sm text-neutral-400">
+              {((platformStats.android / platformStats.total) * 100).toFixed(1)}%
+            </p>
+          </div>
+          <div className="bg-white/5 border border-white/10 rounded-lg p-4">
+            <h3 className="text-sm text-neutral-400 mb-1">iOS/iPhone</h3>
+            <p className="text-2xl font-bold text-blue-400">{platformStats.ios}</p>
+            <p className="text-sm text-neutral-400">
+              {((platformStats.ios / platformStats.total) * 100).toFixed(1)}%
+            </p>
+          </div>
+          <div className="bg-white/5 border border-white/10 rounded-lg p-4">
+            <h3 className="text-sm text-neutral-400 mb-1">Duplicados Removidos</h3>
+            <p className="text-2xl font-bold text-red-400">{leads.length - platformStats.total}</p>
+          </div>
+        </div>
+        
         {loading ? (
           <div className="text-center py-8">Carregando...</div>
         ) : error ? (
@@ -222,7 +288,7 @@ export default function AdminCallLiberacao() {
                   </tr>
                 </thead>
                 <tbody>
-                  {leads.map((lead) => (
+                  {filteredLeads.map((lead) => (
                     <tr key={lead.id} className="border-b border-white/10">
                       <td className="p-4">{formatDate(lead.createdAt)}</td>
                       <td className="p-4">{lead.name}</td>
