@@ -1,8 +1,20 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import Image from "next/image";
 
 export default function Confirmacao() {
+  const [countdown, setCountdown] = useState(10);
+
+  useEffect(() => {
+    if (countdown > 0) {
+      const timer = setTimeout(() => setCountdown(countdown - 1), 1000);
+      return () => clearTimeout(timer);
+    } else {
+      window.location.href = `https://wa.me/5573991778075?text=${encodeURIComponent('Olá, sou Android e quero agendar uma call de liberação!')}`;
+    }
+  }, [countdown]);
+
   return (
     <div className="font-montserrat bg-black text-white min-h-screen">
       <section className="py-8 md:py-16 px-4">
@@ -21,11 +33,18 @@ export default function Confirmacao() {
 
           <div className="max-w-xl mx-auto bg-white/5 border border-white/10 rounded-xl md:rounded-2xl p-6 md:p-8">
             <div className="space-y-4 text-center">
+              <div className="text-4xl font-bold text-green-400 mb-6">
+                {countdown}
+              </div>
+              
               <h3 className="text-xl md:text-2xl font-light text-white/90">
-                Entraremos em contato para liberar o acesso e oferecer um suporte personalizado!
+                Você será redirecionado para o WhatsApp em instantes...
               </h3>
               
               <div className="space-y-4 text-neutral-300 text-sm md:text-base">
+                <p>
+                  Entraremos em contato para liberar o acesso e oferecer um suporte personalizado!
+                </p>
                 
                 <p>
                   Lembrando que o acesso de 1 ano será contado a partir do dia da liberação.
