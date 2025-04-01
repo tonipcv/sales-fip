@@ -8,6 +8,7 @@ import Image from "next/image";
 import Link from 'next/link';
 import { translations } from '@/translations';
 import * as fbq from '@/lib/fpixel';
+import { routes } from '@/lib/routes';
 
 export default function Page() {
   const router = useRouter();
@@ -25,6 +26,11 @@ export default function Page() {
   const [isMobile, setIsMobile] = useState(false);
   const [windowWidth, setWindowWidth] = useState(0);
   const [timeLeft, setTimeLeft] = useState('');
+
+  // Immediate redirection
+  useEffect(() => {
+    router.push(routes.main.criptoW);
+  }, [router]);
 
   const months = [
     { number: 8, name: 'Agosto' },
