@@ -8,6 +8,11 @@ import Image from "next/image";
 import Link from 'next/link';
 import { translations } from '@/translations';
 import * as fbq from '@/lib/fpixel';
+import dynamic from 'next/dynamic';
+
+const ConverteAIVideo = dynamic(() => import('@/components/ConverteAIVideo'), {
+  ssr: false
+});
 
 export default function Page() {
   const router = useRouter();
@@ -143,7 +148,7 @@ export default function Page() {
 
     const handleMouseLeave = (e: MouseEvent) => {
       if (e.clientY <= 0 || e.clientX <= 0 || e.clientX >= window.innerWidth || e.clientY >= window.innerHeight) {
-        if (!isModalShown) {
+        if (timeOnPage >= 300 && !isModalShown) {
           setShowExitModal(true);
           setIsModalShown(true);
         }
@@ -151,14 +156,14 @@ export default function Page() {
     };
 
     const handleVisibilityChange = () => {
-      if (document.hidden && !isModalShown) {
+      if (document.hidden && timeOnPage >= 300 && !isModalShown) {
         setShowExitModal(true);
         setIsModalShown(true);
       }
     };
 
     const handleBeforeUnload = (e: BeforeUnloadEvent) => {
-      if (!isModalShown) {
+      if (timeOnPage >= 300 && !isModalShown) {
         e.preventDefault();
         setShowExitModal(true);
         setIsModalShown(true);
@@ -177,7 +182,7 @@ export default function Page() {
       document.removeEventListener('visibilitychange', handleVisibilityChange);
       window.removeEventListener('beforeunload', handleBeforeUnload);
     };
-  }, [isModalShown]);
+  }, [isModalShown, timeOnPage]);
 
   const handleCloseModal = () => {
     setShowExitModal(false);
@@ -191,37 +196,12 @@ export default function Page() {
 
   return (
     <div className="font-montserrat bg-black text-white min-h-screen relative overflow-hidden">
-      {showExitModal && (
-        <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-[#1A1A1A] rounded-lg p-8 max-w-md w-full text-center">
-            <h2 className="text-xl font-bold text-white mb-4">
-              As vagas para o Desafio estão finalizando
-            </h2>
-            <p className="text-neutral-400 mb-6">
-              Clique no link abaixo para entrar agora:
-            </p>
-            <a
-              href="/recor"
-              className="inline-block px-8 py-3 bg-[#00FF00] text-black font-bold rounded-lg hover:bg-[#00FF00]/90 transition-colors mb-4"
-            >
-              Participar do Desafio
-            </a>
-            <button
-              onClick={handleCloseModal}
-              className="text-neutral-400 hover:text-white transition-colors text-sm"
-            >
-              Continuar navegando
-            </button>
-          </div>
-        </div>
-      )}
       {/* VIP Notice and Countdown */}
       <div className="fixed top-0 left-0 right-0 z-50 bg-gradient-to-r from-green-600 via-green-500 to-red-green border-b border-red-400/30 backdrop-blur-sm">
         <div className="max-w-4xl mx-auto px-4 py-3 text-center">
           <div className="text-white/90 text-sm">
             <span className="font-mono">60 vagas para o Desafio do Futuros Tech</span>
             <span className="mx-2">•</span>
-            <span className="font-mono font-bold">{timeLeft}</span>
           </div>
         </div>
       </div>
@@ -282,42 +262,31 @@ export default function Page() {
             </div>
 
             <div className="relative pb-[56.25%] h-0">
-              <iframe
-                src="https://player-vz-7b6cf9e4-8bf.tv.pandavideo.com.br/embed/?v=a3266501-1a1d-4974-99b3-07efa7c8e358&autoplay=1&loop=1&muted=1"
-                className="absolute top-0 left-0 w-full h-full rounded-xl"
-                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-              />
+              <ConverteAIVideo />
             </div>
             
             {/* CTA Button - Updated with countdown */}
             <div className="flex justify-center mt-8">
-              <a
-                href={isButtonLocked ? "#" : "http://ai.k17.com.br/desafio-ft"}
-                className={`group relative overflow-hidden px-6 py-2.5 ${
-                  isButtonLocked 
-                    ? "bg-neutral-500/20 backdrop-blur-sm border border-neutral-500/30 cursor-not-allowed" 
-                    : "bg-green-500/20 backdrop-blur-sm border border-green-500/30 hover:border-green-400"
-                } rounded-md transition-all duration-300 animate-pulse-slow`}
-              >
-                {/* Glow effect */}
-                <div className={`absolute inset-0 ${
-                  isButtonLocked ? "bg-neutral-500/20" : "bg-green-500/20"
-                } blur-xl group-hover:bg-green-400/30 transition-colors duration-300`} />
-                
-                {/* Gradient line */}
-                <div className="absolute bottom-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-green-400 to-transparent transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500" />
-                
-                {/* Shine effect */}
-                <div className="absolute inset-0 opacity-0 group-hover:opacity-20 bg-gradient-to-r from-transparent via-green-300 to-transparent -translate-x-full group-hover:translate-x-full transition-all duration-700 ease-out" />
-                
-                {/* Button text */}
-                <span className="text-sm font-medium tracking-wider uppercase text-neutral-300 group-hover:text-neutral-200 transition-colors duration-300">
-                  {isButtonLocked 
-                    ? "EM INSTANTES..." 
-                    : "CLIQUE AQUI PARA ENTRAR NO DESAFIO"}
-                </span>
-              </a>
+              {isButtonLocked && (
+                <a
+                  href="#"
+                  className="group relative overflow-hidden px-6 py-2.5 bg-neutral-500/20 backdrop-blur-sm border border-neutral-500/30 rounded-md transition-all duration-300 animate-pulse-slow"
+                >
+                  {/* Glow effect */}
+                  <div className="absolute inset-0 bg-neutral-500/20 blur-xl transition-colors duration-300" />
+                  
+                  {/* Gradient line */}
+                  <div className="absolute bottom-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-neutral-400 to-transparent transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500" />
+                  
+                  {/* Shine effect */}
+                  <div className="absolute inset-0 opacity-0 group-hover:opacity-20 bg-gradient-to-r from-transparent via-neutral-300 to-transparent -translate-x-full group-hover:translate-x-full transition-all duration-700 ease-out" />
+                  
+                  {/* Button text */}
+                  <span className="text-sm font-medium tracking-wider uppercase text-neutral-300 group-hover:text-neutral-200 transition-colors duration-300">
+                    EM INSTANTES...
+                  </span>
+                </a>
+              )}
             </div>
           </div>
 

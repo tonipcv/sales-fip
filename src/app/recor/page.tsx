@@ -73,8 +73,19 @@ export default function QuizPage() {
       return e.returnValue = "As vagas para o Desafio estão finalizando, deseja realmente sair?";
     };
 
+    const handleMouseLeave = (e: MouseEvent) => {
+      if (e.clientY <= 0) {
+        setShowExitModal(true);
+      }
+    };
+
     window.addEventListener('beforeunload', handleBeforeUnload);
-    return () => window.removeEventListener('beforeunload', handleBeforeUnload);
+    window.addEventListener('mouseleave', handleMouseLeave);
+
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+      window.removeEventListener('mouseleave', handleMouseLeave);
+    };
   }, []);
 
   useEffect(() => {
@@ -147,6 +158,10 @@ export default function QuizPage() {
 
   const handleSubmit = () => {
     window.location.href = "https://pay.hotmart.com/H95976782G?preview_id=2621&preview_nonce=dc33ccea2a";
+  };
+
+  const handleCloseModal = () => {
+    setShowExitModal(false);
   };
 
   const renderStep = () => {
@@ -414,10 +429,16 @@ export default function QuizPage() {
             </p>
             <a
               href="/recor"
-              className="inline-block px-8 py-3 bg-[#00FF00] text-black font-bold rounded-lg hover:bg-[#00FF00]/90 transition-colors"
+              className="inline-block px-8 py-3 bg-[#00FF00] text-black font-bold rounded-lg hover:bg-[#00FF00]/90 transition-colors mb-4"
             >
               Participar do Desafio
             </a>
+            <button
+              onClick={handleCloseModal}
+              className="text-neutral-400 hover:text-white transition-colors text-sm"
+            >
+              Continuar navegando
+            </button>
           </div>
         </div>
       )}
@@ -462,6 +483,29 @@ export default function QuizPage() {
           <div className="text-center mt-2 text-neutral-400 text-sm">
             {currentStep + 1} de {steps.length} passos
           </div>
+        </div>
+      </div>
+
+      {/* Fixed Buttons Container */}
+      <div className="fixed bottom-0 left-0 right-0 bg-[#0A0A0A] border-t border-neutral-800 p-4 md:hidden">
+        <div className="max-w-4xl mx-auto">
+          {currentStep > 0 && (
+            <button
+              onClick={handleBack}
+              className="w-full mb-4 flex items-center justify-center text-neutral-400 hover:text-white transition-colors"
+            >
+              <ChevronLeft className="w-5 h-5 mr-2" />
+              Voltar
+            </button>
+          )}
+          {currentStep < steps.length - 1 && (
+            <button
+              onClick={handleContinue}
+              className="w-full px-8 py-3 bg-[#00FF00] text-black font-bold rounded-lg hover:bg-[#00FF00]/90 transition-colors"
+            >
+              Continuar
+            </button>
+          )}
         </div>
       </div>
     </div>
