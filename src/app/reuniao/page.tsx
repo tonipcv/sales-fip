@@ -180,11 +180,6 @@ export default function Page() {
     return `${mins}:${secs.toString().padStart(2, '0')}`;
   };
 
-  // Immediate redirect to Zoom meeting
-  useEffect(() => {
-    window.location.href = "https://us05web.zoom.us/j/88416881037?pwd=xDzdqoH2Dkd8XBoueV0JHox3Th9C6B.1";
-  }, []);
-
   return (
     <div className="font-montserrat bg-black text-white min-h-screen relative overflow-hidden">
       {/* Add padding to account for fixed header */}
