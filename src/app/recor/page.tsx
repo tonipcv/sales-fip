@@ -133,8 +133,47 @@ export default function QuizPage() {
     setCurrentStep(currentStep + 1);
   };
 
-  const handleSubmit = () => {
-    window.location.href = "https://pay.hotmart.com/H95976782G?preview_id=2621&preview_nonce=dc33ccea2a";
+  const handleSubmit = async () => {
+    if (!formData.name || !formData.email || !formData.phone || !acceptedTerms) {
+      return;
+    }
+    
+    try {
+      // Salvar os dados no banco de dados antes de redirecionar
+      const response = await fetch('/api/form-submit', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          acceptedTerms: acceptedTerms
+        }),
+      });
+      
+      const result = await response.json();
+      
+      if (result.success) {
+        // Armazenar o ID da submissão no localStorage como prova adicional
+        localStorage.setItem('submission_id', result.data.id);
+        localStorage.setItem('terms_accepted_at', result.data.termsAcceptedAt);
+        
+        // Redirecionar para a página de pagamento
+        const { name, email, phone } = formData;
+        const ddd = phone.substring(0, 2);
+        const phoneNumber = phone.substring(2);
+        window.location.href = `https://pay.hotmart.com/H95976782G?preview_id=2621&preview_nonce=dc33ccea2a&name=${encodeURIComponent(name)}&email=${encodeURIComponent(email)}&phoneac=${encodeURIComponent(ddd)}&phonenumber=${encodeURIComponent(phoneNumber)}`;
+      } else {
+        // Tratar erro
+        console.error('Erro ao salvar dados:', result.error);
+        alert('Ocorreu um erro ao processar seu cadastro. Por favor, tente novamente.');
+      }
+    } catch (error) {
+      console.error('Erro na solicitação:', error);
+      alert('Ocorreu um erro ao processar seu cadastro. Por favor, tente novamente.');
+    }
   };
 
   const renderStep = () => {
@@ -320,6 +359,7 @@ export default function QuizPage() {
                 onChange={handleInputChange}
                 placeholder="Nome completo"
                 className="w-full px-4 py-3 bg-[#1A1A1A] text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-[#00FF00]"
+                required
               />
               <input
                 type="email"
@@ -328,6 +368,7 @@ export default function QuizPage() {
                 onChange={handleInputChange}
                 placeholder="E-mail"
                 className="w-full px-4 py-3 bg-[#1A1A1A] text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-[#00FF00]"
+                required
               />
               <input
                 type="tel"
@@ -336,15 +377,18 @@ export default function QuizPage() {
                 onChange={handleInputChange}
                 placeholder="DDD + Telefone (apenas números)"
                 className="w-full px-4 py-3 bg-[#1A1A1A] text-white rounded-lg focus:outline-none"
+                required
               />
-              <div className="flex items-center justify-center gap-2 text-neutral-400 text-sm">
+              <div className="flex items-start justify-center gap-2 text-neutral-400 text-sm">
                 <input
                   type="checkbox"
+                  id="terms-checkbox"
                   checked={acceptedTerms}
                   onChange={(e) => setAcceptedTerms(e.target.checked)}
-                  className="w-4 h-4 rounded border-neutral-700 bg-[#1A1A1A] text-[#00FF00] focus:ring-0"
+                  className="w-4 h-4 mt-1 rounded border-neutral-700 bg-[#1A1A1A] text-[#00FF00] focus:ring-0"
+                  required
                 />
-                <span>
+                <label htmlFor="terms-checkbox" className="text-left">
                   Li e aceito os{" "}
                   <a 
                     href="/termos" 
@@ -354,10 +398,11 @@ export default function QuizPage() {
                   >
                     termos de uso
                   </a>
-                </span>
+                  . Compreendo que meus dados serão armazenados de acordo com a política de privacidade.
+                </label>
               </div>
               <button
-                onClick={handleContinue}
+                onClick={handleSubmit}
                 disabled={!formData.name || !formData.email || !formData.phone || !acceptedTerms}
                 className={`w-full px-12 py-4 bg-[#00FF00] text-black font-bold rounded-lg transition-colors text-lg ${
                   !formData.name || !formData.email || !formData.phone || !acceptedTerms
@@ -379,12 +424,7 @@ export default function QuizPage() {
             </h1>
             <p className="text-lg text-neutral-400 mb-4">Clique no botão abaixo para continuar:</p>
             <button
-              onClick={() => {
-                const { name, email, phone } = formData;
-                const ddd = phone.substring(0, 2);
-                const phoneNumber = phone.substring(2);
-                window.location.href = `https://pay.hotmart.com/H95976782G?preview_id=2621&preview_nonce=dc33ccea2a&name=${encodeURIComponent(name)}&email=${encodeURIComponent(email)}&phoneac=${encodeURIComponent(ddd)}&phonenumber=${encodeURIComponent(phoneNumber)}`;
-              }}
+              onClick={handleSubmit}
               className="px-12 py-4 bg-[#00FF00] text-black font-bold rounded-lg hover:bg-[#00FF00]/90 transition-colors text-lg"
             >
               Continuar para o Pagamento

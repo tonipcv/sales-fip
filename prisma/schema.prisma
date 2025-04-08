@@ -117,4 +117,27 @@ model CriptoWhatsappLead {
   checked   Boolean  @default(false)
 
   @@map("cripto_whatsapp_leads")
+}
+
+model UserSubmission {
+  id             String   @id @default(cuid())
+  name           String   @db.VarChar(255)
+  email          String   @db.VarChar(255)
+  phone          String   @db.VarChar(20)
+  acceptedTerms  Boolean  @default(true)
+  termsAcceptedAt DateTime @default(now())
+  ipAddress      String   @db.VarChar(50)
+  userAgent      String   @db.Text
+  utm_source     String?
+  utm_medium     String?
+  utm_campaign   String?
+  utm_content    String?
+  utm_term       String?
+  createdAt      DateTime @default(now())
+  checked        Boolean  @default(false)
+
+  @@index([email])
+  @@index([phone])
+  @@index([createdAt])
+  @@map("user_submissions")
 } 
