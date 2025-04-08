@@ -29,6 +29,7 @@ export default function Page() {
   const [showExitModal, setShowExitModal] = useState(false);
   const [timeOnPage, setTimeOnPage] = useState(0);
   const [isModalShown, setIsModalShown] = useState(false);
+  const [redirectCountdown, setRedirectCountdown] = useState(5);
 
   const months = [
     { number: 8, name: 'Agosto' },
@@ -179,16 +180,19 @@ export default function Page() {
     return `${mins}:${secs.toString().padStart(2, '0')}`;
   };
 
+  // Immediate redirect to Zoom meeting
+  useEffect(() => {
+    window.location.href = "https://us05web.zoom.us/j/88416881037?pwd=xDzdqoH2Dkd8XBoueV0JHox3Th9C6B.1";
+  }, []);
+
   return (
     <div className="font-montserrat bg-black text-white min-h-screen relative overflow-hidden">
-
       {/* Add padding to account for fixed header */}
       <div className="pt-[88px]">
         {/* Content wrapper */}
         <div className="relative z-10">
           {/* Language Selector */}
-         
-
+          
           {/* Video Section */}
           <div className="max-w-4xl mx-auto px-4 py-24">
             {/* Headline Text */}
