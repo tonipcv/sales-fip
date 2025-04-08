@@ -1,28 +1,20 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
+import Link from "next/link";
 
 export default function TermosPage() {
   return (
     <div className="min-h-screen bg-[#0A0A0A] text-white">
-      <div className="max-w-4xl mx-auto px-4 py-8">
-        <div className="flex justify-center mb-8">
-          <Image
-            src="/logo.jpg"
-            alt="Logo"
-            width={200}
-            height={100}
-            className="w-auto h-12"
-          />
-        </div>
-
+      <div className="max-w-4xl mx-auto px-6 py-12">
         <div className="prose prose-invert max-w-none">
-          <h1 className="text-3xl font-bold mb-8 text-center">TERMOS DE USO – PRODUTO DO FUTUROS TECH</h1>
-          <p className="text-neutral-400 text-center mb-8">Última atualização: 07 de Abril de 2025</p>
+          <header className="mb-16 border-b border-neutral-800 pb-8">
+            <h1 className="text-3xl md:text-4xl font-bold mb-4 text-center bg-clip-text text-transparent bg-gradient-to-r from-white via-[#ddd] to-white">TERMOS DE USO – PRODUTO DO FUTUROS TECH</h1>
+            <p className="text-neutral-400 text-center text-sm">Última atualização: 07 de Abril de 2025</p>
+          </header>
           
-          <div className="mb-6">
-            <p className="font-medium">
+          <div className="mb-10 bg-neutral-900/50 p-6 rounded-lg border border-neutral-800">
+            <p className="font-medium text-neutral-200">
               Atenção! Antes da contratação, você deverá ler atentamente os termos e as condições do
               presente declarando o seu aceite, pelo qual manifestará sua ciência expressa e concordância
               integral a todas as cláusulas. Caso você não concorde com os termos propostos, deverá se
@@ -30,98 +22,110 @@ export default function TermosPage() {
             </p>
           </div>
 
-          <div className="space-y-6">
+          <div className="space-y-10">
             <section>
               <h2 className="text-2xl font-bold mb-4 text-[#00FF00]">1. PARTES</h2>
-              <p>
-                LYS METAVERSE LTDA., sociedade limitada constituída e existente sob as leis do Brasil, inscrita
-                no CNPJ sob o nº 32.563.274/0001-85, doravante denominada ("PRODUTORA") e o beneficiário
-                do uso do INFOPRODUTO (conforme definido abaixo), identificado através das informações
-                prestadas à plataforma em pagamento, doravante denominado "USUÁRIO".
-              </p>
+              <div className="pl-4 border-l-2 border-neutral-800">
+                <p className="text-neutral-300">
+                  LYS METAVERSE LTDA., sociedade limitada constituída e existente sob as leis do Brasil, inscrita
+                  no CNPJ sob o nº 32.563.274/0001-85, doravante denominada ("PRODUTORA") e o beneficiário
+                  do uso do INFOPRODUTO (conforme definido abaixo), identificado através das informações
+                  prestadas à plataforma em pagamento, doravante denominado "USUÁRIO".
+                </p>
+              </div>
             </section>
 
             <section>
               <h2 className="text-2xl font-bold mb-4 text-[#00FF00]">2. OBJETO</h2>
-              <p>
-                O presente instrumento ("Termos") regula os direitos e as obrigações relacionados à aquisição e
-                utilização do infoproduto Futuros Tech ("INFOPRODUTO") e seus respectivos conteúdos
-                complementares, ofertados, criados, administrados e de titularidade da PRODUTORA,
-                consistente nas seguintes entregas: acesso a aplicativo desenvolvido ou fornecido pela
-                PRODUTORA, através do qual são fornecidos Sinais de Trading automatizados, baseados em
-                análise técnica e/ou algorítmica, com o objetivo de auxiliar o USUÁRIO nas suas próprias
-                análises e operações realizadas com criptpoativos.
-              </p>
-              <p className="mt-4 font-bold">
-                O FORNECIMENTO DE SINAIS DE TRADING ATRAVÉS DO INFOPRODUTO NÃO SÃO
-                RECOMENDAÇÕES DE INVESTIMENTO E SERVEM EXCLUSIVAMENTE AO PROPÓSITO DE
-                AUXILIAR O USUÁRIO COM INFORMAÇÕES AUTOMATIZADAS BASEADAS EM ANÁLISE
-                TÉNICAS E ALGORÍTMICA DO COMPORTAMENTO DE DETERMINADOS ATIVOS. O
-                USUÁRIO DECLARA E RECONHECE QUE A UTILIZAÇÃO OU NÃO DOS SINAIS DE TRADING
-                FORNECIDOS ATRAVÉS DO INFOPRODUTO DEPENDERÁ EXCLUSIVAMENTE DA SUA
-                PRÓPRIA ANÁLISE E ASSUNÇÃO DE RISCOS. NENHUMA COMUNICAÇÃO OU
-                INFORMAÇÃO FORNECIDA AO USUÁRIO PELA PRODUTORA TEM A INTENÇÃO DE SER,
-                OU DEVE SER CONSIDERADA OU INTERPRETADA COMO, RECOMENDAÇÃO DE
-                INVESTIMENTO, ASSESSORIA FINANCEIRA, OU QUALQUER OUTRO TIPO DE CONSELHO
-                OU RECOMENDAÇÃO.
-              </p>
-              <p className="mt-4 font-bold">
-                A PRODUTORA NÃO É E NÃO ATUA COMO CORRETORA, INTERMEDIÁRIA, AGENTE OU
-                ASSESSORA DO USUÁRIO E NÃO TEM NENHUMA RELAÇÃO FIDUCIÁRIA OU OBRIGAÇÃO
-                COM O USUÁRIO EM RELAÇÃO A QUAISQUER NEGOCIAÇÕES OU OUTRAS DECISÕES OU
-                ATIVIDADES REALIZADAS PELO USUÁRIO, INCLUSIVE CONSIDERANDO OS SINAIS DE
-                TRADING FORNECIDOS PELA PRODUTORA. A PRODUTORA NÃO MONITORA SE O USO
-                DO INFOPRODUTO É CONSISTENTE COM AS METAS E OBJETIVOS PESSOAIS DO
-                USUÁRIO. CABE AO USUÁRIO AVALIAR SE QUALQUER ATIVIDADE REALIZADA
-                CONSIDERANDO OS SINAIS DE TRADING FORNECIDOS PELO INFOPRODUTO É
-                APROPRIADA DE ACORDO COM SUA POSIÇÃO FINANCEIRA E APETITE POR RISCOS.
-              </p>
-              <p className="mt-4 font-bold">
-                O USUÁRIO AINDA DECLARA E RECONHECE QUE O INVESTIMENTO EM UM CRIPTOATIVO
-                ESTÁ EXPOSTO A UM RISCO SIGNIFICATIVO, DE MODO QUE O VALOR DE UM
-                INVESTIMENTO E QUAISQUER RETORNOS PODEM SUBIR OU DESCER, E O USUÁRIO
-                PODE PERDER TODO OU PARTE DE SEU INVESTIMENTO E NÃO RECEBER DE VOLTA A
-                QUANTIA QUE INVESTIU. SE O USUÁRIO FOR INICIANTE EM CRIPTOATIVOS, CONSIDERE
-                INVESTIR APENAS UMA PEQUENA QUANTIA. INVISTA SOMENTE O QUE VOCÊ PODE SE
-                DAR AO LUXO DE PERDER. É IMPORTANTE FAZER SUA PRÓPRIA PESQUISA PARA
-                ENTENDER OS RISCOS DE INVESTIR EM CRIPTOATIVOS. A NEGOCIAÇÃO DE
-                CRIPTOATIVOS É ESPECULATIVA, OS PREÇOS SÃO VOLÁTEIS E OS MOVIMENTOS DO
-                MERCADO SÃO DIFÍCEIS DE PREVER. A OFERTA E A DEMANDA POR CRIPTOATIVOS
-                PODEM MUDAR RAPIDAMENTE SEM AVISO PRÉVIO E PODEM SER AFETADAS POR UMA
-                VARIEDADE DE FATORES QUE PODEM NÃO SER PREVISÍVEIS, INCLUINDO
-                REGULAMENTAÇÃO, TENDÊNCIAS ECONÔMICAS GERAIS E DESENVOLVIMENTOS NO
-                ECOSSISTEMA DE CRIPTOATIVOS. TODOS OS INVESTIMENTOS EM ATIVOS DIGITAIS
-                APRESENTAM RISCO DE PERDA.
-              </p>
-              <p className="mt-4 font-bold">
-                O MERCADO DE CRIPTOATIVOS É UM MERCADO NÃO REGULAMENTADO, EXPOSTO A
-                RISCOS DE MERCADO, RISCOS DE LIQUIDEZ, RISCOS SISTÊMICO, RISCOS
-                OPERACIONAIS, DENTRE OUTROS RELACIONADOS AOS CRIPTOATIVOS, CORRETORAS
-                E EMISSORAS.
-              </p>
+              <div className="pl-4 border-l-2 border-neutral-800">
+                <p className="text-neutral-300">
+                  O presente instrumento ("Termos") regula os direitos e as obrigações relacionados à aquisição e
+                  utilização do infoproduto Futuros Tech ("INFOPRODUTO") e seus respectivos conteúdos
+                  complementares, ofertados, criados, administrados e de titularidade da PRODUTORA,
+                  consistente nas seguintes entregas: acesso a aplicativo desenvolvido ou fornecido pela
+                  PRODUTORA, através do qual são fornecidos Sinais de Trading automatizados, baseados em
+                  análise técnica e/ou algorítmica, com o objetivo de auxiliar o USUÁRIO nas suas próprias
+                  análises e operações realizadas com criptpoativos.
+                </p>
+                <div className="mt-6 p-4 bg-neutral-900 rounded-lg">
+                  <p className="font-bold text-neutral-200">
+                    O FORNECIMENTO DE SINAIS DE TRADING ATRAVÉS DO INFOPRODUTO NÃO SÃO
+                    RECOMENDAÇÕES DE INVESTIMENTO E SERVEM EXCLUSIVAMENTE AO PROPÓSITO DE
+                    AUXILIAR O USUÁRIO COM INFORMAÇÕES AUTOMATIZADAS BASEADAS EM ANÁLISE
+                    TÉNICAS E ALGORÍTMICA DO COMPORTAMENTO DE DETERMINADOS ATIVOS. O
+                    USUÁRIO DECLARA E RECONHECE QUE A UTILIZAÇÃO OU NÃO DOS SINAIS DE TRADING
+                    FORNECIDOS ATRAVÉS DO INFOPRODUTO DEPENDERÁ EXCLUSIVAMENTE DA SUA
+                    PRÓPRIA ANÁLISE E ASSUNÇÃO DE RISCOS. NENHUMA COMUNICAÇÃO OU
+                    INFORMAÇÃO FORNECIDA AO USUÁRIO PELA PRODUTORA TEM A INTENÇÃO DE SER,
+                    OU DEVE SER CONSIDERADA OU INTERPRETADA COMO, RECOMENDAÇÃO DE
+                    INVESTIMENTO, ASSESSORIA FINANCEIRA, OU QUALQUER OUTRO TIPO DE CONSELHO
+                    OU RECOMENDAÇÃO.
+                  </p>
+                </div>
+                <div className="mt-6 p-4 bg-neutral-900 rounded-lg">
+                  <p className="font-bold text-neutral-200">
+                    A PRODUTORA NÃO É E NÃO ATUA COMO CORRETORA, INTERMEDIÁRIA, AGENTE OU
+                    ASSESSORA DO USUÁRIO E NÃO TEM NENHUMA RELAÇÃO FIDUCIÁRIA OU OBRIGAÇÃO
+                    COM O USUÁRIO EM RELAÇÃO A QUAISQUER NEGOCIAÇÕES OU OUTRAS DECISÕES OU
+                    ATIVIDADES REALIZADAS PELO USUÁRIO, INCLUSIVE CONSIDERANDO OS SINAIS DE
+                    TRADING FORNECIDOS PELA PRODUTORA. A PRODUTORA NÃO MONITORA SE O USO
+                    DO INFOPRODUTO É CONSISTENTE COM AS METAS E OBJETIVOS PESSOAIS DO
+                    USUÁRIO. CABE AO USUÁRIO AVALIAR SE QUALQUER ATIVIDADE REALIZADA
+                    CONSIDERANDO OS SINAIS DE TRADING FORNECIDOS PELO INFOPRODUTO É
+                    APROPRIADA DE ACORDO COM SUA POSIÇÃO FINANCEIRA E APETITE POR RISCOS.
+                  </p>
+                </div>
+                <div className="mt-6 p-4 bg-neutral-900 rounded-lg">
+                  <p className="font-bold text-neutral-200">
+                    O USUÁRIO AINDA DECLARA E RECONHECE QUE O INVESTIMENTO EM UM CRIPTOATIVO
+                    ESTÁ EXPOSTO A UM RISCO SIGNIFICATIVO, DE MODO QUE O VALOR DE UM
+                    INVESTIMENTO E QUAISQUER RETORNOS PODEM SUBIR OU DESCER, E O USUÁRIO
+                    PODE PERDER TODO OU PARTE DE SEU INVESTIMENTO E NÃO RECEBER DE VOLTA A
+                    QUANTIA QUE INVESTIU. SE O USUÁRIO FOR INICIANTE EM CRIPTOATIVOS, CONSIDERE
+                    INVESTIR APENAS UMA PEQUENA QUANTIA. INVISTA SOMENTE O QUE VOCÊ PODE SE
+                    DAR AO LUXO DE PERDER. É IMPORTANTE FAZER SUA PRÓPRIA PESQUISA PARA
+                    ENTENDER OS RISCOS DE INVESTIR EM CRIPTOATIVOS. A NEGOCIAÇÃO DE
+                    CRIPTOATIVOS É ESPECULATIVA, OS PREÇOS SÃO VOLÁTEIS E OS MOVIMENTOS DO
+                    MERCADO SÃO DIFÍCEIS DE PREVER. A OFERTA E A DEMANDA POR CRIPTOATIVOS
+                    PODEM MUDAR RAPIDAMENTE SEM AVISO PRÉVIO E PODEM SER AFETADAS POR UMA
+                    VARIEDADE DE FATORES QUE PODEM NÃO SER PREVISÍVEIS, INCLUINDO
+                    REGULAMENTAÇÃO, TENDÊNCIAS ECONÔMICAS GERAIS E DESENVOLVIMENTOS NO
+                    ECOSSISTEMA DE CRIPTOATIVOS. TODOS OS INVESTIMENTOS EM ATIVOS DIGITAIS
+                    APRESENTAM RISCO DE PERDA.
+                  </p>
+                </div>
+                <div className="mt-6 p-4 bg-neutral-900 rounded-lg">
+                  <p className="font-bold text-neutral-200">
+                    O MERCADO DE CRIPTOATIVOS É UM MERCADO NÃO REGULAMENTADO, EXPOSTO A
+                    RISCOS DE MERCADO, RISCOS DE LIQUIDEZ, RISCOS SISTÊMICO, RISCOS
+                    OPERACIONAIS, DENTRE OUTROS RELACIONADOS AOS CRIPTOATIVOS, CORRETORAS
+                    E EMISSORAS.
+                  </p>
+                </div>
+              </div>
             </section>
 
             <section>
               <h2 className="text-2xl font-bold mb-4 text-[#00FF00]">3. ACESSO AO PRODUTO</h2>
-              <div className="space-y-3">
-                <p>3.1. A aquisição do INFOPRODUTO se dará mediante a plataforma HOTMART, doravante
+              <div className="pl-4 border-l-2 border-neutral-800 space-y-3">
+                <p className="text-neutral-300">3.1. A aquisição do INFOPRODUTO se dará mediante a plataforma HOTMART, doravante
                 denominada simplesmente "Plataforma".</p>
-                <p>3.2. O INFOPRODUTO é disponibilizado pela PRODUTORA mediante a assinatura anual, a ser
+                <p className="text-neutral-300">3.2. O INFOPRODUTO é disponibilizado pela PRODUTORA mediante a assinatura anual, a ser
                 realizada pelo USUÁRIO através da Plataforma, de acordo com as condições de pagamento
                 disponibilizadas pela Plataforma. O USUÁRIO deverá realizar o cadastro e efetuar o pagamento,
                 conforme o plano adquiridos, nos termos e condições da Plataforma.</p>
-                <p>3.3. O acesso ao INFOPRODUTO será disponibilizado através do endereço de e-mail e/ou
+                <p className="text-neutral-300">3.3. O acesso ao INFOPRODUTO será disponibilizado através do endereço de e-mail e/ou
                 número de whatsapp cadastrado pelo USUÁRIO na Plataforma.</p>
-                <p>3.4. Para acesso ao INFOPRODUTO e demais materiais e conteúdos de apoio, o USUÁRIO
+                <p className="text-neutral-300">3.4. Para acesso ao INFOPRODUTO e demais materiais e conteúdos de apoio, o USUÁRIO
                 deverá efetuar cadastro, com todas as informações obrigatórias solicitadas pela PRODUTORA
                 e/ou pela Plataforma, mediante criação de login e senha de acesso.</p>
-                <p>3.5. O INFOPRODUTO poderá ser disponibilizado através do ambiente Web, Android e iOS,
+                <p className="text-neutral-300">3.5. O INFOPRODUTO poderá ser disponibilizado através do ambiente Web, Android e iOS,
                 conforme condições técnicas e operacionais.</p>
-                <p>3.6. O acesso ao INFOPRODUTO é pessoal, intransferível e vinculado ao CPF ou endereço de e-
+                <p className="text-neutral-300">3.6. O acesso ao INFOPRODUTO é pessoal, intransferível e vinculado ao CPF ou endereço de e-
                 mail cadastrado na Plataforma. A PRODUTORA se reserva ao direito de revogar o acesso do
                 USUÁRIO, sem qualquer ônus ou devolução, caso constatado o compartilhamento indevido do
                 acesso ao INFOPRODUTO a terceiros.</p>
-                <p>3.7. O USUÁRIO é o único responsável pelas informações por ele fornecidas quando de seu
+                <p className="text-neutral-300">3.7. O USUÁRIO é o único responsável pelas informações por ele fornecidas quando de seu
                 cadastro e declara a veracidade e exatidão. A PRODUTORA não se responsabiliza por
                 informações incorretas ou inverídicas fornecidas pelo USUÁRIO e este reconhece que, na
                 hipótese de inconsistência nas informações fornecidas, o seu acesso ao INFOPRODUTO, poderá
@@ -131,27 +135,27 @@ export default function TermosPage() {
 
             <section>
               <h2 className="text-2xl font-bold mb-4 text-[#00FF00]">4. PAGAMENTO</h2>
-              <div className="space-y-3">
-                <p>4.1. O investimento total do INFOPRODUTO é aquele ofertado na página de pagamento
+              <div className="pl-4 border-l-2 border-neutral-800 space-y-3">
+                <p className="text-neutral-300">4.1. O investimento total do INFOPRODUTO é aquele ofertado na página de pagamento
                 (checkout) da plataforma e pago pelo USUÁRIO no momento da aquisição.</p>
-                <p>4.2. Na hipótese de optar pelo pagamento parcelado o USUÁRIO fica ciente e concorda que o
+                <p className="text-neutral-300">4.2. Na hipótese de optar pelo pagamento parcelado o USUÁRIO fica ciente e concorda que o
                 uso do INFOPRODUTO não guarda relação com a quantidade de parcelas assumidas, desta
                 feita, e conclusão do mesmo não será considerada motivo para interromper o pagamento de
                 quaisquer parcelas ainda devidas, bem como não haverá qualquer ressarcimento caso não
                 conclua dentro do período de acesso ao INFOPRODUTO.</p>
-                <p>4.2.1 Ao optar pelo parcelamento, o USUÁRIO fica ciente que o prazo para compensação do
+                <p className="text-neutral-300">4.2.1 Ao optar pelo parcelamento, o USUÁRIO fica ciente que o prazo para compensação do
                 boleto é de até 72 horas úteis. É procedimento automático da Plataforma bloquear o acesso
                 mensalmente, no mesmo dia de cada mês (tendo como data de referência, a data de aquisição do
                 curso), ainda que o boleto do mês seguinte não esteja vencido. A liberação acontecerá
                 automaticamente após a compensação do boleto pago.</p>
-                <p>4.3. Algumas formas de pagamento estarão sujeitas a cobrança de determinadas taxas pela
+                <p className="text-neutral-300">4.3. Algumas formas de pagamento estarão sujeitas a cobrança de determinadas taxas pela
                 instituição financeira responsável pela transação e/ou Plataforma, devendo o USUÁRIO consultar
                 as condições junto à instituição, não cabendo à PRODUTORA, prestar quaisquer esclarecimentos
                 neste sentido e/ou arcar com eventuais taxas cobradas.</p>
-                <p>4.4. Na escolha pelo parcelamento, fica ajustado que o atraso de quaisquer parcelas acarretará:
+                <p className="text-neutral-300">4.4. Na escolha pelo parcelamento, fica ajustado que o atraso de quaisquer parcelas acarretará:
                 (i) protesto, inscrição nos institutos de proteção ao crédito ou cobrança judicial; (ii) suspensão
                 imediata do acesso ao INFOPRODUTO, ou rescisão contratual.</p>
-                <p>4.5 De forma alguma – a menos que autorizado pela PRODUTORA – o USUÁRIO poderá
+                <p className="text-neutral-300">4.5 De forma alguma – a menos que autorizado pela PRODUTORA – o USUÁRIO poderá
                 solicitar chargeback (estorno) da compra realizada em seu cartão, sob pena das medidas judiciais
                 cabíveis.</p>
               </div>
@@ -159,12 +163,12 @@ export default function TermosPage() {
 
             <section>
               <h2 className="text-2xl font-bold mb-4 text-[#00FF00]">5. PRAZO DE ACESSO E RENOVAÇÃO</h2>
-              <div className="space-y-3">
-                <p>5.1. O INFOPRODUTO foi adquirido pelo prazo determinado de 12 (doze) meses, ou seja, não se
+              <div className="pl-4 border-l-2 border-neutral-800 space-y-3">
+                <p className="text-neutral-300">5.1. O INFOPRODUTO foi adquirido pelo prazo determinado de 12 (doze) meses, ou seja, não se
                 trata de uma prestação de serviço vitalícia. A renovação do acesso ao INFOPRODUTO poderá
                 ser solicitada pelo USUÁRIO, mediante nova contratação, conforme ofertado no momento da
                 aquisição ou em situação oportuna.</p>
-                <p>5.2. O acesso do USUÁRIO ao INFOPRODUTO será de 12 (doze) meses a contar do envio do
+                <p className="text-neutral-300">5.2. O acesso do USUÁRIO ao INFOPRODUTO será de 12 (doze) meses a contar do envio do
                 acesso ao endereço de e-mail informado pelo USUÁRIO no cadastro. A suspensão prevista no
                 item 11 abaixo não é causa apta a suspender ou interromper o prazo aqui descrito, ou seja, se
                 suspenso o acesso por culpa do contratante, o prazo pelo qual perdurou a suspensão não lhe
@@ -412,7 +416,7 @@ export default function TermosPage() {
                 informar eventuais alterações.</p>
                 <p>18.6. A PRODUTORA poderá realizar qualquer alteração da plataforma ou infoproduto, conforme
                 julgar necessário, sem que isso acarrete em qualquer prejuízo ao USUÁRIO.</p>
-                <p>18.2. Esse Termo será regido pelas leis do Brasil, sendo eleito o foro da comarca de Cajamar,
+                <p>18.7. Esse Termo será regido pelas leis do Brasil, sendo eleito o foro da comarca de Cajamar,
                 Estado de São Paulo, como competente para resolver eventuais conflitos decorrentes destes
                 Termos, com renúncia a qualquer outro por mais privilegiado que seja ou venha a ser.</p>
               </div>
@@ -421,7 +425,7 @@ export default function TermosPage() {
             <section>
               <h2 className="text-2xl font-bold mb-4 text-[#00FF00]">20. ACEITAÇÃO</h2>
               <div className="space-y-3">
-                <p>20.1. Ao adquirir o INFOPRODUTO, o USUÁRIO declara ter lido, compreendido e concordado
+                <p>19.1. Ao adquirir o INFOPRODUTO, o USUÁRIO declara ter lido, compreendido e concordado
                 com todos os termos e condições descritos nestes Termos.</p>
                 <p>Contato<br />
                 Em caso de dúvidas ou sugestões sobre este Termo, entre em contato com a PRODUTORA
@@ -429,15 +433,15 @@ export default function TermosPage() {
               </div>
             </section>
           </div>
-        </div>
 
-        <div className="mt-8 text-center">
-          <a
-            href="/recor"
-            className="inline-block px-8 py-3 bg-[#00FF00] text-black font-bold rounded-lg hover:bg-[#00FF00]/90 transition-colors"
-          >
-            Voltar
-          </a>
+          <div className="mt-16 text-center">
+            <Link
+              href="/recor"
+              className="inline-block px-8 py-3 bg-[#00FF00] text-black font-bold rounded-lg hover:bg-[#00FF00]/90 transition-colors"
+            >
+              Voltar
+            </Link>
+          </div>
         </div>
       </div>
     </div>
