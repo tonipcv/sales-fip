@@ -181,70 +181,17 @@ export default function Page() {
 
   return (
     <div className="font-montserrat bg-black text-white min-h-screen relative overflow-hidden">
-      {/* VIP Notice and Countdown */}
-      <div className="fixed top-0 left-0 right-0 z-50 bg-gradient-to-r from-green-600 via-green-500 to-red-green border-b border-red-400/30 backdrop-blur-sm">
-        <div className="max-w-4xl mx-auto px-4 py-3 text-center">
-          <div className="text-white/90 text-sm">
-            <span className="font-mono">60 vagas para o Desafio do Futuros Tech</span>
-            <span className="mx-2">•</span>
-          </div>
-        </div>
-      </div>
 
       {/* Add padding to account for fixed header */}
       <div className="pt-[88px]">
         {/* Content wrapper */}
         <div className="relative z-10">
           {/* Language Selector */}
-          <div className="absolute top-4 left-4">
-            <button
-              onClick={() => setLanguage(language === 'pt' ? 'en' : 'pt')}
-              className="flex items-center gap-1 text-xs text-neutral-400 hover:text-white transition-colors"
-            >
-              <Globe className="h-3 w-3" />
-              {language.toUpperCase()}
-            </button>
-          </div>
-
-          {/* Logo Section */}
-          <div className="w-full flex justify-center pt-8">
-            <Image
-              src="/logo.jpg"
-              alt="Futuros Tech"
-              width={120}
-              height={120}
-              className="mx-auto"
-              priority
-            />
-          </div>
+         
 
           {/* Video Section */}
           <div className="max-w-4xl mx-auto px-4 py-24">
             {/* Headline Text */}
-            <div className="text-center mb-8">
-              <h2 className="text-xl md:text-2xl font-light">
-                <span className="text-neutral-200">Assista o vídeo completo para</span>{' '}
-                <div className="mt-2">
-                  <span className="relative inline-block">
-                    <span className="bg-gradient-to-r from-white via-neutral-200 to-white bg-clip-text text-transparent font-medium">
-                      participar do Desafio do{' '}
-                    </span>
-                    <span className="relative inline-block group">
-                      <span className="bg-gradient-to-r from-white via-neutral-100 to-white bg-clip-text text-transparent font-semibold">
-                        Futuros Tech
-                      </span>
-                      {/* Animated underline */}
-                      <div className="absolute -bottom-1 left-0 w-full h-[1px]">
-                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent" />
-                        <div className="absolute inset-0 bg-gradient-to-r from-white/40 via-white to-white/40 animate-pulse" />
-                      </div>
-                      {/* Subtle glow effect */}
-                      <div className="absolute -inset-1 bg-white/5 blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                    </span>
-                  </span>
-                </div>
-              </h2>
-            </div>
 
             <div className="relative pb-[56.25%] h-0">
               <ConverteAIVideo />
@@ -268,62 +215,20 @@ export default function Page() {
                   
                   {/* Button text */}
                   <span className="text-sm font-medium tracking-wider uppercase text-neutral-300 group-hover:text-neutral-200 transition-colors duration-300">
-                    EM INSTANTES...
+                    BOTÃO SERÁ LIBERADO EM INSTANTES...
                   </span>
                 </a>
+                
               )}
             </div>
+            <p className="text-center text-neutral-500 mt-9 text-xs">Assista o vídeo completo para participar do Desafio do Futuros Tech</p>
           </div>
 
           {/* Brokers Carousel */}
-          <div className="w-full overflow-hidden py-4 bg-black/50">
-            <div className="max-w-[1000px] mx-auto relative">
-              {/* Desktop: fixo e centralizado */}
-              <div className="hidden md:flex justify-center items-center">
-                {[1, 2, 3, 4, 5].map((num) => (
-                  <Image
-                    key={num}
-                    src={`/corretora${num}.webp`}
-                    alt={`Corretora ${num}`}
-                    width={180}
-                    height={35}
-                    className="object-contain mx-4 h-[35px] w-auto"
-                  />
-                ))}
-              </div>
+         
 
-              {/* Mobile: carrossel infinito */}
-              <div className="flex md:hidden animate-scroll-infinite">
-                {/* Primeiro conjunto */}
-                {[1, 2, 3, 4, 5].map((num) => (
-                  <Image
-                    key={`first-${num}`}
-                    src={`/corretora${num}.webp`}
-                    alt={`Corretora ${num}`}
-                    width={180}
-                    height={35}
-                    className="object-contain mx-4 h-[25px] w-auto"
-                  />
-                ))}
-                {/* Segundo conjunto para loop */}
-                {[1, 2, 3, 4, 5].map((num) => (
-                  <Image
-                    key={`second-${num}`}
-                    src={`/corretora${num}.webp`}
-                    alt={`Corretora ${num}`}
-                    width={180}
-                    height={35}
-                    className="object-contain mx-4 h-[25px] w-auto"
-                  />
-                ))}
-              </div>
-            </div>
-          </div>
 
-          {/* Footer */}
-          <footer className="py-8 px-4 text-center bg-black">
-            <p className="text-neutral-500 text-xs">Futuros Tech - Todos os direitos reservados</p>
-          </footer>
+         
         </div>
       </div>
     </div>
