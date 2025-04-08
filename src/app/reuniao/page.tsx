@@ -221,7 +221,7 @@ export default function Page() {
                 
               )}
             </div>
-            <p className="text-center text-neutral-500 mt-9 text-xs">Assista o vídeo completo para participar do Desafio do Futuros Tech</p>
+            <p className="text-center text-neutral-500 mt-9 text-xs">Somente 60 vagas. Assista o vídeo completo para participar do Desafio do Futuros Tech</p>
           </div>
 
           {/* Brokers Carousel */}
