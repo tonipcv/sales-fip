@@ -1,286 +1,498 @@
 "use client";
 
-import { useEffect } from "react";
-import { useRouter } from "next/navigation";
-import { BarChart, Briefcase, Book, ChevronDown, PieChart, TrendingUp, ChevronRight, Globe, ChevronLeft } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
-import Link from 'next/link';
-import { translations } from '@/translations';
-import * as fbq from '@/lib/fpixel';
-import dynamic from 'next/dynamic';
+import { ChevronLeft, ChevronRight, Check, Shield, Percent } from "lucide-react";
 
-const ConverteAIVideo = dynamic(() => import('@/components/ConverteAIVideo'), {
-  ssr: false
-});
+export default function QuizPage() {
+  const [currentStep, setCurrentStep] = useState(0);
+  const [answers, setAnswers] = useState<{ [key: number]: boolean }>({});
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    phone: "",
+  });
+  const [countdown, setCountdown] = useState(4);
+  const [quizTimer, setQuizTimer] = useState(120); // 2 minutes in seconds
+  const [acceptedTerms, setAcceptedTerms] = useState(false);
 
-export default function Page() {
-  const router = useRouter();
-  const [activeQuestion, setActiveQuestion] = useState<number | null>(null);
-  const [selectedMonth, setSelectedMonth] = useState<number>(12);
-  const [language, setLanguage] = useState<'pt' | 'en'>('pt');
-  const t = translations[language];
-  const [currentTestimonial, setCurrentTestimonial] = useState(0);
-  const [isMobile, setIsMobile] = useState(false);
-  const [windowWidth, setWindowWidth] = useState(0);
-  const [timeLeft, setTimeLeft] = useState('');
-  const [isButtonLocked, setIsButtonLocked] = useState(true);
-  const [countdown, setCountdown] = useState(350); // 5 minutes and 50 seconds in seconds
-  const [showExitModal, setShowExitModal] = useState(false);
-  const [timeOnPage, setTimeOnPage] = useState(0);
-  const [isModalShown, setIsModalShown] = useState(false);
-  const [showWhatsAppButton, setShowWhatsAppButton] = useState(true);
-
-  const months = [
-    { number: 8, name: 'Agosto' },
-    { number: 9, name: 'Setembro' },
-    { number: 10, name: 'Outubro' },
-    { number: 11, name: 'Novembro' },
-    { number: 12, name: 'Dezembro' }
+  const steps = [
+    {
+      title: "ACESSE O DESAFIO DO FUTUROS TECH AGORA",
+      subtitle: "Liberamos somente 60 vagas...",
+      type: "continue",
+    },
+    {
+      title: "Futuros Tech é um APP para Iniciantes, Intermediários e Avançados no mercado ter acesso as operações mais assertivas do mercado.",
+      question: "Você teria interesse:",
+      type: "yesno",
+    },
+    {
+      title: "Com uma operação pessoas comum estão fazer o investimento anual e apenas 1 dia",
+      type: "carousel",
+    },
+    {
+      title: "Valor do Futuros Tech é 3.000 ou 12x297, mas no desafio o RISCO é ZERO e você terá uma super redução desse valor e garantia condicional de 1 ano, é do seu agrado:",
+      type: "yesno",
+    },
+    {
+      title: "No desafio você terá acesso a:",
+      benefits: [
+        "FIP - Formação do Zero ao Avançado (De 2 mil por ZERO)",
+        "Black Book - (De 500 por ZERO)",
+        "Futuros Tech (Com redução de 66% do valor.)",
+      ],
+      type: "accept",
+    },
+    {
+      title: "Você terá acesso a duas garantias:",
+      guarantees: [
+        "7 dias de Garantia Exigida pelo Estatuto do Consumidor.",
+        "Garantia Condicional de 1 Ano – Compromisso com a Performance.",
+      ],
+      type: "guarantees",
+    },
+    {
+      title: "Preencha seus dados para continuar",
+      type: "form",
+    },
+    {
+      title: "Restam poucas vagas para o desafio, vamos redirecionar você para o site de inscrição...",
+      type: "redirect",
+      message: (name: string) => `${name}, restam poucas vagas para o desafio, vamos redirecionar você para o site de inscrição...`,
+    },
   ];
 
-  const monthlyResults = {
-    8: { winRate: "81.0", wins: "45/55", total: "11.917" },
-    9: { winRate: "85.0", wins: "68/80", total: "13.254" },
-    10: { winRate: "87.0", wins: "95/109", total: "14.122" },
-    11: { winRate: "88.0", wins: "88/100", total: "15.345" },
-    12: { winRate: "89.0", wins: "137/154", total: "11.917" }
-  };
-
-  const currentResults = monthlyResults[selectedMonth as keyof typeof monthlyResults];
-
-  const toggleQuestion = (index: number) => {
-    setActiveQuestion(activeQuestion === index ? null : index);
-  };
-
-  const handleSubscribeClick = (plan: string) => {
-    // Track the subscription event
-    fbq.event('InitiateCheckout', {
-      content_name: plan,
-      currency: 'BRL',
-      value: plan === 'annual' ? 297 : 405
-    });
-  };
+  const progress = ((currentStep + 1) / steps.length) * 100;
 
   useEffect(() => {
-    // Inicializa a largura da janela
-    setWindowWidth(window.innerWidth);
-
-    const handleResize = () => {
-      setWindowWidth(window.innerWidth);
-      setIsMobile(window.innerWidth <= 768);
-    };
-    
-    handleResize();
-    window.addEventListener('resize', handleResize);
-    
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
-  // Atualiza o autoplay baseado no layout
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentTestimonial((prev) => (prev < (isMobile ? 4 : 3) ? prev + 1 : 0));
-    }, 5000);
-
-    return () => clearInterval(timer);
-  }, [isMobile]);
-
-  useEffect(() => {
-    const calculateTimeLeft = () => {
-      const now = new Date();
-      const target = new Date();
-      target.setHours(23, 59, 59, 999);
-      
-      // Se já passou das 23:59, ajusta para o próximo dia
-      if (now > target) {
-        target.setDate(target.getDate() + 1);
-      }
-
-      const difference = target.getTime() - now.getTime();
-      
-      if (difference > 0) {
-        const hours = Math.floor(difference / (1000 * 60 * 60));
-        const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((difference % (1000 * 60)) / 1000);
-        
-        setTimeLeft(`${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`);
-      } else {
-        setTimeLeft('00:00:00');
-      }
-    };
-
-    calculateTimeLeft();
-    const timer = setInterval(calculateTimeLeft, 1000);
-
-    return () => clearInterval(timer);
-  }, []);
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setCountdown((prev) => {
-        if (prev <= 1) {
-          setIsButtonLocked(false);
-          clearInterval(timer);
+    // Quiz timer
+    const quizTimerInterval = setInterval(() => {
+      setQuizTimer((prev) => {
+        if (prev <= 0) {
+          clearInterval(quizTimerInterval);
           return 0;
         }
         return prev - 1;
       });
     }, 1000);
 
-    return () => clearInterval(timer);
-  }, []);
+    // Redirect timer
+    if (currentStep === steps.length - 1) {
+      const redirectTimer = setInterval(() => {
+        setCountdown((prev) => {
+          if (prev <= 1) {
+            clearInterval(redirectTimer);
+            const { name, email, phone } = formData;
+            const ddd = phone.substring(0, 2);
+            const phoneNumber = phone.substring(2);
+            window.location.href = `https://pay.hotmart.com/H95976782G?preview_id=2621&preview_nonce=dc33ccea2a&name=${encodeURIComponent(name)}&email=${encodeURIComponent(email)}&phoneac=${encodeURIComponent(ddd)}&phonenumber=${encodeURIComponent(phoneNumber)}`;
+            return 0;
+          }
+          return prev - 1;
+        });
+      }, 1000);
 
-  useEffect(() => {
-    let pageTimer: NodeJS.Timeout;
+      return () => {
+        clearInterval(quizTimerInterval);
+        clearInterval(redirectTimer);
+      };
+    }
 
-    const handleMouseLeave = (e: MouseEvent) => {
-      if (e.clientY <= 0 || e.clientX <= 0 || e.clientX >= window.innerWidth || e.clientY >= window.innerHeight) {
-        if (!isModalShown) {
-          setShowExitModal(true);
-          setIsModalShown(true);
-        }
-      }
-    };
-
-    const handleVisibilityChange = () => {
-      if (document.hidden && !isModalShown) {
-        setShowExitModal(true);
-        setIsModalShown(true);
-      }
-    };
-
-    const handleBeforeUnload = (e: BeforeUnloadEvent) => {
-      if (!isModalShown) {
-        e.preventDefault();
-        setShowExitModal(true);
-        setIsModalShown(true);
-        return e.returnValue = "As vagas para o Desafio estão finalizando, deseja realmente sair?";
-      }
-    };
-
-    window.addEventListener('mouseleave', handleMouseLeave);
-    document.addEventListener('visibilitychange', handleVisibilityChange);
-    window.addEventListener('beforeunload', handleBeforeUnload);
-
-    return () => {
-      window.removeEventListener('mouseleave', handleMouseLeave);
-      document.removeEventListener('visibilitychange', handleVisibilityChange);
-      window.removeEventListener('beforeunload', handleBeforeUnload);
-    };
-  }, [isModalShown]);
-
-  const handleCloseModal = () => {
-    setShowExitModal(false);
-  };
+    return () => clearInterval(quizTimerInterval);
+  }, [currentStep, formData]);
 
   const formatTime = (seconds: number) => {
     const mins = Math.floor(seconds / 60);
     const secs = seconds % 60;
-    return `${mins}:${secs.toString().padStart(2, '0')}`;
+    return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
   };
 
-  // Hide WhatsApp button after 2 minutes
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setShowWhatsAppButton(false);
-    }, 120000); // 2 minutes in milliseconds
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const handleAnswer = (answer: boolean) => {
+    setAnswers({ ...answers, [currentStep]: answer });
+    setCurrentStep(currentStep + 1);
+  };
+
+  const handleContinue = () => {
+    setCurrentStep(currentStep + 1);
+  };
+
+  const handleBack = () => {
+    setCurrentStep(currentStep - 1);
+  };
+
+  const handleAcceptChallenge = () => {
+    setCurrentStep(currentStep + 1);
+  };
+
+  const handleSubmit = async () => {
+    if (!formData.name || !formData.email || !formData.phone || !acceptedTerms) {
+      return;
+    }
     
-    return () => clearTimeout(timer);
-  }, []);
+    try {
+      // Salvar os dados no banco de dados antes de redirecionar
+      const response = await fetch('/api/form-submit', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          acceptedTerms: acceptedTerms
+        }),
+      });
+      
+      const result = await response.json();
+      
+      if (result.success) {
+        // Armazenar o ID da submissão no localStorage como prova adicional
+        localStorage.setItem('submission_id', result.data.id);
+        localStorage.setItem('terms_accepted_at', result.data.termsAcceptedAt);
+        
+        // Redirecionar para a página de pagamento
+        const { name, email, phone } = formData;
+        const ddd = phone.substring(0, 2);
+        const phoneNumber = phone.substring(2);
+        window.location.href = `https://pay.hotmart.com/H95976782G?preview_id=2621&preview_nonce=dc33ccea2a&name=${encodeURIComponent(name)}&email=${encodeURIComponent(email)}&phoneac=${encodeURIComponent(ddd)}&phonenumber=${encodeURIComponent(phoneNumber)}`;
+      } else {
+        // Tratar erro
+        console.error('Erro ao salvar dados:', result.error);
+        alert('Ocorreu um erro ao processar seu cadastro. Por favor, tente novamente.');
+      }
+    } catch (error) {
+      console.error('Erro na solicitação:', error);
+      alert('Ocorreu um erro ao processar seu cadastro. Por favor, tente novamente.');
+    }
+  };
+
+  const renderStep = () => {
+    const step = steps[currentStep];
+
+    switch (step.type) {
+      case "continue":
+        return (
+          <div className="text-center">
+            <h1 className="text-2xl font-bold mb-4 text-white">{step.title}</h1>
+            <p className="text-lg mb-8 text-neutral-400">{step.subtitle}</p>
+            <button
+              onClick={handleContinue}
+              className="px-8 py-3 bg-[#00FF00] text-black font-bold rounded-lg hover:bg-[#00FF00]/90 transition-colors"
+            >
+              Continuar
+            </button>
+          </div>
+        );
+
+      case "yesno":
+        return (
+          <div className="text-center">
+            {currentStep === 3 ? (
+              <>
+                <h1 className="text-xl md:text-2xl font-bold mb-8 md:mb-12 text-white">Proposta</h1>
+                <div className="max-w-2xl mx-auto space-y-4 md:space-y-8 mb-8 md:mb-12">
+                  <div className="flex flex-col items-center gap-4 md:gap-6">
+                    <div className="flex items-center gap-3">
+                      <span className="text-2xl md:text-4xl font-bold text-neutral-500 line-through">R$ 3.000</span>
+                    </div>
+                    <div className="text-[#00FF00] text-xl md:text-3xl font-bold tracking-wide">
+                      POR: VALOR SUPER BAIXO
+                    </div>
+                    <div className="flex flex-col items-center gap-2 md:gap-4">
+                      <div className="flex items-center justify-center gap-2 text-white bg-[#1A1A1A] px-4 md:px-6 py-2 md:py-3 rounded-lg">
+                        <Shield className="w-4 h-4 md:w-6 md:h-6" />
+                        <span className="text-base md:text-lg font-bold">RISCO ZERO</span>
+                      </div>
+                      <div className="flex items-center justify-center gap-2 text-white bg-[#1A1A1A] px-4 md:px-6 py-2 md:py-3 rounded-lg">
+                        <Percent className="w-4 h-4 md:w-6 md:h-6" />
+                        <span className="text-base md:text-lg font-bold">SUPER REDUÇÃO</span>
+                      </div>
+                      <div className="text-neutral-400 text-base md:text-lg font-medium">
+                        + GARANTIA
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <p className="text-base md:text-lg mb-6 md:mb-8 text-neutral-400">É do seu agrado?</p>
+                <div className="flex justify-center gap-3 md:gap-4">
+                  <button
+                    onClick={() => handleAnswer(true)}
+                    className="px-8 md:px-12 py-3 md:py-4 bg-[#00FF00] text-black font-bold rounded-lg hover:bg-[#00FF00]/90 transition-colors text-base md:text-lg"
+                  >
+                    Sim
+                  </button>
+                  <button
+                    onClick={() => handleAnswer(false)}
+                    className="px-8 md:px-12 py-3 md:py-4 bg-neutral-800 text-white font-bold rounded-lg hover:bg-neutral-700 transition-colors text-base md:text-lg"
+                  >
+                    Não
+                  </button>
+                </div>
+              </>
+            ) : (
+              <>
+                <h1 className="text-2xl font-bold mb-4 text-white">{step.title}</h1>
+                {step.question && <p className="text-lg mb-8 text-neutral-400">{step.question}</p>}
+                <div className="flex justify-center gap-4">
+                  <button
+                    onClick={() => handleAnswer(true)}
+                    className="px-8 py-3 bg-[#00FF00] text-black font-bold rounded-lg hover:bg-[#00FF00]/90 transition-colors"
+                  >
+                    Sim
+                  </button>
+                  <button
+                    onClick={() => handleAnswer(false)}
+                    className="px-8 py-3 bg-red-500 text-white font-bold rounded-lg hover:bg-red-600 transition-colors"
+                  >
+                    Não
+                  </button>
+                </div>
+              </>
+            )}
+          </div>
+        );
+
+      case "carousel":
+        return (
+          <div className="text-center">
+            <h1 className="text-2xl font-bold mb-8 text-white">{step.title}</h1>
+            <div className="max-w-4xl mx-auto">
+              <div className="grid grid-cols-3 gap-4">
+                {[1, 2, 3].map((num) => (
+                  <div key={num} className="relative">
+                    <Image
+                      src={`/depoimento${num}.webp`}
+                      alt={`Depoimento ${num}`}
+                      width={300}
+                      height={225}
+                      className="w-full h-auto rounded-lg object-cover"
+                      priority={true}
+                    />
+                  </div>
+                ))}
+              </div>
+              <button
+                onClick={handleContinue}
+                className="mt-8 px-8 py-3 bg-[#00FF00] text-black font-bold rounded-lg hover:bg-[#00FF00]/90 transition-colors"
+              >
+                Continuar
+              </button>
+            </div>
+          </div>
+        );
+
+      case "accept":
+        return (
+          <div className="text-center">
+            <h1 className="text-2xl font-bold mb-12 text-white">{step.title}</h1>
+            <div className="max-w-2xl mx-auto space-y-6 mb-12">
+              {step.benefits?.map((benefit, index) => (
+                <div key={index} className="flex items-start gap-3 p-4 bg-[#1A1A1A] rounded-lg">
+                  <div className="flex-shrink-0 mt-1">
+                    <Check className="w-5 h-5 text-[#00FF00]" />
+                  </div>
+                  <p className="text-lg text-neutral-300 text-left">
+                    {benefit}
+                  </p>
+                </div>
+              ))}
+            </div>
+            <button
+              onClick={handleAcceptChallenge}
+              className="px-12 py-4 bg-[#00FF00] text-black font-bold rounded-lg hover:bg-[#00FF00]/90 transition-colors text-lg"
+            >
+              Aceitar desafio
+            </button>
+          </div>
+        );
+
+      case "guarantees":
+        return (
+          <div className="text-center">
+            <h1 className="text-2xl font-bold mb-8 text-white">{step.title}</h1>
+            <div className="max-w-2xl mx-auto space-y-6">
+              {step.guarantees?.map((guarantee, index) => (
+                <div
+                  key={index}
+                  className="bg-[#1A1A1A] p-6 rounded-lg text-left"
+                >
+                  <div className="flex items-start gap-3">
+                    <div className="w-6 h-6 rounded-full bg-[#00FF00] flex items-center justify-center flex-shrink-0">
+                      <Check className="w-4 h-4 text-black" />
+                    </div>
+                    <p className="text-neutral-300">
+                      {guarantee.replace("(Leia os termos)", "")}
+                      <span className="text-neutral-500 text-sm"> (Leia os termos)</span>
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <button
+              onClick={handleContinue}
+              className="mt-8 px-8 py-3 bg-[#00FF00] text-black font-bold rounded-lg hover:bg-[#00FF00]/90 transition-colors"
+            >
+              Continuar
+            </button>
+          </div>
+        );
+
+      case "form":
+        return (
+          <div className="text-center">
+            <h1 className="text-2xl font-bold mb-8 text-white">{step.title}</h1>
+            <div className="max-w-md mx-auto space-y-4">
+              <input
+                type="text"
+                name="name"
+                value={formData.name}
+                onChange={handleInputChange}
+                placeholder="Nome completo"
+                className="w-full px-4 py-3 bg-[#1A1A1A] text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-[#00FF00]"
+                required
+              />
+              <input
+                type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleInputChange}
+                placeholder="E-mail"
+                className="w-full px-4 py-3 bg-[#1A1A1A] text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-[#00FF00]"
+                required
+              />
+              <input
+                type="tel"
+                name="phone"
+                value={formData.phone}
+                onChange={handleInputChange}
+                placeholder="DDD + Telefone (apenas números)"
+                className="w-full px-4 py-3 bg-[#1A1A1A] text-white rounded-lg focus:outline-none"
+                required
+              />
+              <div className="flex items-start justify-center gap-2 text-neutral-400 text-sm">
+                <input
+                  type="checkbox"
+                  id="terms-checkbox"
+                  checked={acceptedTerms}
+                  onChange={(e) => setAcceptedTerms(e.target.checked)}
+                  className="w-4 h-4 mt-1 rounded border-neutral-700 bg-[#1A1A1A] text-[#00FF00] focus:ring-0"
+                  required
+                />
+                <label htmlFor="terms-checkbox" className="text-left">
+                  Li e aceito os{" "}
+                  <a 
+                    href="/termos" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="text-[#00FF00] hover:underline"
+                  >
+                    termos de uso
+                  </a>
+                  . Compreendo que meus dados serão armazenados de acordo com a política de privacidade.
+                </label>
+              </div>
+              <button
+                onClick={handleSubmit}
+                disabled={!formData.name || !formData.email || !formData.phone || !acceptedTerms}
+                className={`w-full px-12 py-4 bg-[#00FF00] text-black font-bold rounded-lg transition-colors text-lg ${
+                  !formData.name || !formData.email || !formData.phone || !acceptedTerms
+                    ? "opacity-50 cursor-not-allowed"
+                    : "hover:bg-[#00FF00]/90"
+                }`}
+              >
+                Continuar
+              </button>
+            </div>
+          </div>
+        );
+
+      case "redirect":
+        return (
+          <div className="text-center">
+            <h1 className="text-2xl font-bold mb-8 text-white">
+              {step.message ? step.message(formData.name) : step.title}
+            </h1>
+            <p className="text-lg text-neutral-400 mb-4">Clique no botão abaixo para continuar:</p>
+            <button
+              onClick={handleSubmit}
+              className="px-12 py-4 bg-[#00FF00] text-black font-bold rounded-lg hover:bg-[#00FF00]/90 transition-colors text-lg"
+            >
+              Continuar para o Pagamento
+            </button>
+          </div>
+        );
+
+      default:
+        return null;
+    }
+  };
 
   return (
-    <div className="font-montserrat bg-black text-white min-h-screen relative overflow-hidden">
-
-      {/* Add padding to account for fixed header */}
-      <div className="pt-[88px]">
-        {/* Content wrapper */}
-        <div className="relative z-10">
-          {/* Language Selector */}
-         
-
-          {/* Logo and meeting completion text */}
-          <div className="flex flex-col items-center justify-center mt-6 mb-4">
-            <Image 
-              src="/logo.jpg" 
-              alt="Logo" 
-              width={150} 
-              height={75} 
-              className="mb-4"
+    <div className="min-h-screen bg-[#0A0A0A] flex flex-col">
+      <div className="flex-1">
+        <div className="max-w-4xl mx-auto px-4 py-8">
+          <div className="flex justify-center mb-8">
+            <Image
+              src="/logo.jpg"
+              alt="Logo"
+              width={200}
+              height={100}
+              className="w-auto h-12"
             />
-            <p className="text-center text-sm md:text-base text-gray-300 max-w-2xl mx-auto px-4">
-              Reunião Finalizada: Assista o Vídeo Ter Acesso a Liberação do Futuros Tech
-            </p>
-            
-            {/* Progress bar - 88% filled */}
-            <div className="w-full max-w-md mx-auto mt-4 mb-1 px-4">
-              <div className="w-full h-2 bg-gray-800 rounded-full overflow-hidden">
-                <div className="h-full bg-gray-500 rounded-full" style={{ width: '88%' }}></div>
-              </div>
-              <p className="text-right text-xs text-gray-400 mt-1">88%</p>
+          </div>
+
+          {/* Timer */}
+          <div className="text-center mb-8">
+            <div className="inline-block px-6 py-2 bg-[#1A1A1A] rounded-lg">
+              <span className="text-white font-bold text-xl">{formatTime(quizTimer)}</span>
             </div>
           </div>
 
-          {/* Video Section */}
-          <div className="max-w-4xl mx-auto px-4 py-24">
-            {/* Headline Text */}
-
-            <div className="relative pb-[56.25%] h-0">
-              <ConverteAIVideo />
-            </div>
-            
-            {/* CTA Button - Updated with countdown */}
-            <div className="flex justify-center mt-8">
-              {isButtonLocked && (
-                <a
-                  href="#"
-                  className="group relative overflow-hidden px-6 py-2.5 bg-neutral-500/20 backdrop-blur-sm border border-neutral-500/30 rounded-md transition-all duration-300 animate-pulse-slow"
-                >
-                  {/* Glow effect */}
-                  <div className="absolute inset-0 bg-neutral-500/20 blur-xl transition-colors duration-300" />
-                  
-                  {/* Gradient line */}
-                  <div className="absolute bottom-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-neutral-400 to-transparent transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500" />
-                  
-                  {/* Shine effect */}
-                  <div className="absolute inset-0 opacity-0 group-hover:opacity-20 bg-gradient-to-r from-transparent via-neutral-300 to-transparent -translate-x-full group-hover:translate-x-full transition-all duration-700 ease-out" />
-                  
-                  {/* Button text */}
-                  <span className="text-sm font-medium tracking-wider uppercase text-neutral-300 group-hover:text-neutral-200 transition-colors duration-300">
-                    BOTÃO SERÁ LIBERADO EM INSTANTES...
-                  </span>
-                </a>
-                
-              )}
-            </div>
-            <p className="text-center text-neutral-500 mt-9 text-xs">Assista o vídeo completo para participar do Desafio do Futuros Tech</p>
-          </div>
-
-          {/* WhatsApp button that disappears after 2 minutes */}
-          {showWhatsAppButton && (
-            <a 
-              href="/whatsapp-desafio" 
-              className="fixed bottom-6 right-6 z-50 w-14 h-14 bg-[#25D366] rounded-full flex items-center justify-center shadow-lg hover:bg-[#128C7E] transition-colors"
+          {currentStep > 0 && (
+            <button
+              onClick={handleBack}
+              className="mb-8 flex items-center text-neutral-400 hover:text-white transition-colors"
             >
-              <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 256 258" className="text-white">
-                <defs>
-                  <linearGradient id="logosWhatsappIcon0" x1="50%" x2="50%" y1="100%" y2="0%">
-                    <stop offset="0%" stopColor="#1FAF38"/>
-                    <stop offset="100%" stopColor="#60D669"/>
-                  </linearGradient>
-                  <linearGradient id="logosWhatsappIcon1" x1="50%" x2="50%" y1="100%" y2="0%">
-                    <stop offset="0%" stopColor="#F9F9F9"/>
-                    <stop offset="100%" stopColor="#FFF"/>
-                  </linearGradient>
-                </defs>
-                <path fill="#fff" d="M5.463 127.456c-.006 21.677 5.658 42.843 16.428 61.499L4.433 252.697l65.232-17.104a122.994 122.994 0 0 0 58.8 14.97h.054c67.815 0 123.018-55.183 123.047-123.01c.013-32.867-12.775-63.773-36.009-87.025c-23.23-23.25-54.125-36.061-87.043-36.076c-67.823 0-123.022 55.18-123.05 123.004"/>
-                <path fill="#fff" d="M1.07 127.416c-.007 22.457 5.86 44.38 17.014 63.704L0 257.147l67.571-17.717c18.618 10.151 39.58 15.503 60.91 15.511h.055c70.248 0 127.434-57.168 127.464-127.423c.012-34.048-13.236-66.065-37.3-90.15C194.633 13.286 162.633.014 128.536 0C58.276 0 1.099 57.16 1.071 127.416Zm40.24 60.376l-2.523-4.005c-10.606-16.864-16.204-36.352-16.196-56.363C22.614 69.029 70.138 21.52 128.576 21.52c28.3.012 54.896 11.044 74.9 31.06c20.003 20.018 31.01 46.628 31.003 74.93c-.026 58.395-47.551 105.91-105.943 105.91h-.042c-19.013-.01-37.66-5.116-53.922-14.765l-3.87-2.295l-40.098 10.513l10.706-39.082Z"/>
-                <path fill="#fff" d="M96.678 74.148c-2.386-5.303-4.897-5.41-7.166-5.503c-1.858-.08-3.982-.074-6.104-.074c-2.124 0-5.575.799-8.492 3.984c-2.92 3.188-11.148 10.892-11.148 26.561c0 15.67 11.413 30.813 13.004 32.94c1.593 2.123 22.033 35.307 54.405 48.073c26.904 10.609 32.379 8.499 38.218 7.967c5.84-.53 18.844-7.702 21.497-15.139c2.655-7.436 2.655-13.81 1.859-15.142c-.796-1.327-2.92-2.124-6.105-3.716c-3.186-1.593-18.844-9.298-21.763-10.361c-2.92-1.062-5.043-1.592-7.167 1.597c-2.124 3.184-8.223 10.356-10.082 12.48c-1.857 2.129-3.716 2.394-6.9.801c-3.187-1.598-13.444-4.957-25.613-15.806c-9.468-8.442-15.86-18.867-17.718-22.056c-1.858-3.184-.199-4.91 1.398-6.497c1.431-1.427 3.186-3.719 4.78-5.578c1.588-1.86 2.118-3.187 3.18-5.311c1.063-2.126.531-3.986-.264-5.579c-.798-1.593-6.987-17.343-9.819-23.64"/>
-              </svg>
-            </a>
+              <ChevronLeft className="w-5 h-5 mr-2" />
+              Voltar
+            </button>
           )}
+
+          {renderStep()}
+
+          {/* Progress Bar */}
+          <div className="mt-8">
+            <div className="w-full bg-[#1A1A1A] rounded-full h-2">
+              <div
+                className="bg-[#00FF00] h-2 rounded-full transition-all duration-300"
+                style={{ width: `${progress}%` }}
+              />
+            </div>
+            <div className="text-center mt-2 text-neutral-400 text-sm">
+              {currentStep + 1} de {steps.length} passos
+            </div>
+          </div>
         </div>
       </div>
+
+      {/* Footer Disclaimer */}
+      <footer className="bg-[#0A0A0A] border-t border-neutral-800 p-4 mt-16">
+        <div className="max-w-4xl mx-auto">
+          <p className="text-neutral-500 text-[10px] md:text-xs text-center">
+            Disclaimer: Ao continuar, você declara que leu, compreendeu e concorda com os nossos Termos de Uso e com a Política de Garantia Condicional. Os resultados podem variar de acordo com a disciplina, execução e gestão de risco do usuário. Esta oferta não constitui promessa de ganhos financeiros, e a garantia de reembolso é válida apenas mediante o cumprimento integral dos critérios estabelecidos nos termos.
+          </p>
+        </div>
+      </footer>
     </div>
   );
-}
+} 
