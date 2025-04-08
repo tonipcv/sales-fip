@@ -145,6 +145,7 @@ export default function AdminDashboard() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [activeTab, setActiveTab] = useState("whatsapp");
+  const [showDuplicates, setShowDuplicates] = useState(true);
   const router = useRouter();
 
   useEffect(() => {
@@ -187,6 +188,70 @@ export default function AdminDashboard() {
 
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleString("pt-BR");
+  };
+
+  // Function to remove duplicates from any lead list based on whatsapp number
+  const removeDuplicates = (leads: any[]) => {
+    if (!leads) return [];
+    
+    const seen = new Set();
+    return leads.filter(lead => {
+      const whatsapp = lead.whatsapp;
+      if (!whatsapp) return true;
+      
+      const normalized = whatsapp.replace(/\D/g, '');
+      if (seen.has(normalized)) return false;
+      
+      seen.add(normalized);
+      return true;
+    });
+  };
+
+  // Function to export data to CSV
+  const exportToCSV = (leads: any[], filename: string) => {
+    if (!leads || leads.length === 0) return;
+    
+    const headers = Object.keys(leads[0]).filter(key => key !== 'id' && key !== 'checked');
+    const csvHeader = headers.join(',');
+    
+    const csvRows = leads.map(lead => {
+      return headers.map(header => {
+        let value = lead[header] !== undefined ? lead[header] : '';
+        
+        // Format dates
+        if (header === 'createdAt') {
+          value = formatDate(value);
+        }
+        
+        // Handle boolean values
+        if (typeof value === 'boolean') {
+          value = value ? 'Sim' : 'Não';
+        }
+        
+        // Escape commas, quotes, etc.
+        if (typeof value === 'string') {
+          value = value.replace(/"/g, '""');
+          if (value.includes(',') || value.includes('"') || value.includes('\n')) {
+            value = `"${value}"`;
+          }
+        }
+        
+        return value;
+      }).join(',');
+    }).join('\n');
+    
+    const csvContent = `${csvHeader}\n${csvRows}`;
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    
+    link.setAttribute('href', url);
+    link.setAttribute('download', `${filename}.csv`);
+    link.style.visibility = 'hidden';
+    
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   };
 
   return (
@@ -279,6 +344,102 @@ export default function AdminDashboard() {
           </button>
         </div>
 
+        {/* Global controls */}
+        <div className="flex justify-between items-center mb-6">
+          <div className="flex items-center gap-3">
+            <label className="flex items-center gap-2 text-sm">
+              <input 
+                type="checkbox" 
+                checked={showDuplicates} 
+                onChange={() => setShowDuplicates(!showDuplicates)}
+                className="w-4 h-4 rounded bg-white/10 border-white/20 accent-green-500"
+              />
+              Mostrar números duplicados
+            </label>
+          </div>
+          
+          {activeTab === "whatsapp" && data?.whatsapp && (
+            <button
+              onClick={() => exportToCSV(
+                showDuplicates ? data.whatsapp.leads : removeDuplicates(data.whatsapp.leads),
+                'whatsapp-leads'
+              )}
+              className="px-4 py-2 bg-green-600 hover:bg-green-700 rounded-md text-sm font-medium"
+            >
+              Exportar CSV
+            </button>
+          )}
+          
+          {activeTab === "waiting-list" && data?.waitingList && (
+            <button
+              onClick={() => exportToCSV(
+                showDuplicates ? data.waitingList.leads : removeDuplicates(data.waitingList.leads),
+                'lista-espera-leads'
+              )}
+              className="px-4 py-2 bg-green-600 hover:bg-green-700 rounded-md text-sm font-medium"
+            >
+              Exportar CSV
+            </button>
+          )}
+          
+          {activeTab === "quiz" && data?.quiz && (
+            <button
+              onClick={() => exportToCSV(
+                showDuplicates ? data.quiz.leads : removeDuplicates(data.quiz.leads),
+                'quiz-leads'
+              )}
+              className="px-4 py-2 bg-green-600 hover:bg-green-700 rounded-md text-sm font-medium"
+            >
+              Exportar CSV
+            </button>
+          )}
+          
+          {activeTab === "call-liberacao" && data?.callLiberacao && (
+            <button
+              onClick={() => exportToCSV(data.callLiberacao.leads, 'call-liberacao-leads')}
+              className="px-4 py-2 bg-green-600 hover:bg-green-700 rounded-md text-sm font-medium"
+            >
+              Exportar CSV
+            </button>
+          )}
+          
+          {activeTab === "protection-form" && data?.protectionForm && (
+            <button
+              onClick={() => exportToCSV(
+                showDuplicates ? data.protectionForm.leads : removeDuplicates(data.protectionForm.leads),
+                'protecao-leads'
+              )}
+              className="px-4 py-2 bg-green-600 hover:bg-green-700 rounded-md text-sm font-medium"
+            >
+              Exportar CSV
+            </button>
+          )}
+          
+          {activeTab === "gift-form" && data?.giftForm && (
+            <button
+              onClick={() => exportToCSV(
+                showDuplicates ? data.giftForm.leads : removeDuplicates(data.giftForm.leads),
+                'gift-leads'
+              )}
+              className="px-4 py-2 bg-green-600 hover:bg-green-700 rounded-md text-sm font-medium"
+            >
+              Exportar CSV
+            </button>
+          )}
+          
+          {activeTab === "cripto-whatsapp" && data?.criptoWhatsapp && (
+            <button
+              onClick={() => exportToCSV(
+                showDuplicates ? data.criptoWhatsapp.leads : removeDuplicates(data.criptoWhatsapp.leads),
+                'cripto-whatsapp-leads'
+              )}
+              className="px-4 py-2 bg-green-600 hover:bg-green-700 rounded-md text-sm font-medium"
+            >
+              Exportar CSV
+            </button>
+          )}
+        </div>
+
         {loading ? (
           <div className="text-center py-8">Carregando...</div>
         ) : error ? (
@@ -312,7 +473,7 @@ export default function AdminDashboard() {
                       </tr>
                     </thead>
                     <tbody>
-                      {data.whatsapp.leads.map((lead) => (
+                      {(showDuplicates ? data.whatsapp.leads : removeDuplicates(data.whatsapp.leads)).map((lead) => (
                         <tr key={lead.id} className="border-b border-white/10">
                           <td className="p-4">{formatDate(lead.createdAt)}</td>
                           <td className="p-4">{lead.whatsapp}</td>
@@ -361,7 +522,7 @@ export default function AdminDashboard() {
                       </tr>
                     </thead>
                     <tbody>
-                      {data.waitingList.leads.map((lead) => (
+                      {(showDuplicates ? data.waitingList.leads : removeDuplicates(data.waitingList.leads)).map((lead) => (
                         <tr key={lead.id} className="border-b border-white/10">
                           <td className="p-4">{formatDate(lead.createdAt)}</td>
                           <td className="p-4">{lead.whatsapp}</td>
@@ -411,7 +572,7 @@ export default function AdminDashboard() {
                       </tr>
                     </thead>
                     <tbody>
-                      {data.quiz.leads.map((lead) => (
+                      {(showDuplicates ? data.quiz.leads : removeDuplicates(data.quiz.leads)).map((lead) => (
                         <tr key={lead.id} className="border-b border-white/10">
                           <td className="p-4">{formatDate(lead.createdAt)}</td>
                           <td className="p-4">{lead.name}</td>
@@ -538,7 +699,7 @@ export default function AdminDashboard() {
                       </tr>
                     </thead>
                     <tbody>
-                      {data.protectionForm.leads.map((lead) => (
+                      {(showDuplicates ? data.protectionForm.leads : removeDuplicates(data.protectionForm.leads)).map((lead) => (
                         <tr key={lead.id} className="border-b border-white/10">
                           <td className="p-4">{formatDate(lead.createdAt)}</td>
                           <td className="p-4">{lead.name}</td>
@@ -643,7 +804,7 @@ export default function AdminDashboard() {
                       </tr>
                     </thead>
                     <tbody>
-                      {data.giftForm.leads.map((lead) => (
+                      {(showDuplicates ? data.giftForm.leads : removeDuplicates(data.giftForm.leads)).map((lead) => (
                         <tr key={lead.id} className="border-b border-white/10">
                           <td className="p-4">{formatDate(lead.createdAt)}</td>
                           <td className="p-4">{lead.name}</td>
@@ -715,7 +876,7 @@ export default function AdminDashboard() {
                       </tr>
                     </thead>
                     <tbody>
-                      {data.criptoWhatsapp.leads.map((lead) => (
+                      {(showDuplicates ? data.criptoWhatsapp.leads : removeDuplicates(data.criptoWhatsapp.leads)).map((lead) => (
                         <tr key={lead.id} className="border-b border-white/10">
                           <td className="p-4">{formatDate(lead.createdAt)}</td>
                           <td className="p-4">{lead.whatsapp}</td>

@@ -183,14 +183,35 @@ export default function Page() {
     <div className="font-montserrat bg-black text-white min-h-screen relative overflow-hidden">
 
       {/* Add padding to account for fixed header */}
-      <div className="pt-[88px]">
+      <div className="pt-[10px]">
         {/* Content wrapper */}
         <div className="relative z-10">
           {/* Language Selector */}
          
+          {/* Logo and meeting completion text */}
+          <div className="flex flex-col items-center justify-center mt-6 mb-4">
+            <Image 
+              src="/logo.jpg" 
+              alt="Logo" 
+              width={150} 
+              height={75} 
+              className="mb-4"
+            />
+            <p className="text-center text-sm md:text-base text-gray-300 max-w-2xl mx-auto px-4">
+              Reunião Finalizada: Assista o Vídeo Ter Acesso a Liberação do Futuros Tech
+            </p>
+            
+            {/* Progress bar - 88% filled */}
+            <div className="w-full max-w-md mx-auto mt-4 mb-1 px-4">
+              <div className="w-full h-2 bg-gray-800 rounded-full overflow-hidden">
+                <div className="h-full bg-gray-500 rounded-full" style={{ width: '88%' }}></div>
+              </div>
+              <p className="text-right text-xs text-gray-400 mt-1">88%</p>
+            </div>
+          </div>
 
           {/* Video Section */}
-          <div className="max-w-4xl mx-auto px-4 py-24">
+          <div className="max-w-4xl mx-auto px-4 py-12">
             {/* Headline Text */}
 
             <div className="relative pb-[56.25%] h-0">

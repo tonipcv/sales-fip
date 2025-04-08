@@ -32,7 +32,7 @@ export default function QuizPage() {
       type: "carousel",
     },
     {
-      title: "Valor do Futuros Tech é 3.000 ou 12x297, mas no desafio o RISCO é ZERO e você terá uma super redução desse valor e garantia de 1 ano, é do seu agrado:",
+      title: "Valor do Futuros Tech é 3.000 ou 12x297, mas no desafio o RISCO é ZERO e você terá uma super redução desse valor e garantia condicional de 1 ano, é do seu agrado:",
       type: "yesno",
     },
     {
@@ -48,7 +48,7 @@ export default function QuizPage() {
       title: "Você terá acesso a duas garantias:",
       guarantees: [
         "7 dias de Garantia Exigida pelo Estatuto do Consumidor.",
-        "Garantia Condicional de 1 Ano – Compromisso com a Performance. Válida exclusivamente para os casos em que forem cumpridos integralmente os critérios de elegibilidade descritos nos Termos de Uso.",
+        "Garantia Condicional de 1 Ano – Compromisso com a Performance.",
       ],
       type: "guarantees",
     },
