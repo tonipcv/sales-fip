@@ -15,7 +15,6 @@ export default function QuizPage() {
   const [countdown, setCountdown] = useState(4);
   const [quizTimer, setQuizTimer] = useState(120); // 2 minutes in seconds
   const [acceptedTerms, setAcceptedTerms] = useState(false);
-  const [showExitModal, setShowExitModal] = useState(false);
 
   const steps = [
     {
@@ -41,7 +40,7 @@ export default function QuizPage() {
       benefits: [
         "FIP - Formação do Zero ao Avançado (De 2 mil por ZERO)",
         "Black Book - (De 500 por ZERO)",
-        "Futuros Tech (De 3.000 por 997 e se você não ter resultado por 1 ano assinamos um contrato que devolvemos todo seu dinheiro.)",
+        "Futuros Tech (Com redução de 66% do valor.)",
       ],
       type: "accept",
     },
@@ -49,7 +48,7 @@ export default function QuizPage() {
       title: "Você terá acesso a duas garantias:",
       guarantees: [
         "7 dias de Garantia Exigida pelo Estatuto do Consumidor.",
-        "Garantia de 1 ano de Confiança no Resultados do APP Caso você Não Tenha resultados após 1 ano de assinatura também devolvemos todo o seu dinheiro.",
+        "Garantia Condicional de 1 Ano – Compromisso com a Performance. Válida exclusivamente para os casos em que forem cumpridos integralmente os critérios de elegibilidade descritos nos Termos de Uso.",
       ],
       type: "guarantees",
     },
@@ -65,28 +64,6 @@ export default function QuizPage() {
   ];
 
   const progress = ((currentStep + 1) / steps.length) * 100;
-
-  useEffect(() => {
-    const handleBeforeUnload = (e: BeforeUnloadEvent) => {
-      e.preventDefault();
-      setShowExitModal(true);
-      return e.returnValue = "As vagas para o Desafio estão finalizando, deseja realmente sair?";
-    };
-
-    const handleMouseLeave = (e: MouseEvent) => {
-      if (e.clientY <= 0) {
-        setShowExitModal(true);
-      }
-    };
-
-    window.addEventListener('beforeunload', handleBeforeUnload);
-    window.addEventListener('mouseleave', handleMouseLeave);
-
-    return () => {
-      window.removeEventListener('beforeunload', handleBeforeUnload);
-      window.removeEventListener('mouseleave', handleMouseLeave);
-    };
-  }, []);
 
   useEffect(() => {
     // Quiz timer
@@ -160,10 +137,6 @@ export default function QuizPage() {
     window.location.href = "https://pay.hotmart.com/H95976782G?preview_id=2621&preview_nonce=dc33ccea2a";
   };
 
-  const handleCloseModal = () => {
-    setShowExitModal(false);
-  };
-
   const renderStep = () => {
     const step = steps[currentStep];
 
@@ -187,41 +160,41 @@ export default function QuizPage() {
           <div className="text-center">
             {currentStep === 3 ? (
               <>
-                <h1 className="text-2xl font-bold mb-12 text-white">Proposta</h1>
-                <div className="max-w-2xl mx-auto space-y-8 mb-12">
-                  <div className="flex flex-col items-center gap-6">
+                <h1 className="text-xl md:text-2xl font-bold mb-8 md:mb-12 text-white">Proposta</h1>
+                <div className="max-w-2xl mx-auto space-y-4 md:space-y-8 mb-8 md:mb-12">
+                  <div className="flex flex-col items-center gap-4 md:gap-6">
                     <div className="flex items-center gap-3">
-                      <span className="text-4xl font-bold text-neutral-500 line-through">R$ 3.000</span>
+                      <span className="text-2xl md:text-4xl font-bold text-neutral-500 line-through">R$ 3.000</span>
                     </div>
-                    <div className="text-[#00FF00] text-3xl font-bold tracking-wide">
+                    <div className="text-[#00FF00] text-xl md:text-3xl font-bold tracking-wide">
                       POR: VALOR SUPER BAIXO
                     </div>
-                    <div className="flex flex-col items-center gap-4">
-                      <div className="flex items-center justify-center gap-2 text-white bg-[#1A1A1A] px-6 py-3 rounded-lg">
-                        <Shield className="w-6 h-6" />
-                        <span className="text-lg font-bold">RISCO ZERO</span>
+                    <div className="flex flex-col items-center gap-2 md:gap-4">
+                      <div className="flex items-center justify-center gap-2 text-white bg-[#1A1A1A] px-4 md:px-6 py-2 md:py-3 rounded-lg">
+                        <Shield className="w-4 h-4 md:w-6 md:h-6" />
+                        <span className="text-base md:text-lg font-bold">RISCO ZERO</span>
                       </div>
-                      <div className="flex items-center justify-center gap-2 text-white bg-[#1A1A1A] px-6 py-3 rounded-lg">
-                        <Percent className="w-6 h-6" />
-                        <span className="text-lg font-bold">SUPER REDUÇÃO</span>
+                      <div className="flex items-center justify-center gap-2 text-white bg-[#1A1A1A] px-4 md:px-6 py-2 md:py-3 rounded-lg">
+                        <Percent className="w-4 h-4 md:w-6 md:h-6" />
+                        <span className="text-base md:text-lg font-bold">SUPER REDUÇÃO</span>
                       </div>
-                      <div className="text-neutral-400 text-lg font-medium">
-                        + GARANTIA DE 1 ANO
+                      <div className="text-neutral-400 text-base md:text-lg font-medium">
+                        + GARANTIA
                       </div>
                     </div>
                   </div>
                 </div>
-                <p className="text-lg mb-8 text-neutral-400">É do seu agrado?</p>
-                <div className="flex justify-center gap-4">
+                <p className="text-base md:text-lg mb-6 md:mb-8 text-neutral-400">É do seu agrado?</p>
+                <div className="flex justify-center gap-3 md:gap-4">
                   <button
                     onClick={() => handleAnswer(true)}
-                    className="px-12 py-4 bg-[#00FF00] text-black font-bold rounded-lg hover:bg-[#00FF00]/90 transition-colors text-lg"
+                    className="px-8 md:px-12 py-3 md:py-4 bg-[#00FF00] text-black font-bold rounded-lg hover:bg-[#00FF00]/90 transition-colors text-base md:text-lg"
                   >
                     Sim
                   </button>
                   <button
                     onClick={() => handleAnswer(false)}
-                    className="px-12 py-4 bg-neutral-800 text-white font-bold rounded-lg hover:bg-neutral-700 transition-colors text-lg"
+                    className="px-8 md:px-12 py-3 md:py-4 bg-neutral-800 text-white font-bold rounded-lg hover:bg-neutral-700 transition-colors text-base md:text-lg"
                   >
                     Não
                   </button>
@@ -255,7 +228,7 @@ export default function QuizPage() {
           <div className="text-center">
             <h1 className="text-2xl font-bold mb-8 text-white">{step.title}</h1>
             <div className="max-w-4xl mx-auto">
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="grid grid-cols-3 gap-4">
                 {[1, 2, 3].map((num) => (
                   <div key={num} className="relative">
                     <Image
@@ -404,10 +377,18 @@ export default function QuizPage() {
             <h1 className="text-2xl font-bold mb-8 text-white">
               {step.message ? step.message(formData.name) : step.title}
             </h1>
-            <p className="text-lg text-neutral-400 mb-4">Redirecionando em {countdown} segundos...</p>
-            <div className="animate-pulse">
-              <div className="w-16 h-16 border-4 border-[#00FF00] border-t-transparent rounded-full mx-auto mb-8"></div>
-            </div>
+            <p className="text-lg text-neutral-400 mb-4">Clique no botão abaixo para continuar:</p>
+            <button
+              onClick={() => {
+                const { name, email, phone } = formData;
+                const ddd = phone.substring(0, 2);
+                const phoneNumber = phone.substring(2);
+                window.location.href = `https://pay.hotmart.com/H95976782G?preview_id=2621&preview_nonce=dc33ccea2a&name=${encodeURIComponent(name)}&email=${encodeURIComponent(email)}&phoneac=${encodeURIComponent(ddd)}&phonenumber=${encodeURIComponent(phoneNumber)}`;
+              }}
+              className="px-12 py-4 bg-[#00FF00] text-black font-bold rounded-lg hover:bg-[#00FF00]/90 transition-colors text-lg"
+            >
+              Continuar para o Pagamento
+            </button>
           </div>
         );
 
@@ -417,97 +398,61 @@ export default function QuizPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0A0A0A]">
-      {showExitModal && (
-        <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-[#1A1A1A] rounded-lg p-8 max-w-md w-full text-center">
-            <h2 className="text-xl font-bold text-white mb-4">
-              As vagas para o Desafio estão finalizando
-            </h2>
-            <p className="text-neutral-400 mb-6">
-              Clique no link abaixo para entrar agora:
-            </p>
-            <a
-              href="/recor"
-              className="inline-block px-8 py-3 bg-[#00FF00] text-black font-bold rounded-lg hover:bg-[#00FF00]/90 transition-colors mb-4"
-            >
-              Participar do Desafio
-            </a>
-            <button
-              onClick={handleCloseModal}
-              className="text-neutral-400 hover:text-white transition-colors text-sm"
-            >
-              Continuar navegando
-            </button>
-          </div>
-        </div>
-      )}
-      <div className="max-w-4xl mx-auto px-4 py-8">
-        <div className="flex justify-center mb-8">
-          <Image
-            src="/logo.jpg"
-            alt="Logo"
-            width={200}
-            height={100}
-            className="w-auto h-12"
-          />
-        </div>
-
-        {/* Timer */}
-        <div className="text-center mb-8">
-          <div className="inline-block px-6 py-2 bg-[#1A1A1A] rounded-lg">
-            <span className="text-white font-bold text-xl">{formatTime(quizTimer)}</span>
-          </div>
-        </div>
-
-        {currentStep > 0 && (
-          <button
-            onClick={handleBack}
-            className="mb-8 flex items-center text-neutral-400 hover:text-white transition-colors"
-          >
-            <ChevronLeft className="w-5 h-5 mr-2" />
-            Voltar
-          </button>
-        )}
-
-        {renderStep()}
-
-        {/* Progress Bar */}
-        <div className="mt-8">
-          <div className="w-full bg-[#1A1A1A] rounded-full h-2">
-            <div
-              className="bg-[#00FF00] h-2 rounded-full transition-all duration-300"
-              style={{ width: `${progress}%` }}
+    <div className="min-h-screen bg-[#0A0A0A] flex flex-col">
+      <div className="flex-1">
+        <div className="max-w-4xl mx-auto px-4 py-8">
+          <div className="flex justify-center mb-8">
+            <Image
+              src="/logo.jpg"
+              alt="Logo"
+              width={200}
+              height={100}
+              className="w-auto h-12"
             />
           </div>
-          <div className="text-center mt-2 text-neutral-400 text-sm">
-            {currentStep + 1} de {steps.length} passos
-          </div>
-        </div>
-      </div>
 
-      {/* Fixed Buttons Container */}
-      <div className="fixed bottom-0 left-0 right-0 bg-[#0A0A0A] border-t border-neutral-800 p-4 md:hidden">
-        <div className="max-w-4xl mx-auto">
+          {/* Timer */}
+          <div className="text-center mb-8">
+            <div className="inline-block px-6 py-2 bg-[#1A1A1A] rounded-lg">
+              <span className="text-white font-bold text-xl">{formatTime(quizTimer)}</span>
+            </div>
+          </div>
+
           {currentStep > 0 && (
             <button
               onClick={handleBack}
-              className="w-full mb-4 flex items-center justify-center text-neutral-400 hover:text-white transition-colors"
+              className="mb-8 flex items-center text-neutral-400 hover:text-white transition-colors"
             >
               <ChevronLeft className="w-5 h-5 mr-2" />
               Voltar
             </button>
           )}
-          {currentStep < steps.length - 1 && (
-            <button
-              onClick={handleContinue}
-              className="w-full px-8 py-3 bg-[#00FF00] text-black font-bold rounded-lg hover:bg-[#00FF00]/90 transition-colors"
-            >
-              Continuar
-            </button>
-          )}
+
+          {renderStep()}
+
+          {/* Progress Bar */}
+          <div className="mt-8">
+            <div className="w-full bg-[#1A1A1A] rounded-full h-2">
+              <div
+                className="bg-[#00FF00] h-2 rounded-full transition-all duration-300"
+                style={{ width: `${progress}%` }}
+              />
+            </div>
+            <div className="text-center mt-2 text-neutral-400 text-sm">
+              {currentStep + 1} de {steps.length} passos
+            </div>
+          </div>
         </div>
       </div>
+
+      {/* Footer Disclaimer */}
+      <footer className="bg-[#0A0A0A] border-t border-neutral-800 p-4 mt-16">
+        <div className="max-w-4xl mx-auto">
+          <p className="text-neutral-500 text-[10px] md:text-xs text-center">
+            Disclaimer: Ao continuar, você declara que leu, compreendeu e concorda com os nossos Termos de Uso e com a Política de Garantia Condicional. Os resultados podem variar de acordo com a disciplina, execução e gestão de risco do usuário. Esta oferta não constitui promessa de ganhos financeiros, e a garantia de reembolso é válida apenas mediante o cumprimento integral dos critérios estabelecidos nos termos.
+          </p>
+        </div>
+      </footer>
     </div>
   );
 } 

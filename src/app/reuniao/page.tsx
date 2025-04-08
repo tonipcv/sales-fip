@@ -133,22 +133,9 @@ export default function Page() {
   useEffect(() => {
     let pageTimer: NodeJS.Timeout;
 
-    const startTimer = () => {
-      pageTimer = setInterval(() => {
-        setTimeOnPage(prev => {
-          const newTime = prev + 1;
-          if (newTime >= 300 && !isModalShown) {
-            setShowExitModal(true);
-            setIsModalShown(true);
-          }
-          return newTime;
-        });
-      }, 1000);
-    };
-
     const handleMouseLeave = (e: MouseEvent) => {
       if (e.clientY <= 0 || e.clientX <= 0 || e.clientX >= window.innerWidth || e.clientY >= window.innerHeight) {
-        if (timeOnPage >= 300 && !isModalShown) {
+        if (!isModalShown) {
           setShowExitModal(true);
           setIsModalShown(true);
         }
@@ -156,14 +143,14 @@ export default function Page() {
     };
 
     const handleVisibilityChange = () => {
-      if (document.hidden && timeOnPage >= 300 && !isModalShown) {
+      if (document.hidden && !isModalShown) {
         setShowExitModal(true);
         setIsModalShown(true);
       }
     };
 
     const handleBeforeUnload = (e: BeforeUnloadEvent) => {
-      if (timeOnPage >= 300 && !isModalShown) {
+      if (!isModalShown) {
         e.preventDefault();
         setShowExitModal(true);
         setIsModalShown(true);
@@ -171,18 +158,16 @@ export default function Page() {
       }
     };
 
-    startTimer();
     window.addEventListener('mouseleave', handleMouseLeave);
     document.addEventListener('visibilitychange', handleVisibilityChange);
     window.addEventListener('beforeunload', handleBeforeUnload);
 
     return () => {
-      clearInterval(pageTimer);
       window.removeEventListener('mouseleave', handleMouseLeave);
       document.removeEventListener('visibilitychange', handleVisibilityChange);
       window.removeEventListener('beforeunload', handleBeforeUnload);
     };
-  }, [isModalShown, timeOnPage]);
+  }, [isModalShown]);
 
   const handleCloseModal = () => {
     setShowExitModal(false);

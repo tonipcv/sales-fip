@@ -1,8 +1,9 @@
 "use client";
 
+import { useState } from "react";
 import Image from "next/image";
 
-export default function TermsPage() {
+export default function TermosPage() {
   return (
     <div className="min-h-screen bg-[#0A0A0A] text-white">
       <div className="max-w-4xl mx-auto px-4 py-8">
@@ -119,6 +120,15 @@ export default function TermsPage() {
               <p>10.1. As partes elegem o foro da comarca de Cajamar, Estado de São Paulo, como competente para resolver eventuais conflitos decorrentes destes Termos, com renúncia a qualquer outro.</p>
             </section>
           </div>
+        </div>
+
+        <div className="mt-8 text-center">
+          <a
+            href="/recor"
+            className="inline-block px-8 py-3 bg-[#00FF00] text-black font-bold rounded-lg hover:bg-[#00FF00]/90 transition-colors"
+          >
+            Voltar
+          </a>
         </div>
       </div>
     </div>
