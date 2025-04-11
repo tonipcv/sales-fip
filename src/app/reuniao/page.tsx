@@ -182,8 +182,12 @@ export default function Page() {
 
   return (
     <div className="font-montserrat bg-black text-white min-h-screen relative overflow-hidden">
+      {/* Background Effects */}
+      <div className="fixed inset-0 bg-gradient-to-b from-black via-black/95 to-black/90 z-0" />
+      <div className="fixed inset-0 bg-[url('/grid.svg')] bg-center [mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))] z-0" />
+      
       {/* Add padding to account for fixed header */}
-      <div className="pt-[88px]">
+      <div className="pt-[88px] relative z-10">
         {/* Content wrapper */}
         <div className="relative z-10">
           {/* Language Selector */}
@@ -191,43 +195,79 @@ export default function Page() {
           {/* Video Section */}
           <div className="max-w-4xl mx-auto px-4 py-24">
             {/* Headline Text */}
+            <div className="text-center mb-12">
+              <h1 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-red-500 via-red-400 to-red-600 bg-clip-text text-transparent animate-gradient">
+                ENCONTRO EXCLUSIVO
+              </h1>
+              <p className="text-xl md:text-2xl text-neutral-300 max-w-2xl mx-auto">
+                Assista ao vídeo abaixo para participar do Desafio do Futuros Tech
+              </p>
+            </div>
 
-            <div className="relative pb-[56.25%] h-0">
+            <div className="relative pb-[56.25%] h-0 rounded-2xl overflow-hidden shadow-2xl shadow-red-500/20 backdrop-blur-sm">
+              <div className="absolute inset-0 bg-gradient-to-r from-red-500/10 to-red-600/10 animate-pulse" />
               <ConverteAIVideo />
             </div>
             
             {/* CTA Button - Updated with countdown */}
-            <div className="flex justify-center mt-8">
+            <div className="flex justify-center mt-12">
               {isButtonLocked && (
                 <a
                   href="#"
-                  className="group relative overflow-hidden px-6 py-2.5 bg-neutral-500/20 backdrop-blur-sm border border-neutral-500/30 rounded-md transition-all duration-300 animate-pulse-slow"
+                  className="group relative overflow-hidden px-8 py-4 bg-red-500/10 backdrop-blur-sm border border-red-500/30 rounded-xl transition-all duration-300 hover:scale-105"
                 >
                   {/* Glow effect */}
-                  <div className="absolute inset-0 bg-neutral-500/20 blur-xl transition-colors duration-300" />
+                  <div className="absolute inset-0 bg-red-500/20 blur-xl transition-colors duration-300 group-hover:bg-red-500/30" />
                   
                   {/* Gradient line */}
-                  <div className="absolute bottom-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-neutral-400 to-transparent transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500" />
+                  <div className="absolute bottom-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-red-400 to-transparent transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500" />
                   
                   {/* Shine effect */}
-                  <div className="absolute inset-0 opacity-0 group-hover:opacity-20 bg-gradient-to-r from-transparent via-neutral-300 to-transparent -translate-x-full group-hover:translate-x-full transition-all duration-700 ease-out" />
+                  <div className="absolute inset-0 opacity-0 group-hover:opacity-20 bg-gradient-to-r from-transparent via-red-300 to-transparent -translate-x-full group-hover:translate-x-full transition-all duration-700 ease-out" />
                   
                   {/* Button text */}
-                  <span className="text-sm font-medium tracking-wider uppercase text-neutral-300 group-hover:text-neutral-200 transition-colors duration-300">
+                  <span className="text-lg font-medium tracking-wider uppercase text-red-400 group-hover:text-red-300 transition-colors duration-300">
                     BOTÃO SERÁ LIBERADO EM INSTANTES...
                   </span>
                 </a>
-                
               )}
             </div>
-            <p className="text-center text-neutral-500 mt-9 text-xs">Assista o vídeo completo para participar do Desafio do Futuros Tech</p>
+            <p className="text-center text-neutral-500 mt-8 text-sm">Assista o vídeo completo para participar do Desafio do Futuros Tech</p>
           </div>
 
           {/* Brokers Carousel */}
-         
-
-
-         
+          <div className="max-w-7xl mx-auto px-4 py-16">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl md:text-4xl font-bold mb-6 bg-gradient-to-r from-red-500 via-red-400 to-red-600 bg-clip-text text-transparent animate-gradient">
+                NOSSOS RESULTADOS
+              </h2>
+              <p className="text-xl text-neutral-300 max-w-2xl mx-auto">
+                Confira os resultados mensais do nosso time
+              </p>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {months.map((month) => (
+                <div key={month.number} className="group bg-neutral-900/50 backdrop-blur-sm border border-neutral-800 rounded-xl p-6 hover:border-red-500/30 transition-all duration-300 hover:scale-105">
+                  <h3 className="text-2xl font-bold text-red-500 mb-4 group-hover:text-red-400 transition-colors duration-300">{month.name}</h3>
+                  <div className="space-y-4">
+                    <div className="flex justify-between items-center">
+                      <span className="text-neutral-400">Taxa de Acerto</span>
+                      <span className="text-red-500 font-bold group-hover:text-red-400 transition-colors duration-300">{monthlyResults[month.number as keyof typeof monthlyResults].winRate}%</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-neutral-400">Vitórias</span>
+                      <span className="text-red-500 font-bold group-hover:text-red-400 transition-colors duration-300">{monthlyResults[month.number as keyof typeof monthlyResults].wins}</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-neutral-400">Total</span>
+                      <span className="text-red-500 font-bold group-hover:text-red-400 transition-colors duration-300">R$ {monthlyResults[month.number as keyof typeof monthlyResults].total}</span>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </div>
