@@ -11,8 +11,8 @@ export default function CursoWebLead() {
   const whatsappLink = "https://chat.whatsapp.com/HUhsxJjMIHWG7pDf7uuz5T";
   
   useEffect(() => {
-    // Track the webinar-abril event when page loads
-    fbq.event('webinar-abril');
+    // Track a standard Lead event when page loads
+    fbq.event('Lead');
     
     const timer = setInterval(() => {
       setCountdown((prev) => {
