@@ -176,7 +176,6 @@ export default function Page() {
 
   return (
     <div className="font-montserrat bg-black text-white min-h-screen relative overflow-hidden">
-
       {/* Add padding to account for fixed header */}
       <div className="pt-[88px]">
         {/* Content wrapper */}

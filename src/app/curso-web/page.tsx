@@ -2,12 +2,50 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { Suspense } from "react";
+import { Suspense, useState } from "react";
+import { useRouter } from "next/navigation";
 
 function LiveContent() {
-  const handleEnterNow = () => {
-    // Redirect to the WhatsApp group
-    window.location.href = "https://chat.whatsapp.com/HUhsxJjMIHWG7pDf7uuz5T";
+  const router = useRouter();
+  const [showModal, setShowModal] = useState(false);
+  const [whatsapp, setWhatsapp] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  
+  const handleOpenModal = (e: React.MouseEvent) => {
+    e.preventDefault();
+    setShowModal(true);
+  };
+  
+  const handleCloseModal = () => {
+    setShowModal(false);
+    setError("");
+  };
+  
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    setError("");
+
+    try {
+      const response = await fetch("/api/curso-web", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ whatsapp }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Erro ao processar WhatsApp");
+      }
+
+      // Redirect to the lead page
+      router.push("/curso-web-lead");
+    } catch (err) {
+      setError("Erro ao processar WhatsApp. Tente novamente.");
+      setLoading(false);
+    }
   };
   
   return (
@@ -60,13 +98,60 @@ function LiveContent() {
                 <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-green-500/20 to-emerald-500/20 opacity-70 blur-xl group-hover:blur-2xl transition-all duration-500 animate-pulse"></div>
                 
                 <button 
-                  onClick={handleEnterNow}
+                  onClick={handleOpenModal}
                   className="relative inline-block w-full md:w-auto bg-gradient-to-r from-green-600 to-emerald-500 text-white font-bold rounded-xl px-12 py-6 text-lg md:text-xl
                   shadow-lg shadow-green-600/20 hover:shadow-green-500/40 hover:from-green-500 hover:to-emerald-400 transition-all transform hover:scale-105 tracking-wide"
                 >
                   Entrar no Grupo
                 </button>
               </div>
+              
+              {/* WhatsApp Modal */}
+              {showModal && (
+                <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4">
+                  <div className="bg-black border border-green-500/30 rounded-lg w-full max-w-md">
+                    <div className="p-6">
+                      <h3 className="text-xl md:text-2xl font-semibold text-green-400 mb-4">Qual número você quer colocar no grupo:</h3>
+                      
+                      <form onSubmit={handleSubmit} className="space-y-4">
+                        <div>
+                          <input
+                            type="tel"
+                            id="whatsapp"
+                            value={whatsapp}
+                            onChange={(e) => setWhatsapp(e.target.value)}
+                            placeholder="(00) 00000-0000"
+                            className="w-full px-4 py-3 bg-neutral-800 border border-neutral-700 rounded-md text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 text-base"
+                            required
+                          />
+                        </div>
+                        
+                        {error && (
+                          <p className="text-red-500 text-sm">{error}</p>
+                        )}
+                        
+                        <div className="flex space-x-3 pt-2">
+                          <button
+                            type="submit"
+                            disabled={loading}
+                            className="flex-1 bg-gradient-to-r from-green-600 to-emerald-500 text-white py-3 px-4 rounded-md font-bold text-base transition-all hover:from-green-500 hover:to-emerald-400 shadow-lg shadow-green-600/30 hover:shadow-green-500/50 transform hover:scale-105 uppercase tracking-wider disabled:opacity-50 disabled:cursor-not-allowed"
+                          >
+                            {loading ? "Processando..." : "ENVIAR"}
+                          </button>
+                          
+                          <button
+                            type="button"
+                            onClick={handleCloseModal}
+                            className="flex-1 bg-transparent border border-gray-600 text-gray-400 hover:text-white hover:border-gray-500 py-3 px-4 rounded-md transition-colors"
+                          >
+                            Cancelar
+                          </button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              )}
               
               {/* Video */}
               <div className="relative pb-[56.25%] h-0 rounded-2xl overflow-hidden shadow-2xl shadow-green-500/20 backdrop-blur-sm">

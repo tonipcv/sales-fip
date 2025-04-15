@@ -119,6 +119,15 @@ model CriptoWhatsappLead {
   @@map("cripto_whatsapp_leads")
 }
 
+model CursoWebLead {
+  id        String   @id @default(cuid())
+  whatsapp  String   @unique
+  createdAt DateTime @default(now())
+  checked   Boolean  @default(false)
+
+  @@map("curso_web_leads")
+}
+
 model UserSubmission {
   id             String   @id @default(cuid())
   name           String   @db.VarChar(255)
