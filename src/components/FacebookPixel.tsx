@@ -10,7 +10,7 @@ declare global {
   }
 }
 
-const FB_PIXEL_ID = '737017615149021';
+const FB_PIXEL_ID = '1203701254882500';
 
 export default function FacebookPixel() {
   const pathname = usePathname();
