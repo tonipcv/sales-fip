@@ -5,6 +5,14 @@ import Image from "next/image";
 import { Suspense, useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 
+interface UtmParams {
+  utm_source: string | undefined;
+  utm_medium: string | undefined;
+  utm_campaign: string | undefined;
+  utm_content: string | undefined;
+  utm_term: string | undefined;
+}
+
 function LiveContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -12,7 +20,7 @@ function LiveContent() {
   const [whatsapp, setWhatsapp] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const [utmParams, setUtmParams] = useState({
+  const [utmParams, setUtmParams] = useState<UtmParams>({
     utm_source: undefined,
     utm_medium: undefined,
     utm_campaign: undefined,
@@ -21,7 +29,7 @@ function LiveContent() {
   });
   
   useEffect(() => {
-    const params = {
+    const params: UtmParams = {
       utm_source: searchParams.get("utm_source") || undefined,
       utm_medium: searchParams.get("utm_medium") || undefined,
       utm_campaign: searchParams.get("utm_campaign") || undefined,
