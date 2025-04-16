@@ -2,16 +2,35 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { Suspense, useState } from "react";
-import { useRouter } from "next/navigation";
+import { Suspense, useState, useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 
 function LiveContent() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [showModal, setShowModal] = useState(false);
   const [whatsapp, setWhatsapp] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [utmParams, setUtmParams] = useState({
+    utm_source: "",
+    utm_medium: "",
+    utm_campaign: "",
+    utm_content: "",
+    utm_term: ""
+  });
   
+  useEffect(() => {
+    const params = {
+      utm_source: searchParams.get("utm_source") || "",
+      utm_medium: searchParams.get("utm_medium") || "",
+      utm_campaign: searchParams.get("utm_campaign") || "",
+      utm_content: searchParams.get("utm_content") || "",
+      utm_term: searchParams.get("utm_term") || ""
+    };
+    setUtmParams(params);
+  }, [searchParams]);
+
   const handleOpenModal = (e: React.MouseEvent) => {
     e.preventDefault();
     setShowModal(true);
@@ -33,7 +52,10 @@ function LiveContent() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ whatsapp }),
+        body: JSON.stringify({ 
+          whatsapp,
+          ...utmParams
+        }),
       });
 
       if (!response.ok) {
