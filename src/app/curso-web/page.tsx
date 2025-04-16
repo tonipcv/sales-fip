@@ -13,21 +13,22 @@ function LiveContent() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [utmParams, setUtmParams] = useState({
-    utm_source: "",
-    utm_medium: "",
-    utm_campaign: "",
-    utm_content: "",
-    utm_term: ""
+    utm_source: undefined,
+    utm_medium: undefined,
+    utm_campaign: undefined,
+    utm_content: undefined,
+    utm_term: undefined
   });
   
   useEffect(() => {
     const params = {
-      utm_source: searchParams.get("utm_source") || "",
-      utm_medium: searchParams.get("utm_medium") || "",
-      utm_campaign: searchParams.get("utm_campaign") || "",
-      utm_content: searchParams.get("utm_content") || "",
-      utm_term: searchParams.get("utm_term") || ""
+      utm_source: searchParams.get("utm_source") || undefined,
+      utm_medium: searchParams.get("utm_medium") || undefined,
+      utm_campaign: searchParams.get("utm_campaign") || undefined,
+      utm_content: searchParams.get("utm_content") || undefined,
+      utm_term: searchParams.get("utm_term") || undefined
     };
+    console.log('UTM params from URL:', params);
     setUtmParams(params);
   }, [searchParams]);
 
@@ -47,6 +48,12 @@ function LiveContent() {
     setError("");
 
     try {
+      // Filter out undefined UTM parameters
+      const filteredUtmParams = Object.fromEntries(
+        Object.entries(utmParams).filter(([_, value]) => value !== undefined)
+      );
+      
+      console.log('Submitting data:', { whatsapp, ...filteredUtmParams });
       const response = await fetch("/api/curso-web", {
         method: "POST",
         headers: {
@@ -54,18 +61,20 @@ function LiveContent() {
         },
         body: JSON.stringify({ 
           whatsapp,
-          ...utmParams
+          ...filteredUtmParams
         }),
       });
 
       if (!response.ok) {
-        throw new Error("Erro ao processar WhatsApp");
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Failed to submit');
       }
 
       // Redirect to the lead page
       router.push("/curso-web-lead");
     } catch (err) {
-      setError("Erro ao processar WhatsApp. Tente novamente.");
+      console.error('Error submitting form:', err);
+      setError(err instanceof Error ? err.message : "Erro ao processar WhatsApp. Tente novamente.");
       setLoading(false);
     }
   };
@@ -152,21 +161,13 @@ function LiveContent() {
                           <p className="text-red-500 text-sm">{error}</p>
                         )}
                         
-                        <div className="flex space-x-3 pt-2">
+                        <div className="flex pt-2">
                           <button
                             type="submit"
                             disabled={loading}
-                            className="flex-1 bg-gradient-to-r from-green-600 to-emerald-500 text-white py-3 px-4 rounded-md font-bold text-base transition-all hover:from-green-500 hover:to-emerald-400 shadow-lg shadow-green-600/30 hover:shadow-green-500/50 transform hover:scale-105 uppercase tracking-wider disabled:opacity-50 disabled:cursor-not-allowed"
+                            className="w-full bg-gradient-to-r from-green-600 to-emerald-500 text-white py-3 px-4 rounded-md font-bold text-base transition-all hover:from-green-500 hover:to-emerald-400 shadow-lg shadow-green-600/30 hover:shadow-green-500/50 transform hover:scale-105 uppercase tracking-wider disabled:opacity-50 disabled:cursor-not-allowed"
                           >
-                            {loading ? "Processando..." : "ENVIAR"}
-                          </button>
-                          
-                          <button
-                            type="button"
-                            onClick={handleCloseModal}
-                            className="flex-1 bg-transparent border border-gray-600 text-gray-400 hover:text-white hover:border-gray-500 py-3 px-4 rounded-md transition-colors"
-                          >
-                            Cancelar
+                            {loading ? "Processando..." : "CONTINUAR"}
                           </button>
                         </div>
                       </form>
