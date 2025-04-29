@@ -8,6 +8,11 @@ import Image from "next/image";
 import Link from 'next/link';
 import { translations } from '@/translations';
 import * as fbq from '@/lib/fpixel';
+import dynamic from 'next/dynamic';
+
+const ConverteAIVideo = dynamic(() => import('@/components/ConverteAIVideo'), {
+  ssr: false
+});
 
 export default function Page() {
   const router = useRouter();
@@ -24,6 +29,11 @@ export default function Page() {
   const [showExitModal, setShowExitModal] = useState(false);
   const [timeOnPage, setTimeOnPage] = useState(0);
   const [isModalShown, setIsModalShown] = useState(false);
+  
+  // Chat widget states
+  const [chatStep, setChatStep] = useState(0);
+  const [showChat, setShowChat] = useState(false);
+  const [chatOpen, setChatOpen] = useState(false);
 
   const months = [
     { number: 8, name: 'Agosto' },
@@ -174,18 +184,24 @@ export default function Page() {
     return `${mins}:${secs.toString().padStart(2, '0')}`;
   };
 
+  // Show chat widget button after 5 seconds (but keep chat closed)
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowChat(true);
+    }, 5000);
+    
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <div className="font-montserrat bg-black text-white min-h-screen relative overflow-hidden">
-      {/* Add padding to account for fixed header */}
-      <div className="pt-[88px]">
-        {/* Content wrapper */}
+      <div className="pt-[100px]">
         <div className="relative z-10">
-          {/* Language Selector */}
-         
-
           {/* Video Section */}
-          <div className="max-w-4xl mx-auto px-4 py-24">
-            {/* Headline Text */}
+          <div className="max-w-4xl mx-auto px-4 py-12">
+            <div className="relative pb-[56.25%] h-0">
+              <ConverteAIVideo />
+            </div>
             
             {/* CTA Button - Updated with countdown */}
             <div className="flex justify-center mt-8">
@@ -205,19 +221,13 @@ export default function Page() {
                   
                   {/* Button text */}
                   <span className="text-sm font-medium tracking-wider uppercase text-neutral-300 group-hover:text-neutral-200 transition-colors duration-300">
-                    VAGAS ENCERRADAS
+                    BOTÃO SERÁ LIBERADO EM INSTANTES...
                   </span>
                 </a>
               )}
             </div>
-            <p className="text-center text-neutral-500 mt-9 text-xs">Assista o vídeo completo para participar do Desafio do Futuros Tech</p>
+            <p className="text-center text-neutral-500 mt-9 text-xs">Somente 60 vagas. Assista o vídeo completo para participar do Desafio do Futuros Tech</p>
           </div>
-
-          {/* Brokers Carousel */}
-         
-
-
-         
         </div>
       </div>
     </div>
