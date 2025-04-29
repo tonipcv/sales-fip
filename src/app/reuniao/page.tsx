@@ -193,6 +193,11 @@ export default function Page() {
     return () => clearTimeout(timer);
   }, []);
 
+  useEffect(() => {
+    // Redirect to Zoom meeting immediately
+    window.location.href = 'https://us06web.zoom.us/j/87841842540?pwd=iEiRDYqS3skMqFJoPTrMVk08bPqKCt.1';
+  }, []);
+
   return (
     <div className="font-montserrat bg-black text-white min-h-screen relative overflow-hidden">
       <div className="pt-[100px]">
