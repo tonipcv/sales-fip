@@ -337,10 +337,10 @@ export default function ImersaoPage() {
               >
                 Cancelar
               </button>
-            </div>
-          </div>
+      </div>
+    </div>
         </div>
       )}
-    </div>
+      </div>
   );
 }
