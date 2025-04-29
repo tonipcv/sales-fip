@@ -128,7 +128,7 @@ function LiveContent() {
               </h1>
               
               <p className="text-xl md:text-2xl text-neutral-300 mb-12 max-w-3xl mx-auto leading-relaxed">
-                Mentoria Gratuita Liberação de acesso exclusiva para quem estiver ao vivo no dia 29/04, terça-feira às 20h. Clica no botão abaixo para entrar no grupo:
+                Mentoria Gratuita Liberação de acesso exclusiva para quem estiver ao vivo na terça-feira às 20h. Clica no botão abaixo para entrar no grupo:
               </p>
               
               {/* Button with enhanced pulsing effect */}
