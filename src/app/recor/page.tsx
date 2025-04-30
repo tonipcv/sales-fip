@@ -86,7 +86,7 @@ export default function QuizPage() {
             const { name, email, phone } = formData;
             const ddd = phone.substring(0, 2);
             const phoneNumber = phone.substring(2);
-            window.location.href = `https://pay.hotmart.com/H95976782G?preview_id=2621&preview_nonce=dc33ccea2a&name=${encodeURIComponent(name)}&email=${encodeURIComponent(email)}&phoneac=${encodeURIComponent(ddd)}&phonenumber=${encodeURIComponent(phoneNumber)}`;
+            window.location.href = `https://checkout.k17.com.br/subscribe/fip-desconto-unico`;
             return 0;
           }
           return prev - 1;
@@ -164,7 +164,7 @@ export default function QuizPage() {
         const { name, email, phone } = formData;
         const ddd = phone.substring(0, 2);
         const phoneNumber = phone.substring(2);
-        window.location.href = `https://pay.hotmart.com/H95976782G?preview_id=2621&preview_nonce=dc33ccea2a&name=${encodeURIComponent(name)}&email=${encodeURIComponent(email)}&phoneac=${encodeURIComponent(ddd)}&phonenumber=${encodeURIComponent(phoneNumber)}`;
+        window.location.href = `https://checkout.k17.com.br/subscribe/fip-desconto-unico`;
       } else {
         // Tratar erro
         console.error('Erro ao salvar dados:', result.error);
