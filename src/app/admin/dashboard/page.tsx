@@ -87,6 +87,18 @@ interface CriptoWhatsappLead {
   checked: boolean;
 }
 
+interface Partner {
+  id: string;
+  name: string;
+  hotmartEmail: string;
+  purchaseEmail: string;
+  whatsapp: string;
+  instagram: string;
+  marketingMethod: string;
+  createdAt: string;
+  approved: boolean;
+}
+
 interface DashboardData {
   whatsapp: {
     leads: WhatsAppLead[];
@@ -137,6 +149,12 @@ interface DashboardData {
     total: number;
     unique: number;
     duplicates: number;
+  };
+  partners: {
+    leads: Partner[];
+    total: number;
+    approved: number;
+    pending: number;
   };
 }
 
@@ -341,6 +359,16 @@ export default function AdminDashboard() {
             }`}
           >
             Cripto WhatsApp
+          </button>
+          <button
+            onClick={() => setActiveTab("partners")}
+            className={`px-4 py-2 text-sm font-medium transition-colors whitespace-nowrap ${
+              activeTab === "partners"
+                ? "text-green-400 border-b-2 border-green-400"
+                : "text-neutral-400 hover:text-white"
+            }`}
+          >
+            Parceiros
           </button>
         </div>
 
@@ -887,6 +915,62 @@ export default function AdminDashboard() {
                                 : "bg-yellow-500/20 text-yellow-400"
                             }`}>
                               {lead.checked ? "Verificado" : "Pendente"}
+                            </span>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            )}
+
+            {activeTab === "partners" && data?.partners && (
+              <div>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+                  <div className="bg-white/5 border border-white/10 rounded-lg p-4">
+                    <h3 className="text-sm text-neutral-400 mb-1">Total de Parceiros</h3>
+                    <p className="text-2xl font-bold text-white">{data.partners.total}</p>
+                  </div>
+                  <div className="bg-white/5 border border-white/10 rounded-lg p-4">
+                    <h3 className="text-sm text-neutral-400 mb-1">Aprovados</h3>
+                    <p className="text-2xl font-bold text-green-400">{data.partners.approved}</p>
+                  </div>
+                  <div className="bg-white/5 border border-white/10 rounded-lg p-4">
+                    <h3 className="text-sm text-neutral-400 mb-1">Pendentes</h3>
+                    <p className="text-2xl font-bold text-yellow-400">{data.partners.pending}</p>
+                  </div>
+                </div>
+
+                <div className="overflow-x-auto">
+                  <table className="w-full bg-white/5 rounded-lg">
+                    <thead>
+                      <tr className="border-b border-white/10">
+                        <th className="p-4 text-left">Data</th>
+                        <th className="p-4 text-left">Nome</th>
+                        <th className="p-4 text-left">Email Hotmart</th>
+                        <th className="p-4 text-left">Email de Compra</th>
+                        <th className="p-4 text-left">WhatsApp</th>
+                        <th className="p-4 text-left">Instagram</th>
+                        <th className="p-4 text-left">Status</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {data.partners.leads.map((partner) => (
+                        <tr key={partner.id} className="border-b border-white/10">
+                          <td className="p-4">{formatDate(partner.createdAt)}</td>
+                          <td className="p-4">{partner.name}</td>
+                          <td className="p-4">{partner.hotmartEmail}</td>
+                          <td className="p-4">{partner.purchaseEmail}</td>
+                          <td className="p-4">{partner.whatsapp}</td>
+                          <td className="p-4">{partner.instagram}</td>
+                          <td className="p-4">
+                            <span className={`px-2 py-1 rounded-full text-xs ${
+                              partner.approved 
+                                ? "bg-green-500/20 text-green-400" 
+                                : "bg-yellow-500/20 text-yellow-400"
+                            }`}>
+                              {partner.approved ? "Aprovado" : "Pendente"}
                             </span>
                           </td>
                         </tr>

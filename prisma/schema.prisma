@@ -154,4 +154,28 @@ model UserSubmission {
   @@index([phone])
   @@index([createdAt])
   @@map("user_submissions")
+}
+
+model Partner {
+  id              String   @id @default(cuid())
+  name            String   @db.VarChar(255)
+  hotmartEmail    String   @db.VarChar(255)
+  purchaseEmail   String   @db.VarChar(255)
+  whatsapp        String   @db.VarChar(20)
+  instagram       String   @db.VarChar(100)
+  marketingMethod String   @db.Text
+  utm_source      String?
+  utm_medium      String?
+  utm_campaign    String?
+  utm_content     String?
+  utm_term        String?
+  ipAddress       String?  @db.VarChar(50)
+  userAgent       String?  @db.Text
+  createdAt       DateTime @default(now()) @db.Timestamp(6)
+  approved        Boolean  @default(false)
+
+  @@index([hotmartEmail])
+  @@index([whatsapp])
+  @@index([createdAt])
+  @@map("partners")
 } 

@@ -34,6 +34,16 @@ export async function GET() {
       prisma.criptoWhatsappLead.findMany({ orderBy: { createdAt: "desc" } })
     ]);
 
+    // Query for partners
+    const partners = await prisma.partner.findMany({
+      orderBy: {
+        createdAt: 'desc'
+      }
+    });
+
+    const approvedPartners = partners.filter(partner => partner.approved);
+    const pendingPartners = partners.filter(partner => !partner.approved);
+
     // Calcular estatísticas do Cripto WhatsApp
     const uniqueWhatsapps = new Set(criptoWhatsappLeads.map(lead => lead.whatsapp));
     const total = criptoWhatsappLeads.length;
@@ -140,6 +150,12 @@ export async function GET() {
         total,
         unique,
         duplicates
+      },
+      partners: {
+        leads: partners,
+        total: partners.length,
+        approved: approvedPartners.length,
+        pending: pendingPartners.length
       }
     });
   } catch (error) {
