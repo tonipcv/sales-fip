@@ -29,6 +29,9 @@ function LiveContent() {
   });
   
   useEffect(() => {
+    // Redirect to whatsapp-bio
+    router.push("/whatsapp-bio");
+    
     const params: UtmParams = {
       utm_source: searchParams.get("utm_source") || undefined,
       utm_medium: searchParams.get("utm_medium") || undefined,
@@ -38,7 +41,7 @@ function LiveContent() {
     };
     console.log('UTM params from URL:', params);
     setUtmParams(params);
-  }, [searchParams]);
+  }, [searchParams, router]);
 
   const handleOpenModal = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -213,10 +216,12 @@ function LiveContent() {
 export default function Live() {
   return (
     <Suspense fallback={
-      <div className="min-h-screen bg-black text-white flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-500 mx-auto mb-4"></div>
-          <p className="text-neutral-400">Carregando...</p>
+      <div className="min-h-screen bg-black text-white flex flex-col items-center justify-center px-4">
+        <div className="w-full max-w-md text-center">
+          <h1 className="text-3xl md:text-4xl font-bold mb-8">Carregando...</h1>
+          <div className="flex justify-center">
+            <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-b-4 border-green-500"></div>
+          </div>
         </div>
       </div>
     }>
