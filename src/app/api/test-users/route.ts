@@ -20,9 +20,17 @@ export async function POST(request: Request) {
     // Hash the password
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Create the user
-    const user = await prisma.testUser.create({
-      data: {
+    // Create or update the user
+    const user = await prisma.testUser.upsert({
+      where: {
+        email: email,
+      },
+      update: {
+        phone,
+        password: hashedPassword,
+        operatingSystem,
+      },
+      create: {
         email,
         phone,
         password: hashedPassword,
@@ -41,14 +49,6 @@ export async function POST(request: Request) {
       },
     });
   } catch (error: any) {
-    // Handle unique constraint violation
-    if (error.code === 'P2002') {
-      return NextResponse.json(
-        { error: 'Email already registered' },
-        { status: 400 }
-      );
-    }
-
     console.error('Error creating test user:', error);
     return NextResponse.json(
       { error: 'Internal server error' },

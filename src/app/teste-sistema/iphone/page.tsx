@@ -1,9 +1,18 @@
 "use client";
 
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
 export default function IPhoneTutorial() {
+  const [copiedText, setCopiedText] = useState<string | null>(null);
+
+  const handleCopy = async (text: string, label: string) => {
+    await navigator.clipboard.writeText(text);
+    setCopiedText(label);
+    setTimeout(() => setCopiedText(null), 2000);
+  };
+
   return (
     <div className="min-h-screen bg-black text-white">
       <div className="max-w-4xl mx-auto px-4 py-8">
@@ -46,15 +55,31 @@ export default function IPhoneTutorial() {
               <div className="space-y-3">
                 <div>
                   <p className="text-neutral-400 mb-1">Login:</p>
-                  <p className="font-mono bg-neutral-900 p-2 rounded border border-neutral-800">
-                    futurostech01@gmail.com
-                  </p>
+                  <div className="flex items-center gap-2">
+                    <p className="font-mono bg-neutral-900 p-2 rounded border border-neutral-800 flex-grow">
+                      futurostech01@gmail.com
+                    </p>
+                    <button
+                      onClick={() => handleCopy('futurostech01@gmail.com', 'email')}
+                      className="px-3 py-2 bg-neutral-800 hover:bg-neutral-700 rounded text-sm font-medium transition-all duration-200"
+                    >
+                      {copiedText === 'email' ? 'Copiado!' : 'Copiar'}
+                    </button>
+                  </div>
                 </div>
                 <div>
                   <p className="text-neutral-400 mb-1">Senha:</p>
-                  <p className="font-mono bg-neutral-900 p-2 rounded border border-neutral-800">
-                    milionario27@
-                  </p>
+                  <div className="flex items-center gap-2">
+                    <p className="font-mono bg-neutral-900 p-2 rounded border border-neutral-800 flex-grow">
+                      123Teste@
+                    </p>
+                    <button
+                      onClick={() => handleCopy('123Teste@', 'password')}
+                      className="px-3 py-2 bg-neutral-800 hover:bg-neutral-700 rounded text-sm font-medium transition-all duration-200"
+                    >
+                      {copiedText === 'password' ? 'Copiado!' : 'Copiar'}
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
