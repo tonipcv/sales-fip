@@ -11,7 +11,7 @@ export default function TesteLiberadoForm() {
     email: "",
     phone: "",
     password: "",
-    operatingSystem: "android"
+    operatingSystem: "iphone"
   });
   const [isLoading, setIsLoading] = useState(false);
 
@@ -135,8 +135,8 @@ export default function TesteLiberadoForm() {
               onChange={handleChange}
               className="w-full bg-white/10 border-2 border-neutral-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-neutral-500 focus:ring-1 focus:ring-neutral-500 transition-all shadow-[0_0_15px_rgba(0,0,0,0.2)]"
             >
-              <option value="android">Android</option>
               <option value="iphone">iPhone</option>
+              <option value="android">Android</option>
             </select>
           </div>
 

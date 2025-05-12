@@ -74,6 +74,30 @@ export default function TesteLiberadoVideo() {
             />
           </div>
         </div>
+
+        {/* Login Credentials Section */}
+        <div className="mt-8 p-6 bg-white/5 rounded-xl border-2 border-neutral-700 shadow-lg">
+          <h3 className="text-xl font-medium text-center mb-4 text-green-500">
+            Informações de Acesso
+          </h3>
+          
+          <div className="space-y-4">
+            <div>
+              <p className="text-neutral-400">Link:</p>
+              <p className="text-white font-medium">ai.futurostech.com</p>
+            </div>
+            
+            <div>
+              <p className="text-neutral-400">Login:</p>
+              <p className="text-white font-medium">futurostech01@gmail.com</p>
+            </div>
+            
+            <div>
+              <p className="text-neutral-400">Senha:</p>
+              <p className="text-white font-medium">milionario27@</p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
