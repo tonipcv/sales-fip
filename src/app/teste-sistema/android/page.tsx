@@ -8,16 +8,15 @@ export default function AndroidTutorial() {
   const [copiedText, setCopiedText] = useState<string | null>(null);
 
   useEffect(() => {
-    // Add the video script dynamically for Android
+    // Add the Panda Video script dynamically
     const script = document.createElement("script");
-    script.src = "https://scripts.converteai.net/32ff2495-c71e-49ba-811b-00b5b49c517f/players/682119a1e3b3cfc4a13a438d/player.js";
+    script.src = "https://player-vz-7b6cf9e4-8bf.tv.pandavideo.com.br/embed/js/hls.js";
     script.async = true;
-    script.id = "scr_682119a1e3b3cfc4a13a438d";
     document.head.appendChild(script);
 
     return () => {
       // Cleanup script when component unmounts
-      const scriptElement = document.getElementById("scr_682119a1e3b3cfc4a13a438d");
+      const scriptElement = document.querySelector('script[src="https://player-vz-7b6cf9e4-8bf.tv.pandavideo.com.br/embed/js/hls.js"]');
       if (scriptElement) {
         scriptElement.remove();
       }
@@ -50,34 +49,19 @@ export default function AndroidTutorial() {
             Tutorial de Instalação para Android
           </h2>
           <div className="w-full">
-            <div 
-              id="vid_682119a1e3b3cfc4a13a438d" 
-              style={{ position: "relative", width: "100%", padding: "56.25% 0 0" }}
-            >
-              <img 
-                id="thumb_682119a1e3b3cfc4a13a438d" 
-                src="https://images.converteai.net/32ff2495-c71e-49ba-811b-00b5b49c517f/players/682119a1e3b3cfc4a13a438d/thumbnail.jpg" 
+            <div style={{ position: "relative", paddingTop: "56.25%" }}>
+              <iframe
+                src="https://player-vz-7b6cf9e4-8bf.tv.pandavideo.com.br/embed/?v=7c648f09-df06-4cb6-a08f-8a4f85a344a9"
                 style={{
+                  border: "none",
                   position: "absolute",
                   top: 0,
                   left: 0,
-                  width: "100%",
-                  height: "100%",
-                  objectFit: "cover",
-                  display: "block"
-                }}
-                alt="thumbnail"
-              />
-              <div 
-                id="backdrop_682119a1e3b3cfc4a13a438d" 
-                style={{
-                  WebkitBackdropFilter: "blur(5px)",
-                  backdropFilter: "blur(5px)",
-                  position: "absolute",
-                  top: 0,
                   height: "100%",
                   width: "100%"
                 }}
+                allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture"
+                allowFullScreen
               />
             </div>
           </div>
