@@ -178,4 +178,14 @@ model Partner {
   @@index([whatsapp])
   @@index([createdAt])
   @@map("partners")
+}
+
+model TestUser {
+  id              String    @id @default(cuid())
+  email           String    @unique
+  phone           String
+  password        String
+  operatingSystem String
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
 } 
