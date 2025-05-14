@@ -178,7 +178,7 @@ model Partner {
   @@index([whatsapp])
   @@index([createdAt])
   @@map("partners")
-}
+} 
 
 model TestUser {
   id              String    @id @default(cuid())

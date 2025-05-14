@@ -14,7 +14,7 @@ export default function TesteRedirect() {
     "Preparando seu acesso...",
     "Redirecionando para o grupo no WhatsApp..."
   ];
-
+  
   useEffect(() => {
     // Change messages every 2 seconds (faster than other pages)
     const messageInterval = setInterval(() => {
@@ -40,7 +40,7 @@ export default function TesteRedirect() {
         return prev + 2;
       });
     }, 100); // Complete in about 5 seconds
-
+    
     return () => {
       clearInterval(messageInterval);
       clearInterval(progressInterval);

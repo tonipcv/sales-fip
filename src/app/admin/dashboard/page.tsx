@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 interface Lead {
   id: string;
@@ -370,6 +371,18 @@ export default function AdminDashboard() {
           >
             Parceiros
           </button>
+          <Link
+            href="/admin/test-users"
+            className="px-4 py-2 text-sm font-medium transition-colors whitespace-nowrap text-neutral-400 hover:text-white"
+          >
+            Usuários de Teste
+          </Link>
+          <Link
+            href="/admin/partners"
+            className="px-4 py-2 text-sm font-medium transition-colors whitespace-nowrap text-neutral-400 hover:text-white"
+          >
+            Gerenciar Parceiros
+          </Link>
         </div>
 
         {/* Global controls */}
