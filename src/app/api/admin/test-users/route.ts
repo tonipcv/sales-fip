@@ -5,7 +5,7 @@ import { headers } from 'next/headers';
 export async function GET() {
   try {
     // Verify admin token
-    const headersList = headers();
+    const headersList = await headers();
     const authToken = headersList.get("x-admin-token");
 
     if (!authToken || authToken !== process.env.ADMIN_TOKEN) {
