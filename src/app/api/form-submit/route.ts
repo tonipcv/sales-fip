@@ -5,11 +5,16 @@ const prisma = new PrismaClient();
 
 export async function POST(request: NextRequest) {
   try {
+    console.log("📝 Recebendo nova submissão...");
+    
     const body = await request.json();
     const { name, email, phone, acceptedTerms } = body;
+    
+    console.log("📋 Dados recebidos:", { name, email, phone, acceptedTerms });
 
     // Validação
     if (!name || !email || !phone || acceptedTerms !== true) {
+      console.error("❌ Validação falhou:", { name, email, phone, acceptedTerms });
       return NextResponse.json(
         { error: "Todos os campos são obrigatórios" },
         { status: 400 }
@@ -19,6 +24,12 @@ export async function POST(request: NextRequest) {
     // Extrair parâmetros UTM da URL de referência se disponível
     const referer = request.headers.get("referer") || "";
     const urlParams = new URL(referer).searchParams;
+    
+    console.log("🔍 UTM Params:", {
+      source: urlParams.get("utm_source"),
+      medium: urlParams.get("utm_medium"),
+      campaign: urlParams.get("utm_campaign")
+    });
     
     // Criar o registro no banco usando Prisma
     const submission = await prisma.userSubmission.create({
@@ -38,6 +49,8 @@ export async function POST(request: NextRequest) {
       },
     });
 
+    console.log("✅ Dados salvos com sucesso! ID:", submission.id);
+
     return NextResponse.json({ 
       success: true,
       data: {
@@ -46,7 +59,7 @@ export async function POST(request: NextRequest) {
       }
     });
   } catch (error) {
-    console.error("Erro ao salvar dados:", error);
+    console.error("❌ Erro ao salvar dados:", error);
     return NextResponse.json(
       { error: "Erro ao processar solicitação" },
       { status: 500 }
