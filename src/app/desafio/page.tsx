@@ -86,7 +86,7 @@ export default function QuizPage() {
             const { name, email, phone } = formData;
             const ddd = phone.substring(0, 2);
             const phoneNumber = phone.substring(2);
-            window.location.href = `https://checkout.k17.com.br/subscribe/fip-desconto-unico`;
+            window.location.href = `https://checkout.k17.com.br/subscribe/anual-futurostech`;
             return 0;
           }
           return prev - 1;
@@ -164,7 +164,7 @@ export default function QuizPage() {
         const { name, email, phone } = formData;
         const ddd = phone.substring(0, 2);
         const phoneNumber = phone.substring(2);
-        window.location.href = `https://checkout.k17.com.br/subscribe/fip-desconto-unico`;
+        window.location.href = `https://checkout.k17.com.br/subscribe/anual-futurostech`;
       } else {
         // Tratar erro
         console.error('Erro ao salvar dados:', result.error);
@@ -182,12 +182,12 @@ export default function QuizPage() {
     switch (step.type) {
       case "continue":
         return (
-          <div className="text-center">
-            <h1 className="text-2xl font-bold mb-4 text-white">{step.title}</h1>
-            <p className="text-lg mb-8 text-neutral-400">{step.subtitle}</p>
+          <div className="text-center transform transition-all duration-300">
+            <h1 className="text-3xl font-bold mb-6 text-white bg-clip-text text-transparent bg-gradient-to-r from-white to-neutral-300">{step.title}</h1>
+            <p className="text-lg mb-10 text-neutral-400">{step.subtitle}</p>
             <button
               onClick={handleContinue}
-              className="px-8 py-3 bg-[#00FF00] text-black font-bold rounded-lg hover:bg-[#00FF00]/90 transition-colors"
+              className="px-10 py-4 bg-gradient-to-r from-green-200 to-green-100 text-black font-bold rounded-xl hover:scale-105 hover:shadow-[0_0_20px_rgba(134,239,172,0.3)] transition-all duration-300 transform"
             >
               Continuar
             </button>
@@ -196,44 +196,44 @@ export default function QuizPage() {
 
       case "yesno":
         return (
-          <div className="text-center">
+          <div className="text-center transform transition-all duration-300">
             {currentStep === 3 ? (
               <>
-                <h1 className="text-xl md:text-2xl font-bold mb-8 md:mb-12 text-white">Proposta</h1>
-                <div className="max-w-2xl mx-auto space-y-4 md:space-y-8 mb-8 md:mb-12">
-                  <div className="flex flex-col items-center gap-4 md:gap-6">
-                    <div className="flex items-center gap-3">
-                      <span className="text-2xl md:text-4xl font-bold text-neutral-500 line-through">R$ 3.000</span>
+                <h1 className="text-2xl md:text-3xl font-bold mb-10 md:mb-12 text-white bg-clip-text text-transparent bg-gradient-to-r from-white to-neutral-300">Proposta</h1>
+                <div className="max-w-2xl mx-auto space-y-6 md:space-y-8 mb-10 md:mb-12">
+                  <div className="flex flex-col items-center gap-6 md:gap-8">
+                    <div className="flex items-center gap-4">
+                      <span className="text-3xl md:text-5xl font-bold text-neutral-500 line-through">R$ 3.000</span>
                     </div>
-                    <div className="text-[#00FF00] text-xl md:text-3xl font-bold tracking-wide">
+                    <div className="text-[#00FF00] text-2xl md:text-4xl font-bold tracking-wide">
                       POR: VALOR SUPER BAIXO
                     </div>
-                    <div className="flex flex-col items-center gap-2 md:gap-4">
-                      <div className="flex items-center justify-center gap-2 text-white bg-[#1A1A1A] px-4 md:px-6 py-2 md:py-3 rounded-lg">
-                        <Shield className="w-4 h-4 md:w-6 md:h-6" />
-                        <span className="text-base md:text-lg font-bold">RISCO ZERO</span>
+                    <div className="flex flex-col items-center gap-4 md:gap-6">
+                      <div className="flex items-center justify-center gap-3 text-white bg-gradient-to-r from-[#1A1A1A] to-[#252525] px-6 md:px-8 py-3 md:py-4 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300">
+                        <Shield className="w-5 h-5 md:w-6 md:h-6 text-[#00FF00]" />
+                        <span className="text-lg md:text-xl font-bold">RISCO ZERO</span>
                       </div>
-                      <div className="flex items-center justify-center gap-2 text-white bg-[#1A1A1A] px-4 md:px-6 py-2 md:py-3 rounded-lg">
-                        <Percent className="w-4 h-4 md:w-6 md:h-6" />
-                        <span className="text-base md:text-lg font-bold">SUPER REDUÇÃO</span>
+                      <div className="flex items-center justify-center gap-3 text-white bg-gradient-to-r from-[#1A1A1A] to-[#252525] px-6 md:px-8 py-3 md:py-4 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300">
+                        <Percent className="w-5 h-5 md:w-6 md:h-6 text-[#00FF00]" />
+                        <span className="text-lg md:text-xl font-bold">SUPER REDUÇÃO</span>
                       </div>
-                      <div className="text-neutral-400 text-base md:text-lg font-medium">
+                      <div className="text-neutral-300 text-lg md:text-xl font-medium mt-2">
                         + GARANTIA
                       </div>
                     </div>
                   </div>
                 </div>
-                <p className="text-base md:text-lg mb-6 md:mb-8 text-neutral-400">É do seu agrado?</p>
-                <div className="flex justify-center gap-3 md:gap-4">
+                <p className="text-lg md:text-xl mb-8 md:mb-10 text-neutral-300">É do seu agrado?</p>
+                <div className="flex justify-center gap-4 md:gap-6">
                   <button
                     onClick={() => handleAnswer(true)}
-                    className="px-8 md:px-12 py-3 md:py-4 bg-[#00FF00] text-black font-bold rounded-lg hover:bg-[#00FF00]/90 transition-colors text-base md:text-lg"
+                    className="px-10 md:px-14 py-4 md:py-5 bg-gradient-to-r from-green-200 to-green-100 text-black font-bold rounded-xl hover:scale-105 hover:shadow-[0_0_20px_rgba(134,239,172,0.3)] transition-all duration-300 text-lg md:text-xl"
                   >
                     Sim
                   </button>
                   <button
                     onClick={() => handleAnswer(false)}
-                    className="px-8 md:px-12 py-3 md:py-4 bg-neutral-800 text-white font-bold rounded-lg hover:bg-neutral-700 transition-colors text-base md:text-lg"
+                    className="px-10 md:px-14 py-4 md:py-5 bg-gradient-to-r from-red-200 to-red-100 text-red-700 font-bold rounded-xl hover:scale-105 transition-all duration-300 text-lg md:text-xl"
                   >
                     Não
                   </button>
@@ -241,18 +241,18 @@ export default function QuizPage() {
               </>
             ) : (
               <>
-                <h1 className="text-2xl font-bold mb-4 text-white">{step.title}</h1>
-                {step.question && <p className="text-lg mb-8 text-neutral-400">{step.question}</p>}
-                <div className="flex justify-center gap-4">
+                <h1 className="text-2xl md:text-3xl font-bold mb-6 text-white bg-clip-text text-transparent bg-gradient-to-r from-white to-neutral-300">{step.title}</h1>
+                {step.question && <p className="text-lg md:text-xl mb-10 text-neutral-400">{step.question}</p>}
+                <div className="flex justify-center gap-6">
                   <button
                     onClick={() => handleAnswer(true)}
-                    className="px-8 py-3 bg-[#00FF00] text-black font-bold rounded-lg hover:bg-[#00FF00]/90 transition-colors"
+                    className="px-10 py-4 bg-gradient-to-r from-green-200 to-green-100 text-black font-bold rounded-xl hover:scale-105 hover:shadow-[0_0_20px_rgba(134,239,172,0.3)] transition-all duration-300"
                   >
                     Sim
                   </button>
                   <button
                     onClick={() => handleAnswer(false)}
-                    className="px-8 py-3 bg-red-500 text-white font-bold rounded-lg hover:bg-red-600 transition-colors"
+                    className="px-10 py-4 bg-gradient-to-r from-red-200 to-red-100 text-red-700 font-bold rounded-xl hover:scale-105 transition-all duration-300"
                   >
                     Não
                   </button>
@@ -264,18 +264,18 @@ export default function QuizPage() {
 
       case "carousel":
         return (
-          <div className="text-center">
-            <h1 className="text-2xl font-bold mb-8 text-white">{step.title}</h1>
+          <div className="text-center transform transition-all duration-300">
+            <h1 className="text-2xl md:text-3xl font-bold mb-10 text-white bg-clip-text text-transparent bg-gradient-to-r from-white to-neutral-300">{step.title}</h1>
             <div className="max-w-4xl mx-auto">
-              <div className="grid grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {[1, 2, 3].map((num) => (
-                  <div key={num} className="relative">
+                  <div key={num} className="relative transform hover:scale-105 transition-all duration-300">
                     <Image
                       src={`/depoimento${num}.webp`}
                       alt={`Depoimento ${num}`}
                       width={300}
                       height={225}
-                      className="w-full h-auto rounded-lg object-cover"
+                      className="w-full h-auto rounded-xl shadow-xl object-cover"
                       priority={true}
                     />
                   </div>
@@ -283,7 +283,7 @@ export default function QuizPage() {
               </div>
               <button
                 onClick={handleContinue}
-                className="mt-8 px-8 py-3 bg-[#00FF00] text-black font-bold rounded-lg hover:bg-[#00FF00]/90 transition-colors"
+                className="mt-10 px-10 py-4 bg-gradient-to-r from-green-200 to-green-100 text-black font-bold rounded-xl hover:scale-105 hover:shadow-[0_0_20px_rgba(134,239,172,0.3)] transition-all duration-300"
               >
                 Continuar
               </button>
@@ -293,15 +293,17 @@ export default function QuizPage() {
 
       case "accept":
         return (
-          <div className="text-center">
-            <h1 className="text-2xl font-bold mb-12 text-white">{step.title}</h1>
+          <div className="text-center transform transition-all duration-300">
+            <h1 className="text-2xl md:text-3xl font-bold mb-12 text-white bg-clip-text text-transparent bg-gradient-to-r from-white to-neutral-300">{step.title}</h1>
             <div className="max-w-2xl mx-auto space-y-6 mb-12">
               {step.benefits?.map((benefit, index) => (
-                <div key={index} className="flex items-start gap-3 p-4 bg-[#1A1A1A] rounded-lg">
+                <div key={index} className="flex items-start gap-4 p-6 bg-gradient-to-r from-[#1A1A1A] to-[#252525] rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-[1.02]">
                   <div className="flex-shrink-0 mt-1">
-                    <Check className="w-5 h-5 text-[#00FF00]" />
+                    <div className="w-6 h-6 rounded-full bg-[#00FF00]/20 flex items-center justify-center">
+                      <Check className="w-4 h-4 text-[#00FF00]" />
+                    </div>
                   </div>
-                  <p className="text-lg text-neutral-300 text-left">
+                  <p className="text-lg text-neutral-200 text-left">
                     {benefit}
                   </p>
                 </div>
@@ -309,7 +311,7 @@ export default function QuizPage() {
             </div>
             <button
               onClick={handleAcceptChallenge}
-              className="px-12 py-4 bg-[#00FF00] text-black font-bold rounded-lg hover:bg-[#00FF00]/90 transition-colors text-lg"
+              className="px-12 py-4 bg-gradient-to-r from-green-200 to-green-100 text-black font-bold rounded-xl hover:scale-105 hover:shadow-[0_0_20px_rgba(134,239,172,0.3)] transition-all duration-300 text-lg"
             >
               Aceitar desafio
             </button>
@@ -318,21 +320,21 @@ export default function QuizPage() {
 
       case "guarantees":
         return (
-          <div className="text-center">
-            <h1 className="text-2xl font-bold mb-8 text-white">{step.title}</h1>
+          <div className="text-center transform transition-all duration-300">
+            <h1 className="text-2xl md:text-3xl font-bold mb-10 text-white bg-clip-text text-transparent bg-gradient-to-r from-white to-neutral-300">{step.title}</h1>
             <div className="max-w-2xl mx-auto space-y-6">
               {step.guarantees?.map((guarantee, index) => (
                 <div
                   key={index}
-                  className="bg-[#1A1A1A] p-6 rounded-lg text-left"
+                  className="bg-gradient-to-r from-[#1A1A1A] to-[#252525] p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-[1.02]"
                 >
-                  <div className="flex items-start gap-3">
-                    <div className="w-6 h-6 rounded-full bg-[#00FF00] flex items-center justify-center flex-shrink-0">
-                      <Check className="w-4 h-4 text-black" />
+                  <div className="flex items-start gap-4">
+                    <div className="w-8 h-8 rounded-full bg-gradient-to-r from-green-200 to-green-100 flex items-center justify-center flex-shrink-0">
+                      <Check className="w-5 h-5 text-black" />
                     </div>
-                    <p className="text-neutral-300">
+                    <p className="text-neutral-200 text-lg">
                       {guarantee.replace("(Leia os termos)", "")}
-                      <span className="text-neutral-500 text-sm"> (Leia os termos)</span>
+                      <span className="text-neutral-500 text-sm ml-1">(Leia os termos)</span>
                     </p>
                   </div>
                 </div>
@@ -340,7 +342,7 @@ export default function QuizPage() {
             </div>
             <button
               onClick={handleContinue}
-              className="mt-8 px-8 py-3 bg-[#00FF00] text-black font-bold rounded-lg hover:bg-[#00FF00]/90 transition-colors"
+              className="mt-10 px-10 py-4 bg-gradient-to-r from-green-200 to-green-100 text-black font-bold rounded-xl hover:scale-105 hover:shadow-[0_0_20px_rgba(134,239,172,0.3)] transition-all duration-300"
             >
               Continuar
             </button>
@@ -349,16 +351,16 @@ export default function QuizPage() {
 
       case "form":
         return (
-          <div className="text-center">
-            <h1 className="text-2xl font-bold mb-8 text-white">{step.title}</h1>
-            <div className="max-w-md mx-auto space-y-4">
+          <div className="text-center transform transition-all duration-300">
+            <h1 className="text-2xl md:text-3xl font-bold mb-10 text-white bg-clip-text text-transparent bg-gradient-to-r from-white to-neutral-300">{step.title}</h1>
+            <div className="max-w-md mx-auto space-y-6">
               <input
                 type="text"
                 name="name"
                 value={formData.name}
                 onChange={handleInputChange}
                 placeholder="Nome completo"
-                className="w-full px-4 py-3 bg-[#1A1A1A] text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-[#00FF00]"
+                className="w-full px-6 py-4 bg-gradient-to-r from-[#1A1A1A] to-[#252525] text-white rounded-xl focus:outline-none focus:ring-2 focus:ring-[#00FF00] transition-all duration-300 placeholder-neutral-500"
                 required
               />
               <input
@@ -367,7 +369,7 @@ export default function QuizPage() {
                 value={formData.email}
                 onChange={handleInputChange}
                 placeholder="E-mail"
-                className="w-full px-4 py-3 bg-[#1A1A1A] text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-[#00FF00]"
+                className="w-full px-6 py-4 bg-gradient-to-r from-[#1A1A1A] to-[#252525] text-white rounded-xl focus:outline-none focus:ring-2 focus:ring-[#00FF00] transition-all duration-300 placeholder-neutral-500"
                 required
               />
               <input
@@ -376,16 +378,16 @@ export default function QuizPage() {
                 value={formData.phone}
                 onChange={handleInputChange}
                 placeholder="DDD + Telefone (apenas números)"
-                className="w-full px-4 py-3 bg-[#1A1A1A] text-white rounded-lg focus:outline-none"
+                className="w-full px-6 py-4 bg-gradient-to-r from-[#1A1A1A] to-[#252525] text-white rounded-xl focus:outline-none focus:ring-2 focus:ring-[#00FF00] transition-all duration-300 placeholder-neutral-500"
                 required
               />
-              <div className="flex items-start justify-center gap-2 text-neutral-400 text-sm">
+              <div className="flex items-start justify-center gap-3 text-neutral-400 text-sm">
                 <input
                   type="checkbox"
                   id="terms-checkbox"
                   checked={acceptedTerms}
                   onChange={(e) => setAcceptedTerms(e.target.checked)}
-                  className="w-4 h-4 mt-1 rounded border-neutral-700 bg-[#1A1A1A] text-[#00FF00] focus:ring-0"
+                  className="w-5 h-5 mt-1 rounded border-neutral-700 bg-[#1A1A1A] text-[#00FF00] focus:ring-1 focus:ring-[#00FF00] transition-colors duration-200"
                   required
                 />
                 <label htmlFor="terms-checkbox" className="text-left">
@@ -394,7 +396,7 @@ export default function QuizPage() {
                     href="/termos" 
                     target="_blank" 
                     rel="noopener noreferrer"
-                    className="text-[#00FF00] hover:underline"
+                    className="text-[#00FF00] hover:text-[#00CC00] transition-colors duration-300 hover:underline"
                   >
                     termos de uso
                   </a>
@@ -404,10 +406,10 @@ export default function QuizPage() {
               <button
                 onClick={handleSubmit}
                 disabled={!formData.name || !formData.email || !formData.phone || !acceptedTerms}
-                className={`w-full px-12 py-4 bg-[#00FF00] text-black font-bold rounded-lg transition-colors text-lg ${
+                className={`w-full px-12 py-4 bg-gradient-to-r from-green-200 to-green-100 text-black font-bold rounded-xl transition-all duration-300 text-lg transform ${
                   !formData.name || !formData.email || !formData.phone || !acceptedTerms
                     ? "opacity-50 cursor-not-allowed"
-                    : "hover:bg-[#00FF00]/90"
+                    : "hover:scale-105 hover:shadow-[0_0_20px_rgba(134,239,172,0.3)]"
                 }`}
               >
                 Continuar
@@ -418,14 +420,14 @@ export default function QuizPage() {
 
       case "redirect":
         return (
-          <div className="text-center">
-            <h1 className="text-2xl font-bold mb-8 text-white">
+          <div className="text-center transform transition-all duration-300">
+            <h1 className="text-2xl md:text-3xl font-bold mb-10 text-white bg-clip-text text-transparent bg-gradient-to-r from-white to-neutral-300">
               {step.message ? step.message(formData.name) : step.title}
             </h1>
-            <p className="text-lg text-neutral-400 mb-4">Clique no botão abaixo para continuar:</p>
+            <p className="text-lg text-neutral-400 mb-8">Clique no botão abaixo para continuar:</p>
             <button
               onClick={handleSubmit}
-              className="px-12 py-4 bg-[#00FF00] text-black font-bold rounded-lg hover:bg-[#00FF00]/90 transition-colors text-lg"
+              className="px-12 py-4 bg-gradient-to-r from-green-200 to-green-100 text-black font-bold rounded-xl hover:scale-105 hover:shadow-[0_0_20px_rgba(134,239,172,0.3)] transition-all duration-300 text-lg transform"
             >
               Continuar para o Pagamento
             </button>
@@ -438,47 +440,49 @@ export default function QuizPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0A0A0A] flex flex-col">
+    <div className="min-h-screen bg-gradient-to-br from-[#0A0A0A] via-[#121212] to-[#0A0A0A] flex flex-col">
       <div className="flex-1">
-        <div className="max-w-4xl mx-auto px-4 py-8">
-          <div className="flex justify-center mb-8">
+        <div className="max-w-4xl mx-auto px-4 py-12">
+          <div className="flex justify-center mb-12 transform hover:scale-105 transition-transform duration-300">
             <Image
-              src="/logo.jpg"
+              src="/logo.png"
               alt="Logo"
               width={200}
               height={100}
-              className="w-auto h-12"
+              className="w-auto h-16 rounded-lg shadow-lg"
             />
           </div>
 
           {/* Timer */}
-          <div className="text-center mb-8">
-            <div className="inline-block px-6 py-2 bg-[#1A1A1A] rounded-lg">
-              <span className="text-white font-bold text-xl">{formatTime(quizTimer)}</span>
+          <div className="text-center mb-12">
+            <div className="inline-block px-8 py-3 bg-gradient-to-r from-[#1A1A1A] to-[#252525] rounded-xl shadow-xl">
+              <span className="text-white font-bold text-2xl tracking-wider">{formatTime(quizTimer)}</span>
             </div>
           </div>
 
           {currentStep > 0 && (
             <button
               onClick={handleBack}
-              className="mb-8 flex items-center text-neutral-400 hover:text-white transition-colors"
+              className="mb-8 flex items-center text-neutral-400 hover:text-white transition-all duration-300 hover:translate-x-[-4px]"
             >
               <ChevronLeft className="w-5 h-5 mr-2" />
               Voltar
             </button>
           )}
 
-          {renderStep()}
+          <div className="bg-[#1A1A1A]/60 backdrop-blur-sm p-8 rounded-2xl shadow-2xl border border-white/5">
+            {renderStep()}
+          </div>
 
           {/* Progress Bar */}
-          <div className="mt-8">
-            <div className="w-full bg-[#1A1A1A] rounded-full h-2">
+          <div className="mt-12">
+            <div className="w-full bg-[#1A1A1A] rounded-full h-3 shadow-inner">
               <div
-                className="bg-[#00FF00] h-2 rounded-full transition-all duration-300"
+                className="bg-gradient-to-r from-green-200 to-green-100 h-3 rounded-full transition-all duration-500 shadow-lg"
                 style={{ width: `${progress}%` }}
               />
             </div>
-            <div className="text-center mt-2 text-neutral-400 text-sm">
+            <div className="text-center mt-3 text-neutral-400 text-sm font-medium">
               {currentStep + 1} de {steps.length} passos
             </div>
           </div>
@@ -486,9 +490,9 @@ export default function QuizPage() {
       </div>
 
       {/* Footer Disclaimer */}
-      <footer className="bg-[#0A0A0A] border-t border-neutral-800 p-4 mt-16">
+      <footer className="bg-[#0A0A0A]/80 backdrop-blur-sm border-t border-white/5 p-6 mt-16">
         <div className="max-w-4xl mx-auto">
-          <p className="text-neutral-500 text-[10px] md:text-xs text-center">
+          <p className="text-neutral-500 text-[11px] md:text-sm text-center leading-relaxed">
             Disclaimer: Ao continuar, você declara que leu, compreendeu e concorda com os nossos Termos de Uso e com a Política de Garantia Condicional. Os resultados podem variar de acordo com a disciplina, execução e gestão de risco do usuário. Esta oferta não constitui promessa de ganhos financeiros, e a garantia de reembolso é válida apenas mediante o cumprimento integral dos critérios estabelecidos nos termos.
           </p>
         </div>
