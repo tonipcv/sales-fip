@@ -747,13 +747,13 @@ export default function Page() {
                 {/* Preços e botão */}
                 <div className="text-center pt-6 border-t border-white/20">
                   <div className="text-neutral-400 line-through text-sm">De: R$2.997</div>
-                  <div className="text-3xl font-medium text-white">12x R$97,04</div>
+                  <div className="text-3xl font-medium text-white">12x R$104,04</div>
                   <div className="text-lg text-green-400 mt-1 font-medium">ou R$997 à vista (10% off)</div>
                   
                   {/* Botão simplificado */}
                   <div className="mt-8 mb-4 w-full">
                     <a 
-                      href="https://checkout.k17.com.br/subscribe/anual-futurostech"
+                      href="https://checkout.k17.com.br/subscribe/9ef5b01e-4b63-40b0-bfe7-5acf051cfbc6"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="w-full inline-flex justify-center px-8 py-4 bg-green-500 hover:bg-green-600 rounded-xl text-white font-medium transition-all duration-200 shadow-lg shadow-green-500/20 animate-pulse-slow"
