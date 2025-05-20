@@ -1,9 +1,8 @@
 "use client";
 
 import { useEffect } from "react";
-import { useRouter } from "next/navigation";
-import { BarChart, Briefcase, Book, ChevronDown, PieChart, TrendingUp, ChevronRight, Globe, ChevronLeft } from "lucide-react";
 import { useState } from "react";
+import { BarChart, Briefcase, Book, ChevronDown, PieChart, TrendingUp, ChevronRight, Globe, ChevronLeft } from "lucide-react";
 import Image from "next/image";
 import Link from 'next/link';
 import { translations } from '@/translations';
@@ -11,11 +10,10 @@ import * as fbq from '@/lib/fpixel';
 import { routes } from '@/lib/routes';
 
 export default function Page() {
-  const router = useRouter();
   const [activeQuestion, setActiveQuestion] = useState<number | null>(null);
   const [selectedMonth, setSelectedMonth] = useState<number>(12);
   const [language, setLanguage] = useState<'pt' | 'en'>('pt');
-  const [showProtectionModal, setShowProtectionModal] = useState(true);
+  const [showProtectionModal, setShowProtectionModal] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -26,11 +24,6 @@ export default function Page() {
   const [isMobile, setIsMobile] = useState(false);
   const [windowWidth, setWindowWidth] = useState(0);
   const [timeLeft, setTimeLeft] = useState('');
-
-  // Immediate redirection
-  useEffect(() => {
-    router.push(routes.main.criptoW);
-  }, [router]);
 
   const months = [
     { number: 8, name: 'Agosto' },
@@ -117,14 +110,6 @@ export default function Page() {
     return () => clearInterval(timer);
   }, []);
 
-  useEffect(() => {
-    // Check if user already filled the form
-    const hasFilledForm = localStorage.getItem('hasFilledForm');
-    if (hasFilledForm) {
-      setShowProtectionModal(false);
-    }
-  }, []);
-
   const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
@@ -140,8 +125,6 @@ export default function Page() {
         throw new Error('Failed to submit form');
       }
 
-      // Save to localStorage to prevent showing modal again
-      localStorage.setItem('hasFilledForm', 'true');
       // Close the modal
       setShowProtectionModal(false);
     } catch (error) {
