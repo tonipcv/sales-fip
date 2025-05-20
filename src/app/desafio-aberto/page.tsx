@@ -8,6 +8,11 @@ import Image from "next/image";
 import Link from 'next/link';
 import { translations } from '@/translations';
 import * as fbq from '@/lib/fpixel';
+import dynamic from 'next/dynamic';
+
+const ConverteAIVideo = dynamic(() => import('@/components/ConverteAIVideo'), {
+  ssr: false
+});
 
 export default function Page() {
   const router = useRouter();
@@ -207,21 +212,7 @@ export default function Page() {
           {/* Video Section */}
           <div className="max-w-4xl mx-auto px-4 py-12">
             <div className="relative pb-[56.25%] h-0">
-              <div 
-                id="vid_682c6d60e54e517847ba447e" 
-                style={{ position: 'relative', width: '100%', padding: '56.25% 0 0' }}
-              >
-                <img 
-                  id="thumb_682c6d60e54e517847ba447e" 
-                  src="https://images.converteai.net/32ff2495-c71e-49ba-811b-00b5b49c517f/players/682c6d60e54e517847ba447e/thumbnail.jpg" 
-                  style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
-                  alt="thumbnail"
-                />
-                <div 
-                  id="backdrop_682c6d60e54e517847ba447e" 
-                  style={{ WebkitBackdropFilter: 'blur(5px)', backdropFilter: 'blur(5px)', position: 'absolute', top: 0, height: '100%', width: '100%' }}
-                />
-              </div>
+              <ConverteAIVideo playerId="682c6d60e54e517847ba447e" />
             </div>
             
             {/* CTA Button - Updated with countdown */}
