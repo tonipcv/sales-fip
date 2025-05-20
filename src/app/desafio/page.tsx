@@ -86,7 +86,7 @@ export default function QuizPage() {
             const { name, email, phone } = formData;
             const ddd = phone.substring(0, 2);
             const phoneNumber = phone.substring(2);
-            window.location.href = `https://checkout.k17.com.br/subscribe/anual-futurostech`;
+            window.location.href = `https://checkout.k17.com.br/subscribe/9ef5b01e-4b63-40b0-bfe7-5acf051cfbc6`;
             return 0;
           }
           return prev - 1;
@@ -164,7 +164,7 @@ export default function QuizPage() {
         const { name, email, phone } = formData;
         const ddd = phone.substring(0, 2);
         const phoneNumber = phone.substring(2);
-        window.location.href = `https://checkout.k17.com.br/subscribe/anual-futurostech`;
+        window.location.href = `https://checkout.k17.com.br/subscribe/9ef5b01e-4b63-40b0-bfe7-5acf051cfbc6`;
       } else {
         // Tratar erro
         console.error('Erro ao salvar dados:', result.error);
