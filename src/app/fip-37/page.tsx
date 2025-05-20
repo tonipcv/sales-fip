@@ -113,23 +113,9 @@ export default function Page() {
   const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await fetch('/api/protection-form', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to submit form');
-      }
-
-      // Close the modal
-      setShowProtectionModal(false);
+      window.location.href = 'http://ai.k17.com.br';
     } catch (error) {
-      console.error('Error submitting form:', error);
-      // You might want to show an error message to the user here
+      console.error('Error redirecting:', error);
     }
   };
 
@@ -317,7 +303,9 @@ export default function Page() {
             {/* CTA Button - Updated with neutral colors */}
             <div className="flex justify-center mt-8">
               <a
-                href="#planos"
+                href="http://ai.k17.com.br"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="group relative overflow-hidden px-6 py-2.5 bg-neutral-500/20 backdrop-blur-sm border border-neutral-500/30 hover:border-neutral-400 rounded-md transition-all duration-300 animate-pulse-slow"
               >
                 {/* Glow effect */}
@@ -778,7 +766,7 @@ export default function Page() {
                     {/* Botão simplificado */}
                     <div className="mt-8 mb-4 w-full">
                       <a 
-                        href="https://chat.whatsapp.com/GBjqpfmRoUt4eZCjc5pQYm"
+                        href="http://ai.k17.com.br"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="w-full inline-flex justify-center px-8 py-4 bg-neutral-800 hover:bg-neutral-700 rounded-xl text-neutral-400 hover:text-neutral-300 font-medium transition-all duration-200"
@@ -914,7 +902,7 @@ export default function Page() {
                   },
                   {
                     question: "Qual o suporte que eu recebo durante o curso?",
-                    answer: "Ao se inscrever no FIP, você terá suporte dedicado através do nosso WhatsApp e e-mail. Ao longo das semanas serão liberados conteúdos e você poderá tirar dúvida quando quiser."
+                    answer: "Ao se inscrever no FIP, você terá suporte dedicado através do nosso portal de suporte e e-mail. Ao longo das semanas serão liberados conteúdos e você poderá tirar dúvida quando quiser."
                   },
                   {
                     question: "Os sinais no Futuros Tech são de Segunda a Sexta?",
