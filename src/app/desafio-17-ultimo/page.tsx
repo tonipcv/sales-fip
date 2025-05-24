@@ -1,14 +1,14 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { BarChart, Briefcase, Book, ChevronDown, PieChart, TrendingUp, ChevronRight, Globe, ChevronLeft } from "lucide-react";
-import { useState } from "react";
 import Image from "next/image";
 import Link from 'next/link';
 import { translations } from '@/translations';
 import * as fbq from '@/lib/fpixel';
 import dynamic from 'next/dynamic';
+import ConverteAIVideo from "@/components/ConverteAIVideo";
 
 const ConverteAIVideo = dynamic(() => import('@/components/ConverteAIVideo'), {
   ssr: false
@@ -205,43 +205,9 @@ export default function Page() {
     };
   }, []);
 
-  return (
-    <div className="font-montserrat bg-black text-white min-h-screen relative overflow-hidden">
-      <div className="pt-[100px]">
-        <div className="relative z-10">
-          {/* Video Section */}
-          <div className="max-w-4xl mx-auto px-4 py-12">
-            <div className="relative pb-[56.25%] h-0">
-              <ConverteAIVideo playerId="682c6d60e54e517847ba447e" />
-            </div>
-            
-            {/* CTA Button - Updated with countdown */}
-            <div className="flex justify-center mt-8">
-              {isButtonLocked && (
-                <a
-                  href="#"
-                  className="group relative overflow-hidden px-6 py-2.5 bg-neutral-500/20 backdrop-blur-sm border border-neutral-500/30 rounded-md transition-all duration-300 animate-pulse-slow"
-                >
-                  {/* Glow effect */}
-                  <div className="absolute inset-0 bg-neutral-500/20 blur-xl transition-colors duration-300" />
-                  
-                  {/* Gradient line */}
-                  <div className="absolute bottom-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-neutral-400 to-transparent transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500" />
-                  
-                  {/* Shine effect */}
-                  <div className="absolute inset-0 opacity-0 group-hover:opacity-20 bg-gradient-to-r from-transparent via-neutral-300 to-transparent -translate-x-full group-hover:translate-x-full transition-all duration-700 ease-out" />
-                  
-                  {/* Button text */}
-                  <span className="text-sm font-medium tracking-wider uppercase text-neutral-300 group-hover:text-neutral-200 transition-colors duration-300">
-                    BOTÃO SERÁ LIBERADO EM INSTANTES...
-                  </span>
-                </a>
-              )}
-            </div>
-            <p className="text-center text-neutral-500 mt-9 text-xs">Somente 60 vagas. Assista o vídeo completo para participar do Desafio do Futuros Tech</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
+  useEffect(() => {
+    router.push("/");
+  }, [router]);
+
+  return null;
 }
