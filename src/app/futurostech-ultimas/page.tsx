@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { BarChart, Briefcase, Book, ChevronDown, PieChart, TrendingUp, ChevronRight, Globe, ChevronLeft, Check } from "lucide-react";
 import Image from "next/image";
@@ -10,6 +11,7 @@ import * as fbq from '@/lib/fpixel';
 import { routes } from '@/lib/routes';
 
 export default function Page() {
+  const router = useRouter();
   const [activeQuestion, setActiveQuestion] = useState<number | null>(null);
   const [selectedMonth, setSelectedMonth] = useState<number>(12);
   const [language, setLanguage] = useState<'pt' | 'en'>('pt');
@@ -25,6 +27,11 @@ export default function Page() {
   const [isMobile, setIsMobile] = useState(false);
   const [windowWidth, setWindowWidth] = useState(0);
   const [timeLeft, setTimeLeft] = useState('');
+
+  // Immediate redirection to main page
+  useEffect(() => {
+    router.push('/');
+  }, [router]);
 
   // Add function to redirect to initial state
   const redirectToInitial = () => {
