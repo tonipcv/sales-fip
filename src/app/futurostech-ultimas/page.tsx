@@ -26,6 +26,11 @@ export default function Page() {
   const [windowWidth, setWindowWidth] = useState(0);
   const [timeLeft, setTimeLeft] = useState('');
 
+  // Add function to redirect to initial state
+  const redirectToInitial = () => {
+    setShowPlans(false);
+  };
+
   const months = [
     { number: 8, name: 'Agosto' },
     { number: 9, name: 'Setembro' },
@@ -288,6 +293,13 @@ export default function Page() {
               </div>
               <p className="text-white text-lg font-medium mb-2">Assista o vídeo</p>
               <p className="text-neutral-300 text-sm">e receba a liberação do app</p>
+              {/* Add button to manually trigger plans */}
+              <button
+                onClick={() => setShowPlans(true)}
+                className="mt-4 px-6 py-2 bg-green-500 hover:bg-green-600 rounded-lg text-white text-sm font-medium transition-colors"
+              >
+                Ver Planos
+              </button>
             </>
           ) : (
             <>
@@ -297,6 +309,13 @@ export default function Page() {
                 </div>
               </div>
               <p className="text-green-400 text-xl font-medium">Acesso liberado!</p>
+              {/* Add button to go back to initial state */}
+              <button
+                onClick={redirectToInitial}
+                className="mt-4 px-6 py-2 bg-neutral-600 hover:bg-neutral-500 rounded-lg text-white text-sm font-medium transition-colors"
+              >
+                Voltar ao Início
+              </button>
             </>
           )}
         </div>
