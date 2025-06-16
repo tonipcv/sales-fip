@@ -1,8 +1,29 @@
 "use client";
 
 import Image from 'next/image';
+import { useEffect, useState } from 'react';
 
 export default function WhatsAppAlunos() {
+  const [countdown, setCountdown] = useState(3);
+
+  useEffect(() => {
+    // Start countdown
+    const timer = setInterval(() => {
+      setCountdown((prev) => prev - 1);
+    }, 1000);
+
+    // Redirect after 3 seconds
+    const redirect = setTimeout(() => {
+      window.location.href = "https://api.whatsapp.com/send/?phone=557391778075&text&type=phone_number&app_absent=0";
+    }, 3000);
+
+    // Cleanup
+    return () => {
+      clearInterval(timer);
+      clearTimeout(redirect);
+    };
+  }, []);
+
   return (
     <div className="min-h-screen bg-black flex flex-col items-center justify-center p-4">
       {/* Logo */}
@@ -20,17 +41,17 @@ export default function WhatsAppAlunos() {
       {/* Message */}
       <div className="text-center mb-12 max-w-xl">
         <h1 className="text-2xl md:text-3xl font-light text-white mb-6">
-          Em breve, nosso time entrará em contato com você!
+          Redirecionando para o WhatsApp em {countdown} segundos...
         </h1>
         <p className="text-neutral-400 text-sm md:text-base leading-relaxed">
-          Se tiver alguma dúvida envie uma mensagem no botão abaixo com seu comprovante de pagamento:
+          Se não for redirecionado automaticamente, clique no botão abaixo:
         </p>
       </div>
 
       {/* WhatsApp Button */}
       <div className="w-full max-w-md px-4">
         <a
-          href="https://wa.me/557391778075"
+          href="https://api.whatsapp.com/send/?phone=557391778075&text&type=phone_number&app_absent=0"
           target="_blank"
           rel="noopener noreferrer"
           className="group relative overflow-hidden px-6 py-4 bg-green-600/20 backdrop-blur-sm border border-green-600/30 hover:border-green-500 rounded-lg transition-all duration-300 block"
