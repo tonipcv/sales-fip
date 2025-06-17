@@ -11,7 +11,7 @@ export default function Confirmacao() {
       const timer = setTimeout(() => setCountdown(countdown - 1), 1000);
       return () => clearTimeout(timer);
     } else {
-      window.location.href = `https://wa.me/5573991778075?text=${encodeURIComponent('Olá, sou Android e quero agendar uma call de liberação!')}`;
+      window.location.href = `https://wa.me/5573991778075?text=${encodeURIComponent('Oi, eu sou android!')}`;
     }
   }, [countdown]);
 
