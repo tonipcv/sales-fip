@@ -18,7 +18,7 @@ export default function WhatsAppRedirect() {
 
           {/* Attention Text */}
           <h2 className="text-2xl md:text-3xl font-bold text-green-400 mb-8">
-            ATENÇÃO: GRUPO DO APP LIBERADO PARA CONVIDADOS!
+            ATENÇÃO: GRUPO DO APP LIBERADO PARA CONVIDADOS DO DIA 16/07!
           </h2>
 
           {/* Instruction Text */}
@@ -42,8 +42,8 @@ export default function WhatsAppRedirect() {
           <div className="max-w-4xl mx-auto">
             <div className="relative w-full" style={{ paddingTop: '56.25%' }}>
               <iframe 
-                id="panda-8bc9342b-3022-44a8-a969-a68b065c7e53" 
-                src="https://player-vz-7b6cf9e4-8bf.tv.pandavideo.com.br/embed/?v=8bc9342b-3022-44a8-a969-a68b065c7e53"
+                id="panda-14bb38cd-7651-4c0d-84ed-959cb4964d37" 
+                src="https://player-vz-7b6cf9e4-8bf.tv.pandavideo.com.br/embed/?v=14bb38cd-7651-4c0d-84ed-959cb4964d37"
                 style={{
                   position: 'absolute',
                   top: 0,
