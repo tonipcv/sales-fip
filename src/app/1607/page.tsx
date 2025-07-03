@@ -18,7 +18,7 @@ export default function WhatsAppRedirect() {
 
           {/* Attention Text */}
           <h2 className="text-2xl md:text-3xl font-bold text-green-400 mb-8">
-            ATENÇÃO: GRUPO DO APP LIBERADO PARA CONVIDADOS DO DIA 16/07!
+            ATENÇÃO: GRUPO DO APP LIBERADO PARA CONVIDADOS!
           </h2>
 
           {/* Instruction Text */}
