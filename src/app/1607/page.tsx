@@ -21,8 +21,25 @@ export default function WhatsAppRedirect() {
             ATENÇÃO: GRUPO DO APP LIBERADO PARA CONVIDADOS!
           </h2>
 
-          {/* Video */}
-          <div className="max-w-4xl mx-auto mb-4">
+          {/* Instruction Text */}
+          <p className="text-neutral-400 text-sm mb-8">
+            Assista o vídeo para entender e clica no botão para entrar, lotando não criaremos outro.
+          </p>
+
+          {/* Group Join Button */}
+          <div className="mb-16">
+            <a 
+              href="https://chat.whatsapp.com/IaqTe21ft9H1vApGem7psJ"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center px-8 py-4 bg-green-500 hover:bg-green-600 rounded-xl text-white font-medium text-lg transition-all duration-200 transform hover:scale-105"
+            >
+              ENTRAR NO GRUPO DO APP
+            </a>
+          </div>
+
+          {/* Video Container */}
+          <div className="max-w-4xl mx-auto">
             <div className="relative w-full" style={{ paddingTop: '56.25%' }}>
               <iframe 
                 id="panda-8bc9342b-3022-44a8-a969-a68b065c7e53" 
@@ -39,23 +56,6 @@ export default function WhatsAppRedirect() {
                 allowFullScreen={true}
               />
             </div>
-          </div>
-
-          {/* Instruction Text */}
-          <p className="text-neutral-400 text-sm mb-8">
-            Assista o vídeo para entender e clica no botão para entrar, lotando não criaremos outro.
-          </p>
-
-          {/* Group Join Button */}
-          <div className="mt-8">
-            <a 
-              href="https://chat.whatsapp.com/IaqTe21ft9H1vApGem7psJ"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center justify-center px-8 py-4 bg-green-500 hover:bg-green-600 rounded-xl text-white font-medium text-lg transition-all duration-200 transform hover:scale-105"
-            >
-              ENTRAR NO GRUPO DO APP
-            </a>
           </div>
         </div>
       </section>
