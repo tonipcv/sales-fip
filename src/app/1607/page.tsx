@@ -29,7 +29,7 @@ export default function WhatsAppRedirect() {
           {/* Group Join Button */}
           <div className="mb-16">
             <a 
-              href="https://chat.whatsapp.com/IaqTe21ft9H1vApGem7psJ"
+              href="https://chat.whatsapp.com/IoFF0Q8iilyLhlfPsTXKSP?mode=ac_t"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center justify-center px-8 py-4 bg-green-500 hover:bg-green-600 rounded-xl text-white font-medium text-lg transition-all duration-200 transform hover:scale-105"
