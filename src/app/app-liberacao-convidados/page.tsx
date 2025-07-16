@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import Image from "next/image";
 
 export default function Page() {
   useEffect(() => {
@@ -53,13 +54,38 @@ export default function Page() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-black flex items-center justify-center">
-      <div className="w-full max-w-[1000px] mx-auto px-4">
-        <div 
-          dangerouslySetInnerHTML={{
-            __html: '<vturb-smartplayer id="vid-68778ddb0ba5d2090a227a0e" style="display: block; margin: 0 auto; width: 100%; max-width: 100%;"></vturb-smartplayer>'
-          }}
+    <div className="min-h-screen bg-black">
+      {/* Logo Section */}
+      <div className="w-full flex justify-center pt-8 mb-8">
+        <Image
+          src="/logo.png"
+          alt="Logo"
+          width={120}
+          height={120}
+          className="mx-auto"
+          priority
         />
+      </div>
+
+      {/* Text Section */}
+      <div className="text-center mb-8 px-4">
+        <h1 className="text-white text-large md:text-3xl font-medium mb-2">
+          App liberado!
+        </h1>
+        <p className="text-neutral-300 text-small md:text-large">
+          Assista esse vídeo em poucos minutos e receba a liberação hoje
+        </p>
+      </div>
+
+      {/* Video Section - mantido exatamente como estava */}
+      <div className="flex items-center justify-center">
+        <div className="w-full max-w-[1000px] mx-auto px-4">
+          <div 
+            dangerouslySetInnerHTML={{
+              __html: '<vturb-smartplayer id="vid-68778ddb0ba5d2090a227a0e" style="display: block; margin: 0 auto; width: 100%; max-width: 100%;"></vturb-smartplayer>'
+            }}
+          />
+        </div>
       </div>
     </div>
   );
