@@ -28,11 +28,6 @@ export default function Page() {
   const [windowWidth, setWindowWidth] = useState(0);
   const [timeLeft, setTimeLeft] = useState('');
 
-  // Immediate redirection to main page
-  useEffect(() => {
-    router.push('/');
-  }, [router]);
-
   // Add function to redirect to initial state
   const redirectToInitial = () => {
     setShowPlans(false);
