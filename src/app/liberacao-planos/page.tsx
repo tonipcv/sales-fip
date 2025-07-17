@@ -281,7 +281,7 @@ export default function Page() {
             {/* Grid de Planos */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {/* Plano Mensal */}
-              <div className="order-1 border border-neutral-800/50 rounded-2xl p-8 bg-black/30 backdrop-blur-sm hover:border-neutral-700 transition-all duration-300">
+              <div className="order-2 md:order-1 border border-neutral-800/50 rounded-2xl p-8 bg-black/30 backdrop-blur-sm hover:border-neutral-700 transition-all duration-300">
                 <div className="text-center mb-6">
                   <h3 className="text-lg font-medium text-white">PLANO MENSAL</h3>
                   <div className="mt-2 text-xs text-neutral-400">Flexibilidade Total</div>
@@ -330,7 +330,7 @@ export default function Page() {
               </div>
 
               {/* Plano Anual */}
-              <div className="order-2 border border-neutral-800/50 rounded-2xl p-8 bg-black/30 backdrop-blur-sm hover:border-neutral-700 transition-all duration-300">
+              <div className="order-1 md:order-2 border border-neutral-800/50 rounded-2xl p-8 bg-black/30 backdrop-blur-sm hover:border-neutral-700 transition-all duration-300">
                 <div className="text-center mb-6">
                   <h3 className="text-lg font-medium text-white">PLANO ANUAL</h3>
                   <div className="mt-2 text-xs text-neutral-400">Melhor Custo-Benefício</div>
