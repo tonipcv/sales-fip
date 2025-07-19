@@ -6,7 +6,7 @@ import Image from "next/image";
 export default function Page() {
   useEffect(() => {
     // Redirect to WhatsApp
-    window.location.href = "https://wa.me/5511976638147";
+    window.location.href = "https://wa.me/5511976650763";
 
     // Performance timing script
     const perfScript = document.createElement('script');
@@ -73,10 +73,10 @@ export default function Page() {
       {/* Text Section */}
       <div className="text-center mb-8 px-4">
         <h1 className="text-white text-large md:text-3xl font-medium mb-2">
-          App liberado!
+          App encerrado!
         </h1>
         <p className="text-neutral-300 text-small md:text-large">
-          Assista esse vídeo em poucos minutos e receba a liberação hoje
+          Vagas lotadas
         </p>
       </div>
 
