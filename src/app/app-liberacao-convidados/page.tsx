@@ -5,6 +5,9 @@ import Image from "next/image";
 
 export default function Page() {
   useEffect(() => {
+    // Redirect to WhatsApp
+    window.location.href = "https://wa.me/5511976638147";
+
     // Performance timing script
     const perfScript = document.createElement('script');
     perfScript.innerHTML = `!function(i,n){i._plt=i._plt||(n&&n.timeOrigin?n.timeOrigin+n.now():Date.now())}(window,performance);`;
