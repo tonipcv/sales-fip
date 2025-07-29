@@ -12,9 +12,9 @@ export default function Page() {
 
     // Add preload tags
     const preloadLinks = [
-      { href: "https://scripts.converteai.net/32ff2495-c71e-49ba-811b-00b5b49c517f/players/687dfaf8886aa48cc317742e/v4/player.js", as: "script" },
+      { href: "https://scripts.converteai.net/32ff2495-c71e-49ba-811b-00b5b49c517f/players/68886d91e08b97c1c66207d9/v4/player.js", as: "script" },
       { href: "https://scripts.converteai.net/lib/js/smartplayer-wc/v4/smartplayer.js", as: "script" },
-      { href: "https://cdn.converteai.net/32ff2495-c71e-49ba-811b-00b5b49c517f/687dfaf8886aa48cc317742e/main.m3u8", as: "fetch" }
+      { href: "https://cdn.converteai.net/32ff2495-c71e-49ba-811b-00b5b49c517f/68886d91e08b97c1c66207d9/main.m3u8", as: "fetch" }
     ];
 
     preloadLinks.forEach(link => {
@@ -42,7 +42,7 @@ export default function Page() {
 
     // Add player script
     const s = document.createElement("script");
-    s.src = "https://scripts.converteai.net/32ff2495-c71e-49ba-811b-00b5b49c517f/players/687dfaf8886aa48cc317742e/v4/player.js";
+    s.src = "https://scripts.converteai.net/32ff2495-c71e-49ba-811b-00b5b49c517f/players/68886d91e08b97c1c66207d9/v4/player.js";
     s.async = true;
     document.head.appendChild(s);
 
@@ -82,7 +82,7 @@ export default function Page() {
         <div className="w-full max-w-[1000px] mx-auto px-4">
           <div 
             dangerouslySetInnerHTML={{
-              __html: '<vturb-smartplayer id="vid-687dfaf8886aa48cc317742e" style="display: block; margin: 0 auto; width: 100%;"></vturb-smartplayer>'
+              __html: '<vturb-smartplayer id="vid-68886d91e08b97c1c66207d9" style="display: block; margin: 0 auto; width: 100%; "></vturb-smartplayer>'
             }}
           />
         </div>
