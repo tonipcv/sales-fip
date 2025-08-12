@@ -72,6 +72,9 @@ export default function Page() {
         <h1 className="text-white text-large md:text-3xl font-medium mb-2">
         Assista o vídeo e libere seu acesso
         </h1>
+        <p className="text-white text-sm md:text-base mt-2">
+          Só iremos liberar para 30 convidados, assista o vídeo até o final e receba seu acesso ilimitado as entradas.
+        </p>
       </div>
 
       {/* Video Section */}
