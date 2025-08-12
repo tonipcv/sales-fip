@@ -12,9 +12,9 @@ export default function Page() {
 
     // Add preload tags
     const preloadLinks = [
-      { href: "https://scripts.converteai.net/2498789c-4038-49cb-96ee-1747d45ba083/players/689b79a4833cfd0cec997849/v4/player.js", as: "script" },
+      { href: "https://scripts.converteai.net/2498789c-4038-49cb-96ee-1747d45ba083/players/689b8d28eba27b97c1c7a2f6/v4/player.js", as: "script" },
       { href: "https://scripts.converteai.net/lib/js/smartplayer-wc/v4/smartplayer.js", as: "script" },
-      { href: "https://cdn.converteai.net/2498789c-4038-49cb-96ee-1747d45ba083/689b79a4833cfd0cec997849/main.m3u8", as: "fetch" }
+      { href: "https://cdn.converteai.net/2498789c-4038-49cb-96ee-1747d45ba083/689b8d28eba27b97c1c7a2f6/main.m3u8", as: "fetch" }
     ];
 
     preloadLinks.forEach(link => {
@@ -42,7 +42,7 @@ export default function Page() {
 
     // Add player script
     const s = document.createElement("script");
-    s.src = "https://scripts.converteai.net/2498789c-4038-49cb-96ee-1747d45ba083/players/689b79a4833cfd0cec997849/v4/player.js";
+    s.src = "https://scripts.converteai.net/2498789c-4038-49cb-96ee-1747d45ba083/players/689b8d28eba27b97c1c7a2f6/v4/player.js";
     s.async = true;
     document.head.appendChild(s);
 
@@ -70,7 +70,7 @@ export default function Page() {
       {/* Text Section */}
       <div className="text-center mb-8 px-4">
         <h1 className="text-white text-large md:text-3xl font-medium mb-2">
-        Liberação de APP para 30 convidados
+        Assista o vídeo e libere seu acesso
         </h1>
       </div>
 
@@ -79,7 +79,7 @@ export default function Page() {
         <div className="w-full max-w-[1000px] mx-auto px-4">
           <div 
             dangerouslySetInnerHTML={{
-              __html: '<vturb-smartplayer id="vid-689b79a4833cfd0cec997849" style="display: block; margin: 0 auto; width: 100%; "></vturb-smartplayer>'
+              __html: '<vturb-smartplayer id="vid-689b8d28eba27b97c1c7a2f6" style="display: block; margin: 0 auto; width: 100%; "></vturb-smartplayer>'
             }}
           />
         </div>
