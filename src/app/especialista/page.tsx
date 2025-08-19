@@ -27,7 +27,7 @@ export default function WhatsAppAlunos() {
       {/* WhatsApp Button */}
       <div className="w-full max-w-md px-4">
         <a
-          href="https://wa.me/5511976650763"
+          href="https://wa.me/5573917780750"
           target="_blank"
           rel="noopener noreferrer"
           className="group relative overflow-hidden px-6 py-4 bg-green-600/20 backdrop-blur-sm border border-green-600/30 hover:border-green-500 rounded-lg transition-all duration-300 block"
