@@ -197,14 +197,8 @@ export default function SeriesPagePublic() {
           {/* Content and Materials */}
           <div className="space-y-3 md:space-y-4 lg:space-y-4 px-4 md:p-4 lg:p-4">
             <section className="bg-gray-900/40 p-3 lg:p-4 rounded-lg border border-gray-800">
-              <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
-                <h2 className="text-lg md:text-base font-semibold">Informação importante</h2>
-                <span className="text-xl md:text-lg text-gray-200 font-semibold">Dia 8 • 19h (Brasília)</span>
-              </div>
-              <p className="text-base md:text-sm text-gray-300">Versão de teste liberada. Use apenas para aprendizado e siga o passo a passo.</p>
-
-              {/* Countdown */}
-              <div className="mt-3 grid grid-cols-4 gap-2">
+              {/* Countdown only */}
+              <div className="grid grid-cols-4 gap-2">
                 {[
                   { label: 'Dias', value: timeLeft.d },
                   { label: 'Horas', value: timeLeft.h },
@@ -217,14 +211,6 @@ export default function SeriesPagePublic() {
                   </div>
                 ))}
               </div>
-
-              <ul className="mt-3 text-sm md:text-xs text-gray-300 space-y-2 md:space-y-1">
-                <li>✅ Instalar a Automação Oficial</li>
-                <li>✅ Planejamento de Lucros Mensais</li>
-                <li>✅ Mentoria para instalar pelo celular</li>
-                <li>✅ Estratégias avançadas</li>
-                <li>✅ Acesso à versão desbloqueada</li>
-              </ul>
             </section>
           </div>
         </div>
