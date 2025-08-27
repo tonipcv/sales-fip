@@ -137,7 +137,7 @@ export default function SeriesPagePublic() {
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5">
                     <path d="M5 20h14v-2H5v2Zm7-3 5-5h-3V4h-4v8H7l5 5Z" />
                   </svg>
-                  BAIXAR APLICATIVO
+                  BAIXAR APP
                 </a>
               </div>
             )}
