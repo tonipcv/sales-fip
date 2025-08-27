@@ -176,12 +176,37 @@ export default function SeriesPagePublic() {
         </div>
 
         {/* Fixed Bottom Actions */}
+        {activeEpisode === 1 && (
+          <>
+            {/* Broker Button (top) */}
+            <a
+              href="https://one.exnesstrack.org/intl/pt/a/jo986i1iel"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="fixed bottom-28 left-1/2 -translate-x-1/2 bg-gray-700 hover:bg-gray-600 text-white text-sm font-medium px-5 py-2 rounded-full shadow-lg shadow-black/30 transition-colors"
+            >
+              CORRETORA
+            </a>
+
+            {/* MT5 Button (above) */}
+            <a
+              href="https://www.exness.com/pt/metatrader-5/?utm_source=partners&campaign=34785&track1=Baixar&ex_ol=1"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="fixed bottom-16 left-1/2 -translate-x-1/2 bg-gray-700 hover:bg-gray-600 text-white text-sm font-medium px-5 py-2 rounded-full shadow-lg shadow-black/30 transition-colors"
+            >
+              BAIXAR MT5
+            </a>
+          </>
+        )}
+
+        {/* Gold System Button (center) */}
         <button
           type="button"
           onClick={() => setShowDownloadModal(true)}
           className="fixed bottom-4 left-1/2 -translate-x-1/2 bg-green-600 hover:bg-green-700 text-white text-sm font-medium px-5 py-2 rounded-full shadow-lg shadow-green-900/30 transition-colors"
         >
-          Baixar automação
+          BAIXAR GOLD SYSTEM
         </button>
 
         <a
