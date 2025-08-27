@@ -111,9 +111,9 @@ export default function SeriesPagePublic() {
       {/* Header */}
       <header className="fixed top-0 w-full bg-[#111]/90 backdrop-blur-sm z-50 px-4 py-3">
         <div className="flex justify-center lg:justify-start">
-          <Link href="/" className="flex items-center">
+          <div className="flex items-center">
             <Image src="/logo1.png" alt="Futuros Tech Logo" width={40} height={40} className="brightness-0 invert" />
-          </Link>
+          </div>
         </div>
       </header>
 
@@ -121,11 +121,12 @@ export default function SeriesPagePublic() {
       <main className="pt-14 pb-28">
         {/* Video Player Section */}
         <div className="w-full md:w-1/2 lg:w-1/2 md:mx-auto lg:mx-auto px-4 mt-4">
+          {/* Title above video */}
+          <h2 className="text-lg md:text-xl font-bold text-white text-center mt-5 mb-5 md:mt-8 md:mb-6">{currentEpisode.title}</h2>
           <div className="bg-black">
             <VturbPlayer key={currentEpisode.playerId} playerId={currentEpisode.playerId} />
           </div>
           <div className="px-0 py-4">
-            <h2 className="text-xl font-bold text-green-400">{currentEpisode.title}</h2>
             {activeEpisode === 1 && aula1CtaVisible && (
               <div className="mt-4 flex flex-col items-center gap-4">
                 <a
