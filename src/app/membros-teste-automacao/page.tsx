@@ -1,0 +1,257 @@
+/* eslint-disable */
+
+'use client'
+
+import Link from 'next/link'
+import Image from 'next/image'
+import { useEffect, useState } from 'react'
+import { Navigation } from '@/components/Navigation'
+
+// ConverteAI vturb player component (SSR-safe): render placeholder and init on client
+function VturbPlayer({ playerId }: { playerId: string }) {
+  const accountId = '32ff2495-c71e-49ba-811b-00b5b49c517f'
+  const containerId = `vturb-container-${playerId}`
+  
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+    const container = document.getElementById(containerId)
+    if (!container) return
+
+    // Reset container and inject custom element
+    container.innerHTML = ''
+    const playerEl = document.createElement('vturb-smartplayer') as any
+    playerEl.id = `vid-${playerId}`
+    ;(playerEl as HTMLElement).style.display = 'block'
+    ;(playerEl as HTMLElement).style.margin = '0 auto'
+    ;(playerEl as HTMLElement).style.width = '100%'
+    container.appendChild(playerEl)
+
+    // Remove previous scripts for this playerId
+    try {
+      const prev = Array.from(document.querySelectorAll(`script[data-vturb-player="${playerId}"]`))
+      prev.forEach((n) => n.parentElement?.removeChild(n))
+    } catch {}
+
+    // Inject script (re-executes even if cached)
+    const s = document.createElement('script')
+    s.src = `https://scripts.converteai.net/${accountId}/players/${playerId}/v4/player.js`
+    s.async = true
+    s.setAttribute('data-vturb-player', playerId)
+    document.head.appendChild(s)
+
+    return () => {
+      try { document.head.removeChild(s) } catch {}
+      try { container.innerHTML = '' } catch {}
+    }
+  }, [playerId, containerId])
+
+  return <div id={containerId} className="w-full" />
+}
+
+interface Episode {
+  id: number
+  number: number
+  title: string
+  playerId: string
+  duration?: string
+}
+
+export default function SeriesPagePublic() {
+  const [activeEpisode, setActiveEpisode] = useState<number>(1)
+  const [showDownloadModal, setShowDownloadModal] = useState(false)
+  const [timeLeft, setTimeLeft] = useState({ d: 0, h: 0, m: 0, s: 0 })
+
+  useEffect(() => {
+    // Countdown to 08 Sep 2025 19:00 (UTC-3)
+    const target = new Date('2025-09-08T19:00:00-03:00').getTime()
+    const tick = () => {
+      const now = Date.now()
+      const diff = Math.max(0, target - now)
+      const d = Math.floor(diff / (1000 * 60 * 60 * 24))
+      const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
+      const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60))
+      const s = Math.floor((diff % (1000 * 60)) / 1000)
+      setTimeLeft({ d, h, m, s })
+    }
+    tick()
+    const id = setInterval(tick, 1000)
+    return () => clearInterval(id)
+  }, [])
+
+  const episodes: Episode[] = [
+    { id: 1, number: 1, title: 'Começando do Absoluto Zero e Instalando a Automação pelo Celular', playerId: '68aeeb36040f0b0ec4ad980e' },
+    { id: 2, number: 2, title: 'Instalando a Estratégia da Automação do Zero', playerId: '68aeeb36040f0b0ec4ad980e' },
+    { id: 3, number: 3, title: 'Ativando a Automação no Celular', playerId: '68aeeb15d03165f25f444b0b' },
+    { id: 4, number: 4, title: 'Como aumentar a perfomance da Automação', playerId: '68af0480d92b07c6d4ea02b0' },
+  ]
+
+  const currentEpisode = episodes.find((e) => e.id === activeEpisode)!
+  
+  // Troca de episódio
+  const handleEpisodeChange = (id: number) => {
+    if (id === activeEpisode) return
+    setActiveEpisode(id)
+  }
+
+  return (
+    <div className="min-h-screen bg-[#111] text-gray-200">
+      {/* Header */}
+      <header className="fixed top-0 w-full bg-[#111]/90 backdrop-blur-sm z-50 px-4 py-3">
+        <div className="flex justify-center lg:justify-start">
+          <Link href="/" className="flex items-center">
+            <Image src="/logo1.png" alt="Futuros Tech Logo" width={40} height={40} className="brightness-0 invert" />
+          </Link>
+        </div>
+      </header>
+
+      {/* Main Content */}
+      <main className="pt-14 pb-28">
+        {/* Video Player Section */}
+        <div className="w-full md:w-1/2 lg:w-1/2 md:mx-auto lg:mx-auto px-4 mt-4">
+          <div className="bg-black">
+            <VturbPlayer key={currentEpisode.playerId} playerId={currentEpisode.playerId} />
+          </div>
+          <div className="px-0 py-4">
+            <h2 className="text-xl font-bold text-green-400">{currentEpisode.title}</h2>
+          </div>
+        </div>
+
+        {/* Episodes List and Content */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 md:w-1/2 lg:w-1/2 md:mx-auto lg:mx-auto gap-0">
+          {/* Episodes List */}
+          <div className="md:h-[calc(100vh-11rem)] lg:h-[calc(100vh-11rem)] md:overflow-y-auto lg:overflow-y-auto px-4 pb-2 md:p-4 lg:p-4 episode-list">
+            <h2 className="text-lg font-bold mb-2 lg:mb-3">Episódios</h2>
+            <div className="space-y-1 lg:space-y-2">
+              {episodes.map((episode) => (
+                <button
+                  key={episode.id}
+                  onClick={() => handleEpisodeChange(episode.id)}
+                  className={`w-full flex gap-3 p-3 rounded-lg transition-colors ${
+                    activeEpisode === episode.id ? 'bg-gray-400/30 border-l-4 border-green-300' : 'hover:bg-gray-800'
+                  }`}
+                >
+                  <div className="flex-1 text-left">
+                    <h3 className="font-semibold text-green-300 text-sm">Aula {episode.number}</h3>
+                    <p className="text-xs text-gray-200">{episode.title}</p>
+                    {episode.duration && <p className="text-xs text-gray-400 mt-1">{episode.duration}</p>}
+                  </div>
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Content and Materials */}
+          <div className="space-y-3 md:space-y-4 lg:space-y-4 px-4 md:p-4 lg:p-4">
+            <section className="bg-gray-900/40 p-3 lg:p-4 rounded-lg border border-gray-800">
+              <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
+                <h2 className="text-base font-semibold">Informação importante</h2>
+                <span className="text-[11px] text-gray-400">Encontro do dia 8 • 19h (Brasília)</span>
+              </div>
+              <p className="text-sm text-gray-300">Versão de teste liberada. Use apenas para aprendizado e siga o passo a passo.</p>
+
+              {/* Countdown */}
+              <div className="mt-3 grid grid-cols-4 gap-2">
+                {[
+                  { label: 'Dias', value: timeLeft.d },
+                  { label: 'Horas', value: timeLeft.h },
+                  { label: 'Min', value: timeLeft.m },
+                  { label: 'Seg', value: timeLeft.s },
+                ].map((item) => (
+                  <div key={item.label} className="text-center bg-black/40 rounded-lg py-2 border border-gray-800">
+                    <div className="text-2xl font-bold text-green-400 leading-none">{String(item.value).padStart(2, '0')}</div>
+                    <div className="text-[10px] uppercase tracking-wide text-gray-400">{item.label}</div>
+                  </div>
+                ))}
+              </div>
+
+              <ul className="mt-3 text-xs text-gray-300 space-y-1">
+                <li>✅ Instalar a Automação Oficial</li>
+                <li>✅ Planejamento de Lucros Mensais</li>
+                <li>✅ Mentoria para instalar pelo celular</li>
+                <li>✅ Estratégias avançadas</li>
+                <li>✅ Acesso à versão desbloqueada</li>
+              </ul>
+            </section>
+          </div>
+        </div>
+
+        {/* Fixed Bottom Actions */}
+        <button
+          type="button"
+          onClick={() => setShowDownloadModal(true)}
+          className="fixed bottom-4 left-1/2 -translate-x-1/2 bg-green-600 hover:bg-green-700 text-white text-sm font-medium px-5 py-2 rounded-full shadow-lg shadow-green-900/30 transition-colors"
+        >
+          Baixar automação
+        </button>
+
+        <a
+          href={`https://wa.me/5511976650763?text=${encodeURIComponent('Olá! Quero ajuda com a Automação Teste e receber o acesso oficial no dia 8 de setembro.')}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="WhatsApp"
+          className="fixed bottom-4 right-4 bg-green-500 hover:bg-green-600 text-white rounded-full p-3 shadow-lg shadow-green-900/30 transition-colors"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
+            <path d="M20.52 3.48A11.78 11.78 0 0012.06 0C5.47 0 .12 5.35.12 11.94c0 2.1.55 4.17 1.6 5.99L0 24l6.23-1.67a11.86 11.86 0 005.83 1.55h.01c6.59 0 11.94-5.35 11.94-11.94 0-3.19-1.24-6.19-3.49-8.46zM12.07 21.3h-.01a9.35 9.35 0 01-4.77-1.31l-.34-.2-3.7.99.99-3.6-.22-.37a9.28 9.28 0 01-1.42-4.88c0-5.16 4.2-9.36 9.37-9.36a9.3 9.3 0 019.35 9.36c0 5.16-4.2 9.37-9.35 9.37zm5.33-6.99c-.29-.15-1.7-.84-1.96-.93-.26-.1-.45-.15-.64.15-.19.29-.74.93-.9 1.12-.17.19-.33.22-.62.07-.29-.15-1.22-.45-2.33-1.43-.86-.77-1.44-1.72-1.6-2-.17-.29-.02-.45.13-.6.13-.12.29-.33.43-.49.14-.17.19-.29.29-.48.1-.19.05-.36-.02-.51-.07-.15-.64-1.54-.88-2.1-.23-.55-.47-.48-.64-.49-.17-.01-.36-.01-.55-.01-.19 0-.5.07-.76.36-.26.29-1 1-1 2.45 0 1.45 1.03 2.85 1.18 3.05.15.19 2.03 3.1 4.92 4.35.69.3 1.23.48 1.65.62.69.22 1.33.19 1.83.12.56-.08 1.7-.69 1.94-1.36.24-.67.24-1.24.17-1.36-.07-.12-.26-.19-.55-.33z" />
+          </svg>
+        </a>
+
+        {/* Download Terms Modal */}
+        {showDownloadModal && (
+          <div
+            className="fixed inset-0 z-[60] flex items-center justify-center bg-black/70 px-4"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="download-modal-title"
+          >
+            <div className="w-full max-w-md bg-[#111] border border-gray-800 rounded-xl shadow-2xl">
+              <div className="p-4 border-b border-gray-800 flex items-start justify-between">
+                <h3 id="download-modal-title" className="text-base font-semibold text-gray-100">
+                  Leia os Termos antes de baixar
+                </h3>
+                <button
+                  aria-label="Fechar"
+                  onClick={() => setShowDownloadModal(false)}
+                  className="text-gray-400 hover:text-gray-200"
+                >
+                  ✕
+                </button>
+              </div>
+              <div className="p-4 space-y-3 text-sm text-gray-300">
+                <p>
+                  Esta é uma versão de teste destinada apenas a fins de avaliação. Recomendamos ler os
+                  <Link href="/termos-automatizador" className="text-green-400 hover:text-green-300 underline"> Termos de Uso</Link>
+                  antes de prosseguir com o download.
+                </p>
+              </div>
+              <div className="px-4 pb-4 pt-2 flex items-center gap-3">
+                <a
+                  href="https://drive.google.com/drive/folders/1aNuto8dai003b55qIH6z8dw6-9l7RmAz?usp=sharing"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center bg-green-600 hover:bg-green-700 text-white text-sm font-medium px-4 py-2 rounded-md transition-colors"
+                  onClick={() => setShowDownloadModal(false)}
+                >
+                  Concordo e baixar no Drive
+                </a>
+                <button
+                  type="button"
+                  className="text-sm text-gray-300 hover:text-gray-100"
+                  onClick={() => setShowDownloadModal(false)}
+                >
+                  Cancelar
+                </button>
+              </div>
+              <div className="px-4 pb-4">
+                <p className="text-[10px] leading-snug text-gray-400">
+                  ESTE SOFTWARE É UM ARQUIVO DIGITAL E NÃO CONSTITUI CONSULTORIA, ASSESSORIA OU PROMESSA DE RENTABILIDADE.
+                </p>
+              </div>
+            </div>
+          </div>
+        )}
+      </main>
+
+    </div>
+  )
+}
