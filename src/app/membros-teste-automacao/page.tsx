@@ -113,6 +113,45 @@ export default function SeriesPagePublic() {
           </div>
           <div className="px-0 py-4">
             <h2 className="text-xl font-bold text-green-400">{currentEpisode.title}</h2>
+            {activeEpisode === 1 && (
+              <div className="mt-4 flex flex-col items-center gap-4">
+                <a
+                  href="https://one.exnesstrack.org/intl/pt/a/jo986i1iel"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center px-5 py-2 rounded-md border border-green-500 text-green-300 text-sm font-medium hover:bg-green-600/10 transition-colors"
+                >
+                  CORRETORA
+                </a>
+              </div>
+            )}
+            {activeEpisode === 2 && (
+              <div className="mt-4 flex flex-col items-center gap-4">
+                {/* Filled green MT5 button (neon) */}
+                <a
+                  href="https://www.exness.com/pt/metatrader-5/?utm_source=partners&campaign=34785&track1=Baixar&ex_ol=1"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 justify-center px-6 py-3 rounded-xl border border-green-500 bg-green-700 text-white text-base font-semibold shadow-[0_0_28px_rgba(34,197,94,0.35)] hover:bg-green-600 transition-colors"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5">
+                    <path d="M5 20h14v-2H5v2Zm7-3 5-5h-3V4h-4v8H7l5 5Z" />
+                  </svg>
+                  BAIXAR MT5
+                </a>
+                {/* Outlined green GOLD SYSTEM button (neon outline) */}
+                <button
+                  type="button"
+                  onClick={() => setShowDownloadModal(true)}
+                  className="inline-flex items-center gap-2 justify-center px-6 py-3 rounded-xl border-2 border-green-500 text-green-200 text-base font-semibold hover:bg-green-600/10 shadow-[0_0_28px_rgba(34,197,94,0.25)] transition-colors"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5">
+                    <path d="M8 5v14l11-7L8 5Z" />
+                  </svg>
+                  BAIXAR GOLD SYSTEM
+                </button>
+              </div>
+            )}
           </div>
         </div>
 
@@ -175,39 +214,7 @@ export default function SeriesPagePublic() {
           </div>
         </div>
 
-        {/* Fixed Bottom Actions */}
-        {activeEpisode === 1 && (
-          <>
-            {/* Broker Button (top) */}
-            <a
-              href="https://one.exnesstrack.org/intl/pt/a/jo986i1iel"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="fixed bottom-28 left-1/2 -translate-x-1/2 bg-gray-700 hover:bg-gray-600 text-white text-sm font-medium px-5 py-2 rounded-full shadow-lg shadow-black/30 transition-colors"
-            >
-              CORRETORA
-            </a>
-
-            {/* MT5 Button (above) */}
-            <a
-              href="https://www.exness.com/pt/metatrader-5/?utm_source=partners&campaign=34785&track1=Baixar&ex_ol=1"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="fixed bottom-16 left-1/2 -translate-x-1/2 bg-gray-700 hover:bg-gray-600 text-white text-sm font-medium px-5 py-2 rounded-full shadow-lg shadow-black/30 transition-colors"
-            >
-              BAIXAR MT5
-            </a>
-          </>
-        )}
-
-        {/* Gold System Button (center) */}
-        <button
-          type="button"
-          onClick={() => setShowDownloadModal(true)}
-          className="fixed bottom-4 left-1/2 -translate-x-1/2 bg-green-600 hover:bg-green-700 text-white text-sm font-medium px-5 py-2 rounded-full shadow-lg shadow-green-900/30 transition-colors"
-        >
-          BAIXAR GOLD SYSTEM
-        </button>
+        {/* Fixed Bottom Actions removed */}
 
         <a
           href={`https://wa.me/5511976650763?text=${encodeURIComponent('Olá! Quero ajuda com a Automação Teste e receber o acesso oficial no dia 8 de setembro.')}`}
