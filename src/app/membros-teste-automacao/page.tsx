@@ -79,7 +79,7 @@ export default function SeriesPagePublic() {
   }, [])
 
   const episodes: Episode[] = [
-    { id: 1, number: 1, title: 'Começando do Absoluto Zero e Instalando a Automação pelo Celular', playerId: '68aeeb36040f0b0ec4ad980e' },
+    { id: 1, number: 1, title: 'Começando do Absoluto Zero e Instalando a Automação pelo Celular', playerId: '68af32d1c3d8b7bced8ce3db' },
     { id: 2, number: 2, title: 'Instalando a Estratégia da Automação do Zero', playerId: '68aeeb36040f0b0ec4ad980e' },
     { id: 3, number: 3, title: 'Ativando a Automação no Celular', playerId: '68aeeb15d03165f25f444b0b' },
     { id: 4, number: 4, title: 'Como aumentar a perfomance da Automação', playerId: '68af0480d92b07c6d4ea02b0' },
