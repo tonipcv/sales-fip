@@ -175,7 +175,6 @@ export default function SeriesPagePublic() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 md:w-1/2 lg:w-1/2 md:mx-auto lg:mx-auto gap-0">
           {/* Episodes List */}
           <div className="md:h-[calc(100vh-11rem)] lg:h-[calc(100vh-11rem)] md:overflow-y-auto lg:overflow-y-auto px-4 pb-2 md:p-4 lg:p-4 episode-list">
-            <h2 className="text-lg font-bold mb-2 lg:mb-3">Episódios</h2>
             <div className="space-y-1 lg:space-y-2">
               {episodes.map((episode) => (
                 <button
@@ -186,8 +185,8 @@ export default function SeriesPagePublic() {
                   }`}
                 >
                   <div className="flex-1 text-left">
-                    <h3 className="font-semibold text-green-300 text-sm">Aula {episode.number}</h3>
-                    <p className="text-xs text-gray-200">{episode.title}</p>
+                    <h3 className="font-semibold text-green-300 text-lg md:text-sm">Aula {episode.number}</h3>
+                    <p className="text-base md:text-xs text-gray-200">{episode.title}</p>
                     {episode.duration && <p className="text-xs text-gray-400 mt-1">{episode.duration}</p>}
                   </div>
                 </button>
@@ -199,10 +198,10 @@ export default function SeriesPagePublic() {
           <div className="space-y-3 md:space-y-4 lg:space-y-4 px-4 md:p-4 lg:p-4">
             <section className="bg-gray-900/40 p-3 lg:p-4 rounded-lg border border-gray-800">
               <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
-                <h2 className="text-base font-semibold">Informação importante</h2>
-                <span className="text-[11px] text-gray-400">Encontro do dia 8 • 19h (Brasília)</span>
+                <h2 className="text-lg md:text-base font-semibold">Informação importante</h2>
+                <span className="text-xl md:text-lg text-gray-200 font-semibold">Dia 8 • 19h (Brasília)</span>
               </div>
-              <p className="text-sm text-gray-300">Versão de teste liberada. Use apenas para aprendizado e siga o passo a passo.</p>
+              <p className="text-base md:text-sm text-gray-300">Versão de teste liberada. Use apenas para aprendizado e siga o passo a passo.</p>
 
               {/* Countdown */}
               <div className="mt-3 grid grid-cols-4 gap-2">
@@ -213,13 +212,13 @@ export default function SeriesPagePublic() {
                   { label: 'Seg', value: timeLeft.s },
                 ].map((item) => (
                   <div key={item.label} className="text-center bg-black/40 rounded-lg py-2 border border-gray-800">
-                    <div className="text-2xl font-bold text-green-400 leading-none">{String(item.value).padStart(2, '0')}</div>
-                    <div className="text-[10px] uppercase tracking-wide text-gray-400">{item.label}</div>
+                    <div className="text-3xl md:text-2xl font-bold text-green-400 leading-none">{String(item.value).padStart(2, '0')}</div>
+                    <div className="text-xs md:text-[10px] uppercase tracking-wide text-gray-400">{item.label}</div>
                   </div>
                 ))}
               </div>
 
-              <ul className="mt-3 text-xs text-gray-300 space-y-1">
+              <ul className="mt-3 text-sm md:text-xs text-gray-300 space-y-2 md:space-y-1">
                 <li>✅ Instalar a Automação Oficial</li>
                 <li>✅ Planejamento de Lucros Mensais</li>
                 <li>✅ Mentoria para instalar pelo celular</li>
