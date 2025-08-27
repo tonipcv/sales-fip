@@ -233,7 +233,7 @@ export default function SeriesPagePublic() {
         {/* Fixed Bottom Actions removed */}
 
         <a
-          href={`https://wa.me/5511976650763?text=${encodeURIComponent('Olá! Quero ajuda com a Automação Teste e receber o acesso oficial no dia 8 de setembro.')}`}
+          href={`https://wa.me/5511958072826?text=${encodeURIComponent('Olá! Quero ajuda com a Automação Teste e receber o acesso oficial no dia 8 de setembro.')}`}
           target="_blank"
           rel="noopener noreferrer"
           aria-label="WhatsApp"
