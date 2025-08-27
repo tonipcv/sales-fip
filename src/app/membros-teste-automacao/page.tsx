@@ -61,6 +61,7 @@ export default function SeriesPagePublic() {
   const [showDownloadModal, setShowDownloadModal] = useState(false)
   const [timeLeft, setTimeLeft] = useState({ d: 0, h: 0, m: 0, s: 0 })
   const [aula1CtaVisible, setAula1CtaVisible] = useState(false)
+  const [acceptedTerms, setAcceptedTerms] = useState(false)
 
   useEffect(() => {
     // Countdown to 08 Sep 2025 19:00 (UTC-3)
@@ -245,7 +246,10 @@ export default function SeriesPagePublic() {
                 </h3>
                 <button
                   aria-label="Fechar"
-                  onClick={() => setShowDownloadModal(false)}
+                  onClick={() => {
+                    setShowDownloadModal(false)
+                    setAcceptedTerms(false)
+                  }}
                   className="text-gray-400 hover:text-gray-200"
                 >
                   ✕
@@ -258,20 +262,50 @@ export default function SeriesPagePublic() {
                   antes de prosseguir com o download.
                 </p>
               </div>
+              {/* Terms acceptance checkbox */}
+              <div className="px-4 pb-2">
+                <label className="flex items-start gap-2 text-xs text-gray-300">
+                  <input
+                    id="accept-terms"
+                    type="checkbox"
+                    checked={acceptedTerms}
+                    onChange={(e) => setAcceptedTerms(e.target.checked)}
+                    className="mt-0.5 h-4 w-4 rounded border-gray-600 bg-black/40"
+                  />
+                  <span>
+                    Declaro que li e concordo com os
+                    <Link href="/termos-automatizador" className="ml-1 text-green-400 hover:text-green-300 underline">Termos de Uso</Link>.
+                  </span>
+                </label>
+              </div>
               <div className="px-4 pb-4 pt-2 flex items-center gap-3">
                 <a
                   href="https://drive.google.com/drive/folders/1aNuto8dai003b55qIH6z8dw6-9l7RmAz?usp=sharing"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center bg-green-600 hover:bg-green-700 text-white text-sm font-medium px-4 py-2 rounded-md transition-colors"
-                  onClick={() => setShowDownloadModal(false)}
+                  aria-disabled={!acceptedTerms}
+                  className={`inline-flex items-center justify-center text-white text-sm font-medium px-4 py-2 rounded-md transition-colors ${
+                    acceptedTerms ? 'bg-green-600 hover:bg-green-700' : 'bg-green-600/60 cursor-not-allowed'
+                  }`}
+                  onClick={(e) => {
+                    if (!acceptedTerms) {
+                      e.preventDefault()
+                      e.stopPropagation()
+                      return
+                    }
+                    setShowDownloadModal(false)
+                    setAcceptedTerms(false)
+                  }}
                 >
                   Concordo e baixar no Drive
                 </a>
                 <button
                   type="button"
                   className="text-sm text-gray-300 hover:text-gray-100"
-                  onClick={() => setShowDownloadModal(false)}
+                  onClick={() => {
+                    setShowDownloadModal(false)
+                    setAcceptedTerms(false)
+                  }}
                 >
                   Cancelar
                 </button>
