@@ -60,6 +60,7 @@ export default function SeriesPagePublic() {
   const [activeEpisode, setActiveEpisode] = useState<number>(1)
   const [showDownloadModal, setShowDownloadModal] = useState(false)
   const [timeLeft, setTimeLeft] = useState({ d: 0, h: 0, m: 0, s: 0 })
+  const [aula1CtaVisible, setAula1CtaVisible] = useState(false)
 
   useEffect(() => {
     // Countdown to 08 Sep 2025 19:00 (UTC-3)
@@ -93,6 +94,18 @@ export default function SeriesPagePublic() {
     setActiveEpisode(id)
   }
 
+  // Show Aula 1 CTA after 30s when Aula 1 is active
+  useEffect(() => {
+    setAula1CtaVisible(false)
+    let timer: any
+    if (activeEpisode === 1) {
+      timer = setTimeout(() => setAula1CtaVisible(true), 30000)
+    }
+    return () => {
+      if (timer) clearTimeout(timer)
+    }
+  }, [activeEpisode])
+
   return (
     <div className="min-h-screen bg-[#111] text-gray-200">
       {/* Header */}
@@ -113,15 +126,18 @@ export default function SeriesPagePublic() {
           </div>
           <div className="px-0 py-4">
             <h2 className="text-xl font-bold text-green-400">{currentEpisode.title}</h2>
-            {activeEpisode === 1 && (
+            {activeEpisode === 1 && aula1CtaVisible && (
               <div className="mt-4 flex flex-col items-center gap-4">
                 <a
-                  href="https://one.exnesstrack.org/intl/pt/a/jo986i1iel"
+                  href="https://one.exnesstrack.org/a/jo986i1iel?platform=mobile"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center px-5 py-2 rounded-md border border-green-500 text-green-300 text-sm font-medium hover:bg-green-600/10 transition-colors"
+                  className="inline-flex items-center gap-2 justify-center px-6 py-3 rounded-xl border border-green-500 bg-green-700 text-white text-base font-semibold shadow-[0_0_28px_rgba(34,197,94,0.35)] hover:bg-green-600 transition-colors"
                 >
-                  CORRETORA
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5">
+                    <path d="M5 20h14v-2H5v2Zm7-3 5-5h-3V4h-4v8H7l5 5Z" />
+                  </svg>
+                  BAIXAR APLICATIVO
                 </a>
               </div>
             )}
