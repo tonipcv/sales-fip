@@ -257,9 +257,9 @@ export default function SeriesPagePublic() {
               </div>
               <div className="p-4 space-y-3 text-sm text-gray-300">
                 <p>
-                  Esta é uma versão de teste destinada apenas a fins de avaliação. Recomendamos ler os
-                  <Link href="/termos-automatizador" className="text-green-400 hover:text-green-300 underline"> Termos de Uso</Link>
-                  antes de prosseguir com o download.
+                  Esta é uma versão de teste destinada apenas a fins de avaliação. A leitura e concordância com os
+                  <Link href="/termos-automatizador" className="ml-1 text-green-400 hover:text-green-300 underline">Termos de Uso</Link>
+                  são obrigatórias antes de prosseguir.
                 </p>
               </div>
               {/* Terms acceptance checkbox */}
