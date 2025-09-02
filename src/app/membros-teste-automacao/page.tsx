@@ -120,6 +120,27 @@ export default function SeriesPagePublic() {
 
       {/* Main Content */}
       <main className="pt-14 pb-28">
+        {/* Mobile-only Countdown at Top */}
+        <div className="block md:hidden px-4 mt-2">
+          <section className="bg-gray-900/40 p-3 rounded-lg border border-gray-800">
+            <p className="text-center text-sm text-gray-300 font-semibold mb-3">
+              Versão 10x será liberada em:
+            </p>
+            <div className="grid grid-cols-4 gap-2">
+              {[
+                { label: 'Dias', value: timeLeft.d },
+                { label: 'Horas', value: timeLeft.h },
+                { label: 'Min', value: timeLeft.m },
+                { label: 'Seg', value: timeLeft.s },
+              ].map((item) => (
+                <div key={item.label} className="text-center bg-black/40 rounded-lg py-2 border border-gray-800">
+                  <div className="text-3xl font-bold text-green-400 leading-none">{String(item.value).padStart(2, '0')}</div>
+                  <div className="text-xs uppercase tracking-wide text-gray-400">{item.label}</div>
+                </div>
+              ))}
+            </div>
+          </section>
+        </div>
         {/* Video Player Section */}
         <div className="w-full md:w-1/2 lg:w-1/2 md:mx-auto lg:mx-auto px-4 mt-4">
           {/* Title above video */}
@@ -197,9 +218,12 @@ export default function SeriesPagePublic() {
           </div>
 
           {/* Content and Materials */}
-          <div className="space-y-3 md:space-y-4 lg:space-y-4 px-4 md:p-4 lg:p-4">
+          <div className="hidden md:space-y-4 lg:space-y-4 px-4 md:p-4 lg:p-4 md:block">
             <section className="bg-gray-900/40 p-3 lg:p-4 rounded-lg border border-gray-800">
               {/* Countdown only */}
+              <p className="text-center text-sm md:text-base text-gray-300 font-semibold mb-3">
+                Versão 10x será liberada em:
+              </p>
               <div className="grid grid-cols-4 gap-2">
                 {[
                   { label: 'Dias', value: timeLeft.d },
