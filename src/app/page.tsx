@@ -29,7 +29,7 @@ export default function Page() {
 
   // Immediate redirection
   useEffect(() => {
-    router.push(routes.main.criptoW);
+    router.push('/automacao-v2');
   }, [router]);
 
   const months = [
