@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import { Inter } from "next/font/google";
+import * as fbq from '@/lib/fpixel';
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -78,6 +79,13 @@ export default function GrupoAutomacaoV2() {
             href="https://chat.whatsapp.com/Db9HtRc8px82H2Y5kxsaCG?mode=wwc"
             target="_blank"
             rel="noopener noreferrer"
+            onClick={() => {
+              try {
+                fbq.event('Lead', { content_name: 'automacao_v2_whatsapp' });
+              } catch (e) {
+                // no-op
+              }
+            }}
             className="bg-gradient-to-r from-green-400 to-emerald-600 hover:from-green-500 hover:to-emerald-700 text-white font-medium py-3 px-8 rounded-full flex items-center transition-all duration-300 shadow-lg shadow-emerald-600/30"
           >
             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-3" fill="currentColor" viewBox="0 0 24 24">
