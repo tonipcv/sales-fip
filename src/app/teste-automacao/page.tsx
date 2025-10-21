@@ -8,8 +8,7 @@ import { useEffect, useState } from 'react'
 import { Navigation } from '@/components/Navigation'
 
 // ConverteAI vturb player component (SSR-safe): render placeholder and init on client
-function VturbPlayer({ playerId }: { playerId: string }) {
-  const accountId = '32ff2495-c71e-49ba-811b-00b5b49c517f'
+function VturbPlayer({ accountId, playerId }: { accountId: string; playerId: string }) {
   const containerId = `vturb-container-${playerId}`
   
   useEffect(() => {
@@ -131,6 +130,7 @@ interface Episode {
   number: number
   title: string
   playerId: string
+  accountId: string
   duration?: string
 }
 
@@ -228,10 +228,12 @@ export default function SeriesPagePublic() {
   }, [])
 
   const episodes: Episode[] = [
-    { id: 1, number: 1, title: 'Começando do Absoluto Zero e Instalando a Automação pelo Celular', playerId: '68af32d1c3d8b7bced8ce3db' },
-    { id: 2, number: 2, title: 'Instalando a Estratégia da Automação do Zero', playerId: '68aeeb36040f0b0ec4ad980e' },
-    { id: 3, number: 3, title: 'Ativando a Automação no Celular', playerId: '68aeeb15d03165f25f444b0b' },
-    { id: 4, number: 4, title: 'Como aumentar a perfomance da Automação', playerId: '68af0480d92b07c6d4ea02b0' },
+    // Aula 1 updated to use the provided Vturb player and account
+    { id: 1, number: 1, title: 'Começando do Absoluto Zero e Instalando a Automação pelo Celular', playerId: '68e6c868b1501b64cbccfe7c', accountId: '17e2196c-5794-49ef-bd61-857538a02fa6' },
+    // Remaining aulas keep the existing account
+    { id: 2, number: 2, title: 'Instalando a Estratégia da Automação do Zero', playerId: '68aeeb36040f0b0ec4ad980e', accountId: '32ff2495-c71e-49ba-811b-00b5b49c517f' },
+    { id: 3, number: 3, title: 'Ativando a Automação no Celular', playerId: '68aeeb15d03165f25f444b0b', accountId: '32ff2495-c71e-49ba-811b-00b5b49c517f' },
+    { id: 4, number: 4, title: 'Como aumentar a perfomance da Automação', playerId: '68af0480d92b07c6d4ea02b0', accountId: '32ff2495-c71e-49ba-811b-00b5b49c517f' },
   ]
 
   const currentEpisode = episodes.find((e) => e.id === activeEpisode)!
@@ -361,7 +363,7 @@ export default function SeriesPagePublic() {
           {/* Title above video */}
           <h2 className="text-lg md:text-xl font-bold text-white text-center mt-5 mb-5 md:mt-8 md:mb-6">{currentEpisode.title}</h2>
           <div className="bg-black">
-            <VturbPlayer key={currentEpisode.playerId} playerId={currentEpisode.playerId} />
+            <VturbPlayer key={currentEpisode.playerId} accountId={currentEpisode.accountId} playerId={currentEpisode.playerId} />
           </div>
           <div className="px-0 py-4">
             {activeEpisode === 1 && aula1CtaVisible && (
