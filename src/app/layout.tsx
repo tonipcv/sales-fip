@@ -5,10 +5,12 @@ import GoogleAnalytics from '@/components/GoogleAnalytics';
 import DualFacebookPixel from '@/components/DualFacebookPixel';
 
 const geist = Geist({ subsets: ["latin"] });
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
 
 export const metadata: Metadata = {
   title: "FIP - K17",
   description: "Formação para Investidor Profissional - K17",
+  metadataBase: new URL(siteUrl),
   icons: {
     icon: "/favicon.svg",
     shortcut: "/favicon.svg",

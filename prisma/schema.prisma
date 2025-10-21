@@ -189,3 +189,44 @@ model TestUser {
   createdAt       DateTime  @default(now())
   updatedAt       DateTime  @updatedAt
 } 
+
+// Members for automation test - referrals and coupons
+model Member {
+  id           String    @id @default(cuid())
+  name         String
+  whatsapp     String    @unique
+  referralCode String    @unique
+  createdAt    DateTime  @default(now())
+
+  coupons      Coupon[]
+  referredBy   Referral[] @relation("Referrer")
+  referrals    Referral[] @relation("Referred")
+
+  @@map("members")
+}
+
+model Coupon {
+  id        String    @id @default(cuid())
+  code      String    @unique
+  owner     Member    @relation(fields: [ownerId], references: [id])
+  ownerId   String
+  usedAt    DateTime?
+  createdAt DateTime  @default(now())
+
+  @@index([ownerId])
+  @@map("coupons")
+}
+
+model Referral {
+  id         String   @id @default(cuid())
+  referrer   Member?  @relation("Referrer", fields: [referrerId], references: [id])
+  referrerId String?
+  referred   Member   @relation("Referred", fields: [referredId], references: [id])
+  referredId String
+  createdAt  DateTime @default(now())
+
+  @@index([referrerId])
+  @@index([referredId])
+  @@unique([referrerId, referredId])
+  @@map("referrals")
+}
