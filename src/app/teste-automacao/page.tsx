@@ -6,6 +6,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
 import { Navigation } from '@/components/Navigation'
+import { countries } from '@/lib/countries'
 
 // ConverteAI vturb player component (SSR-safe): render placeholder and init on client
 function VturbPlayer({ accountId, playerId }: { accountId: string; playerId: string }) {
@@ -61,7 +62,7 @@ function CopyBadge({ text }: { text: string }) {
     <button
       type="button"
       onClick={onCopy}
-      className="px-2 py-1 text-xs rounded bg-emerald-800/40 hover:bg-emerald-700/50 border border-emerald-700 text-emerald-200"
+      className="px-2 py-1 text-xs rounded bg-orange-800/40 hover:bg-orange-700/50 border border-orange-700 text-orange-200"
       title="Copiar"
     >
       {copied ? 'Copiado!' : text}
@@ -105,7 +106,7 @@ function ReferralModalContent({ referralCode }: { referralCode: string }) {
           <button
             type="button"
             onClick={() => { try { navigator.clipboard.writeText(href) } catch {} }}
-            className="px-2 py-1 text-[11px] rounded border border-emerald-700 text-emerald-300 hover:bg-emerald-900/20"
+            className="px-2 py-1 text-[11px] rounded border border-orange-700 text-orange-300 hover:bg-orange-900/20"
             title="Copiar"
           >
             Copiar
@@ -139,6 +140,7 @@ export default function SeriesPagePublic() {
   const [showDownloadModal, setShowDownloadModal] = useState(false)
   const [timeLeft, setTimeLeft] = useState({ d: 0, h: 0, m: 0, s: 0 })
   const [aula1CtaVisible, setAula1CtaVisible] = useState(false)
+  const [aula2CtaVisible, setAula2CtaVisible] = useState(false)
   const [acceptedTerms, setAcceptedTerms] = useState(false)
 
   // Gate: block page until WhatsApp is submitted
@@ -148,12 +150,9 @@ export default function SeriesPagePublic() {
   const [gateError, setGateError] = useState<string | null>(null)
   const [referralCode, setReferralCode] = useState("")
   const [showReferralModal, setShowReferralModal] = useState(false)
-  const countries = [
-    { code: 'BR', name: 'Brasil', dial: '+55', flag: '🇧🇷' },
-    { code: 'PT', name: 'Portugal', dial: '+351', flag: '🇵🇹' },
-    { code: 'US', name: 'Estados Unidos', dial: '+1', flag: '🇺🇸' },
-  ] as const
-  const [selectedCountry, setSelectedCountry] = useState<typeof countries[number]>(countries[0])
+  const [selectedCountry, setSelectedCountry] = useState<typeof countries[number]>(
+    countries.find(c => c.code === 'BR') || countries[0]
+  )
 
   useEffect(() => {
     try {
@@ -165,10 +164,14 @@ export default function SeriesPagePublic() {
   }, [])
 
   const formatWhatsapp = (value: string) => {
-    const digits = value.replace(/\D/g, '').slice(0, 11)
-    if (digits.length <= 2) return digits
-    if (digits.length <= 7) return `(${digits.slice(0,2)}) ${digits.slice(2)}`
-    return `(${digits.slice(0,2)}) ${digits.slice(2,7)}-${digits.slice(7)}`
+    const digits = value.replace(/\D/g, '')
+    if (selectedCountry.code !== 'BR') {
+      return digits.slice(0, 20) // internacional sem máscara
+    }
+    const br = digits.slice(0, 11)
+    if (br.length <= 2) return br
+    if (br.length <= 7) return `(${br.slice(0,2)}) ${br.slice(2)}`
+    return `(${br.slice(0,2)}) ${br.slice(2,7)}-${br.slice(7)}`
   }
 
   const submitWhatsapp = async (e: React.FormEvent) => {
@@ -242,12 +245,15 @@ export default function SeriesPagePublic() {
     setActiveEpisode(id)
   }
 
-  // Show Aula 1 CTA after 30s when Aula 1 is active
+  // Mostrar CTA após delay por aula: Aula 1 -> 30s, Aula 2 -> 20s
   useEffect(() => {
     setAula1CtaVisible(false)
+    setAula2CtaVisible(false)
     let timer: any
     if (activeEpisode === 1) {
       timer = setTimeout(() => setAula1CtaVisible(true), 30000)
+    } else if (activeEpisode === 2) {
+      timer = setTimeout(() => setAula2CtaVisible(true), 20000)
     }
     return () => {
       if (timer) clearTimeout(timer)
@@ -288,8 +294,8 @@ export default function SeriesPagePublic() {
                       type="tel"
                       value={whatsInput}
                       onChange={(e) => setWhatsInput(formatWhatsapp(e.target.value))}
-                      placeholder="(00) 00000-0000"
-                      maxLength={15}
+                      placeholder={selectedCountry.code === 'BR' ? '(00) 00000-0000' : 'Somente números'}
+                      maxLength={selectedCountry.code === 'BR' ? 15 : 20}
                       className="flex-1 bg-black border border-gray-800 rounded-lg px-4 py-2.5 text-white text-sm focus:outline-none focus:border-gray-700"
                       required
                     />
@@ -300,7 +306,7 @@ export default function SeriesPagePublic() {
                 <button
                   type="submit"
                   disabled={gateLoading}
-                  className="w-full bg-green-600 hover:bg-green-500 disabled:opacity-60 rounded-lg px-4 py-3 text-sm font-medium transition-colors"
+                  className="w-full bg-orange-600 hover:bg-orange-500 disabled:opacity-60 rounded-lg px-4 py-3 text-sm font-medium transition-colors"
                 >
                   {gateLoading ? 'Enviando...' : 'Liberar acesso'}
                 </button>
@@ -330,7 +336,7 @@ export default function SeriesPagePublic() {
                 <button
                   type="button"
                   onClick={() => setShowReferralModal(true)}
-                  className="px-4 py-2 text-xs rounded border border-emerald-700 text-emerald-300 hover:bg-emerald-900/20"
+                  className="px-4 py-2 text-xs rounded border border-orange-700 text-orange-300 hover:bg-orange-900/20"
                 >
                   Ver meu link de indicação
                 </button>
@@ -346,7 +352,7 @@ export default function SeriesPagePublic() {
                     { label: 'Seg', value: timeLeft.s },
                   ].map((item) => (
                     <div key={item.label} className="text-center bg-black/40 rounded-lg py-2 border border-gray-800">
-                      <div className="text-3xl font-bold text-green-400 leading-none">{String(item.value).padStart(2, '0')}</div>
+                      <div className="text-3xl font-bold text-orange-400 leading-none">{String(item.value).padStart(2, '0')}</div>
                       <div className="text-xs uppercase tracking-wide text-gray-400">{item.label}</div>
                     </div>
                   ))}
@@ -369,7 +375,7 @@ export default function SeriesPagePublic() {
                   href="https://one.exnesstrack.org/a/jo986i1iel?platform=mobile"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 justify-center px-6 py-3 rounded-xl border border-green-500 bg-green-700 text-white text-base font-semibold shadow-[0_0_28px_rgba(34,197,94,0.35)] hover:bg-green-600 transition-colors"
+                  className="inline-flex items-center gap-2 justify-center px-6 py-3 rounded-xl border border-orange-500 bg-orange-700 text-white text-base font-semibold shadow-[0_0_28px_rgba(249,115,22,0.35)] hover:bg-orange-600 transition-colors"
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5">
                     <path d="M5 20h14v-2H5v2Zm7-3 5-5h-3V4h-4v8H7l5 5Z" />
@@ -378,14 +384,14 @@ export default function SeriesPagePublic() {
                 </a>
               </div>
             )}
-            {activeEpisode === 2 && (
+            {activeEpisode === 2 && aula2CtaVisible && (
               <div className="mt-4 flex flex-col items-center gap-4">
                 {/* Filled green MT5 button (neon) */}
                 <a
                   href="https://www.exness.com/pt/metatrader-5/?utm_source=partners&campaign=34785&track1=Baixar&ex_ol=1"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 justify-center px-6 py-3 rounded-xl border border-green-500 bg-green-700 text-white text-base font-semibold shadow-[0_0_28px_rgba(34,197,94,0.35)] hover:bg-green-600 transition-colors"
+                  className="inline-flex items-center gap-2 justify-center px-6 py-3 rounded-xl border border-orange-500 bg-orange-700 text-white text-base font-semibold shadow-[0_0_28px_rgba(249,115,22,0.35)] hover:bg-orange-600 transition-colors"
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5">
                     <path d="M5 20h14v-2H5v2Zm7-3 5-5h-3V4h-4v8H7l5 5Z" />
@@ -396,7 +402,7 @@ export default function SeriesPagePublic() {
                 <button
                   type="button"
                   onClick={() => setShowDownloadModal(true)}
-                  className="inline-flex items-center gap-2 justify-center px-6 py-3 rounded-xl border-2 border-green-500 text-green-200 text-base font-semibold hover:bg-green-600/10 shadow-[0_0_28px_rgba(34,197,94,0.25)] transition-colors"
+                  className="inline-flex items-center gap-2 justify-center px-6 py-3 rounded-xl border-2 border-orange-500 text-orange-200 text-base font-semibold hover:bg-orange-600/10 shadow-[0_0_28px_rgba(249,115,22,0.25)] transition-colors"
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5">
                     <path d="M8 5v14l11-7L8 5Z" />
@@ -418,11 +424,11 @@ export default function SeriesPagePublic() {
                   key={episode.id}
                   onClick={() => handleEpisodeChange(episode.id)}
                   className={`w-full flex gap-3 p-3 rounded-lg transition-colors ${
-                    activeEpisode === episode.id ? 'bg-gray-400/30 border-l-4 border-green-300' : 'hover:bg-gray-800'
+                    activeEpisode === episode.id ? 'bg-gray-400/30 border-l-4 border-orange-300' : 'hover:bg-gray-800'
                   }`}
                 >
                   <div className="flex-1 text-left">
-                    <h3 className="font-semibold text-green-300 text-lg md:text-sm">Aula {episode.number}</h3>
+                    <h3 className="font-semibold text-orange-300 text-lg md:text-sm">Aula {episode.number}</h3>
                     <p className="text-base md:text-xs text-gray-200">{episode.title}</p>
                     {episode.duration && <p className="text-xs text-gray-400 mt-1">{episode.duration}</p>}
                   </div>
@@ -439,7 +445,7 @@ export default function SeriesPagePublic() {
                   <button
                     type="button"
                     onClick={() => setShowReferralModal(true)}
-                    className="px-4 py-2 text-xs rounded border border-emerald-700 text-emerald-300 hover:bg-emerald-900/20"
+                    className="px-4 py-2 text-xs rounded border border-orange-700 text-orange-300 hover:bg-orange-900/20"
                   >
                     Ver meu link de indicação
                   </button>
@@ -456,7 +462,7 @@ export default function SeriesPagePublic() {
                       { label: 'Seg', value: timeLeft.s },
                     ].map((item) => (
                       <div key={item.label} className="text-center bg-black/40 rounded-lg py-2 border border-gray-800">
-                        <div className="text-3xl md:text-2xl font-bold text-green-400 leading-none">{String(item.value).padStart(2, '0')}</div>
+                        <div className="text-3xl md:text-2xl font-bold text-orange-400 leading-none">{String(item.value).padStart(2, '0')}</div>
                         <div className="text-xs md:text-[10px] uppercase tracking-wide text-gray-400">{item.label}</div>
                       </div>
                     ))}
@@ -474,7 +480,7 @@ export default function SeriesPagePublic() {
           target="_blank"
           rel="noopener noreferrer"
           aria-label="WhatsApp"
-          className="fixed bottom-4 right-4 bg-green-500 hover:bg-green-600 text-white rounded-full p-3 shadow-lg shadow-green-900/30 transition-colors"
+          className="fixed bottom-4 right-4 bg-orange-500 hover:bg-orange-600 text-white rounded-full p-3 shadow-lg shadow-orange-900/30 transition-colors"
         >
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
             <path d="M20.52 3.48A11.78 11.78 0 0012.06 0C5.47 0 .12 5.35.12 11.94c0 2.1.55 4.17 1.6 5.99L0 24l6.23-1.67a11.86 11.86 0 005.83 1.55h.01c6.59 0 11.94-5.35 11.94-11.94 0-3.19-1.24-6.19-3.49-8.46zM12.07 21.3h-.01a9.35 9.35 0 01-4.77-1.31l-.34-.2-3.7.99.99-3.6-.22-.37a9.28 9.28 0 01-1.42-4.88c0-5.16 4.2-9.36 9.37-9.36a9.3 9.3 0 019.35 9.36c0 5.16-4.2 9.37-9.35 9.37zm5.33-6.99c-.29-.15-1.7-.84-1.96-.93-.26-.1-.45-.15-.64.15-.19.29-.74.93-.9 1.12-.17.19-.33.22-.62.07-.29-.15-1.22-.45-2.33-1.43-.86-.77-1.44-1.72-1.6-2-.17-.29-.02-.45.13-.6.13-.12.29-.33.43-.49.14-.17.19-.29.29-.48.1-.19.05-.36-.02-.51-.07-.15-.64-1.54-.88-2.1-.23-.55-.47-.48-.64-.49-.17-.01-.36-.01-.55-.01-.19 0-.5.07-.76.36-.26.29-1 1-1 2.45 0 1.45 1.03 2.85 1.18 3.05.15.19 2.03 3.1 4.92 4.35.69.3 1.23.48 1.65.62.69.22 1.33.19 1.83.12.56-.08 1.7-.69 1.94-1.36.24-.67.24-1.24.17-1.36-.07-.12-.26-.19-.55-.33z" />
@@ -508,7 +514,7 @@ export default function SeriesPagePublic() {
               <div className="p-4 space-y-3 text-sm text-gray-300">
                 <p>
                   Esta é uma versão de teste destinada apenas a fins de avaliação. A leitura e concordância com os
-                  <Link href="/termos-automatizador" className="ml-1 text-green-400 hover:text-green-300 underline">Termos de Uso</Link>
+                  <Link href="/termos-automatizador" className="ml-1 text-orange-400 hover:text-orange-300 underline">Termos de Uso</Link>
                   são obrigatórias antes de prosseguir.
                 </p>
               </div>
@@ -524,7 +530,7 @@ export default function SeriesPagePublic() {
                   />
                   <span>
                     Declaro que li e concordo com os
-                    <Link href="/termos-automatizador" className="ml-1 text-green-400 hover:text-green-300 underline">Termos de Uso</Link>.
+                    <Link href="/termos-automatizador" className="ml-1 text-orange-400 hover:text-orange-300 underline">Termos de Uso</Link>.
                   </span>
                 </label>
               </div>
@@ -535,7 +541,7 @@ export default function SeriesPagePublic() {
                   rel="noopener noreferrer"
                   aria-disabled={!acceptedTerms}
                   className={`inline-flex items-center justify-center text-white text-sm font-medium px-4 py-2 rounded-md transition-colors ${
-                    acceptedTerms ? 'bg-green-600 hover:bg-green-700' : 'bg-green-600/60 cursor-not-allowed'
+                    acceptedTerms ? 'bg-orange-600 hover:bg-orange-700' : 'bg-orange-600/60 cursor-not-allowed'
                   }`}
                   onClick={(e) => {
                     if (!acceptedTerms) {

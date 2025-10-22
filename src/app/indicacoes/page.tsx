@@ -3,6 +3,7 @@
 import { Suspense, useState } from "react";
 import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
+import { countries } from "@/lib/countries";
 
 function IndicacoesPageContent() {
   const router = useRouter();
@@ -14,13 +15,19 @@ function IndicacoesPageContent() {
   const [indicacao, setIndicacao] = useState(indicacaoQuery);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [selectedCountry, setSelectedCountry] = useState<typeof countries[number]>(
+    countries.find(c => c.code === 'BR') || countries[0]
+  );
 
   const formatWhatsapp = (value: string) => {
-    const digits = value.replace(/\D/g, "").slice(0, 11);
-    let formatted = digits;
-    if (digits.length > 2) formatted = `(${digits.slice(0, 2)}) ${digits.slice(2)}`;
-    if (digits.length > 7) formatted = `(${digits.slice(0, 2)}) ${digits.slice(2, 7)}-${digits.slice(7)}`;
-    return formatted;
+    const digits = value.replace(/\D/g, "");
+    if (selectedCountry.code !== 'BR') {
+      return digits.slice(0, 20); // internacional sem máscara (permitir maior)
+    }
+    const br = digits.slice(0, 11);
+    if (br.length <= 2) return br;
+    if (br.length <= 7) return `(${br.slice(0, 2)}) ${br.slice(2)}`;
+    return `(${br.slice(0, 2)}) ${br.slice(2, 7)}-${br.slice(7)}`;
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -28,10 +35,14 @@ function IndicacoesPageContent() {
     setError(null);
     setLoading(true);
     try {
+      const digits = whatsapp.replace(/\D/g, "");
+      const dialDigits = selectedCountry.dial.replace(/\D/g, '');
+      const fullDigits = digits.startsWith(dialDigits) ? digits : `${dialDigits}${digits}`;
+
       const res = await fetch("/api/membros-teste-automacao", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ nome, whatsapp, indicacao }),
+        body: JSON.stringify({ nome, whatsapp: fullDigits, indicacao }),
       });
       if (!res.ok) {
         const data = await res.json().catch(() => ({}));
@@ -64,16 +75,32 @@ function IndicacoesPageContent() {
           <form onSubmit={handleSubmit} className="space-y-5">
             <div>
               <label htmlFor="whatsapp" className="block text-sm text-neutral-300 mb-2">WhatsApp</label>
-              <input
-                id="whatsapp"
-                type="tel"
-                value={whatsapp}
-                onChange={(e) => setWhatsapp(formatWhatsapp(e.target.value))}
-                required
-                placeholder="(00) 00000-0000"
-                maxLength={15}
-                className="w-full bg-neutral-900 border border-neutral-800 rounded-lg px-4 py-2.5 text-white text-sm focus:outline-none focus:border-neutral-700"
-              />
+              <div className="flex gap-2">
+                <select
+                  aria-label="País"
+                  className="bg-neutral-900 border border-neutral-800 rounded-lg px-3 py-2.5 text-white text-sm focus:outline-none focus:border-neutral-700"
+                  value={selectedCountry.code}
+                  onChange={(e) => {
+                    const c = countries.find(x => x.code === e.target.value) || countries[0]
+                    setSelectedCountry(c)
+                    setWhatsapp("")
+                  }}
+                >
+                  {countries.map((c) => (
+                    <option key={c.code} value={c.code}>{c.flag} {c.dial}</option>
+                  ))}
+                </select>
+                <input
+                  id="whatsapp"
+                  type="tel"
+                  value={whatsapp}
+                  onChange={(e) => setWhatsapp(formatWhatsapp(e.target.value))}
+                  required
+                  placeholder={selectedCountry.code === 'BR' ? "(00) 00000-0000" : "Somente números"}
+                  maxLength={selectedCountry.code === 'BR' ? 15 : 20}
+                  className="flex-1 bg-neutral-900 border border-neutral-800 rounded-lg px-4 py-2.5 text-white text-sm focus:outline-none focus:border-neutral-700"
+                />
+              </div>
             </div>
 
             {error && (
