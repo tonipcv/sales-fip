@@ -263,7 +263,7 @@ export default function SeriesPagePublic() {
           <div className="relative h-full flex items-center justify-center p-4">
             <div className="bg-[#0f0f0f] border border-gray-800 rounded-2xl p-6 w-full max-w-md shadow-2xl">
               <div className="flex justify-center mb-6">
-                <Image src="/logo.jpg" alt="Futuros Tech" width={96} height={96} className="rounded" />
+                <Image src="/logo1.png" alt="Futuros Tech" width={96} height={96} className="rounded" />
               </div>
               <h2 className="text-center text-xl font-semibold text-white mb-2">Acesse a Série</h2>
               <p className="text-center text-gray-400 text-sm mb-6">Informe seu WhatsApp para liberar o conteúdo.</p>
