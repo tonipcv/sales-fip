@@ -6,6 +6,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
 import { Navigation } from '@/components/Navigation'
+import { useRouter } from 'next/navigation'
 
 // ConverteAI vturb player component (SSR-safe): render placeholder and init on client
 function VturbPlayer({ accountId, playerId }: { accountId: string; playerId: string }) {
@@ -57,6 +58,12 @@ interface Episode {
 }
 
 export default function SeriesPagePublic() {
+  const router = useRouter()
+  // Redirect immediately to the new page while keeping this file's content for future use
+  useEffect(() => {
+    router.replace('/teste-automacao')
+  }, [router])
+
   const [activeEpisode, setActiveEpisode] = useState<number>(1)
   const [showDownloadModal, setShowDownloadModal] = useState(false)
   const [timeLeft, setTimeLeft] = useState({ d: 0, h: 0, m: 0, s: 0 })
