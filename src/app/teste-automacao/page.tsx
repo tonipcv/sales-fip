@@ -401,7 +401,7 @@ export default function SeriesPagePublic() {
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5">
                     <path d="M8 5v14l11-7L8 5Z" />
                   </svg>
-                  BAIXAR GOLD SYSTEM
+                  BAIXAR V2
                 </button>
               </div>
             )}
@@ -470,7 +470,7 @@ export default function SeriesPagePublic() {
         {/* Fixed Bottom Actions removed */}
 
         <a
-          href={`https://wa.me/5511958072826?text=${encodeURIComponent('Olá! Quero ajuda com a Automação Teste e receber o acesso oficial no dia 8 de setembro.')}`}
+          href={`https://wa.me/5511958072826?text=${encodeURIComponent('Olá! Quero ajuda com a Automação Teste e receber o acesso oficial no dia 3 de Novembro.')}`}
           target="_blank"
           rel="noopener noreferrer"
           aria-label="WhatsApp"
