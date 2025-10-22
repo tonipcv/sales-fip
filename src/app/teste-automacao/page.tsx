@@ -263,10 +263,9 @@ export default function SeriesPagePublic() {
           <div className="relative h-full flex items-center justify-center p-4">
             <div className="bg-[#0f0f0f] border border-gray-800 rounded-2xl p-6 w-full max-w-md shadow-2xl">
               <div className="flex justify-center mb-6">
-                <Image src="/logo1.png" alt="Futuros Tech" width={96} height={96} className="rounded" />
+                <Image src="/logo1.png" alt="Futuros Tech" width={96} height={96} className="rounded brightness-0 invert" />
               </div>
-              <h2 className="text-center text-xl font-semibold text-white mb-2">Acesse a Série</h2>
-              <p className="text-center text-gray-400 text-sm mb-6">Informe seu WhatsApp para liberar o conteúdo.</p>
+              <p className="text-center text-gray-400 text-sm mb-6">Informe seu WhatsApp para liberar o teste da Automação exclusivo para você.</p>
               <form onSubmit={submitWhatsapp} className="space-y-4">
                 <div>
                   <label htmlFor="gate-whats" className="block text-sm text-gray-300 mb-2">WhatsApp</label>
@@ -296,6 +295,7 @@ export default function SeriesPagePublic() {
                     />
                   </div>
                 </div>
+                <p className="text-[11px] text-amber-300 mt-1">Coloque o seu número correto, os benefícios serão liberados para esse número.</p>
                 {gateError && <div className="text-red-400 text-sm">{gateError}</div>}
                 <button
                   type="submit"
@@ -305,7 +305,6 @@ export default function SeriesPagePublic() {
                   {gateLoading ? 'Enviando...' : 'Liberar acesso'}
                 </button>
               </form>
-              <p className="text-[11px] text-gray-500 text-center mt-4">Seu número é usado para contato e suporte. Não compartilhamos com terceiros.</p>
             </div>
           </div>
         </div>
