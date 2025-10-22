@@ -278,7 +278,7 @@ export default function SeriesPagePublic() {
                   <div className="flex gap-2">
                     <select
                       aria-label="País"
-                      className="bg-black border border-gray-800 rounded-lg px-3 py-2.5 text-white text-sm focus:outline-none focus:border-gray-700"
+                      className="bg-black border border-gray-800 rounded-lg px-3 py-2.5 text-white text-base md:text-sm focus:outline-none focus:border-gray-700"
                       value={selectedCountry.code}
                       onChange={(e) => {
                         const c = countries.find(x => x.code === e.target.value) || countries[0]
@@ -296,7 +296,7 @@ export default function SeriesPagePublic() {
                       onChange={(e) => setWhatsInput(formatWhatsapp(e.target.value))}
                       placeholder={selectedCountry.code === 'BR' ? '(00) 00000-0000' : 'Somente números'}
                       maxLength={selectedCountry.code === 'BR' ? 15 : 20}
-                      className="flex-1 bg-black border border-gray-800 rounded-lg px-4 py-2.5 text-white text-sm focus:outline-none focus:border-gray-700"
+                      className="flex-1 bg-black border border-gray-800 rounded-lg px-4 py-2.5 text-white text-base md:text-sm focus:outline-none focus:border-gray-700"
                       required
                     />
                   </div>
