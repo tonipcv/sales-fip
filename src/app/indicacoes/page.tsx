@@ -48,7 +48,12 @@ function IndicacoesPageContent() {
         const data = await res.json().catch(() => ({}));
         throw new Error(data?.error || "Falha ao enviar. Tente novamente.");
       }
-      // Sucesso: redireciona automaticamente para o grupo do WhatsApp
+      const data = await res.json();
+      const repeated = data?.meta?.alreadyReferred || data?.meta?.referralExisted;
+      if (repeated) {
+        try { alert('Cadastro já registrado em indicações. Vamos te redirecionar para o grupo.'); } catch {}
+      }
+      // Redireciona para o grupo do WhatsApp em ambos os casos
       window.location.href = "https://chat.whatsapp.com/CPbdoKeaVlH37mBK55SefS?mode=wwc";
     } catch (err: any) {
       setError(err.message || "Erro inesperado.");

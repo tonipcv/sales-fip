@@ -59,6 +59,7 @@ export async function POST(req: Request) {
     }
 
     // Upsert Member by whatsapp
+    let memberCreated = false;
     let member = await prisma.member.findUnique({ where: { whatsapp: phoneDigits } });
     if (!member) {
       const referralCode = genReferralCodeFromPhone(phoneDigits);
@@ -68,6 +69,7 @@ export async function POST(req: Request) {
       while (tries < 20) {
         try {
           member = await prisma.member.create({ data: { name: nome, whatsapp: phoneDigits, referralCode: code } });
+          memberCreated = true;
           break;
         } catch (e: any) {
           if (e?.code === "P2002") {
@@ -85,6 +87,9 @@ export async function POST(req: Request) {
     }
 
     // Handle referral (optional)
+    let referralCreated = false;
+    let referralExisted = false;
+    let alreadyReferred = false; // já existe alguma indicação para este referido (independe do referrer)
     if (indicacao) {
       const refCodeCandidate = indicacao.trim();
       const refPhoneCandidate = onlyDigits(indicacao);
@@ -98,12 +103,22 @@ export async function POST(req: Request) {
       });
 
       if (referrer && referrer.id !== member.id) {
-        // Create referral if not exists
-        const existing = await prisma.referral.findFirst({
-          where: { referrerId: referrer.id, referredId: member.id },
+        // Não permitir múltiplas indicações para o mesmo referido (apenas a primeira conta)
+        const anyReferralForReferred = await prisma.referral.findFirst({
+          where: { referredId: member.id },
+          orderBy: { createdAt: 'asc' },
         });
-        if (!existing) {
-          await prisma.referral.create({ data: { referrerId: referrer.id, referredId: member.id } });
+        if (anyReferralForReferred) {
+          alreadyReferred = true;
+        } else {
+          // Create referral se não existir este par
+          const existing = await prisma.referral.findFirst({ where: { referrerId: referrer.id, referredId: member.id } });
+          if (existing) {
+            referralExisted = true;
+          } else {
+            await prisma.referral.create({ data: { referrerId: referrer.id, referredId: member.id } });
+            referralCreated = true;
+          }
         }
       }
     }
@@ -115,7 +130,16 @@ export async function POST(req: Request) {
       coupon = await prisma.coupon.create({ data: { code, ownerId: member.id } });
     }
 
-    return NextResponse.json({ member, coupon });
+    return NextResponse.json({
+      member,
+      coupon,
+      meta: {
+        memberCreated,
+        referralCreated,
+        referralExisted,
+        alreadyReferred,
+      },
+    });
   } catch (error: any) {
     console.error("/api/membros-teste-automacao error", error);
     return NextResponse.json({ error: error?.message || "Erro interno." }, { status: 500 });
