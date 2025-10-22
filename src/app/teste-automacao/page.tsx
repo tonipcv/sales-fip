@@ -228,12 +228,10 @@ export default function SeriesPagePublic() {
   }, [])
 
   const episodes: Episode[] = [
-    // Aula 1 updated to use the provided Vturb player and account
-    { id: 1, number: 1, title: 'Começando do Absoluto Zero e Instalando a Automação pelo Celular', playerId: '68e6c868b1501b64cbccfe7c', accountId: '17e2196c-5794-49ef-bd61-857538a02fa6' },
-    // Remaining aulas keep the existing account
-    { id: 2, number: 2, title: 'Instalando a Estratégia da Automação do Zero', playerId: '68aeeb36040f0b0ec4ad980e', accountId: '32ff2495-c71e-49ba-811b-00b5b49c517f' },
-    { id: 3, number: 3, title: 'Ativando a Automação no Celular', playerId: '68aeeb15d03165f25f444b0b', accountId: '32ff2495-c71e-49ba-811b-00b5b49c517f' },
-    { id: 4, number: 4, title: 'Como aumentar a perfomance da Automação', playerId: '68af0480d92b07c6d4ea02b0', accountId: '32ff2495-c71e-49ba-811b-00b5b49c517f' },
+    { id: 1, number: 1, title: 'Começando do Absoluto Zero e Instalando a Automação pelo Celular', playerId: '68f8d1e9077f8febd9bea317', accountId: '17e2196c-5794-49ef-bd61-857538a02fa6' },
+    { id: 2, number: 2, title: 'Instalando a Estratégia da Automação do Zero', playerId: '68f8d6d8c376aaf61f78271a', accountId: '17e2196c-5794-49ef-bd61-857538a02fa6' },
+    { id: 3, number: 3, title: 'Ativando a Automação no Celular', playerId: '68f8cb427e181d1f6b405915', accountId: '17e2196c-5794-49ef-bd61-857538a02fa6' },
+    { id: 4, number: 4, title: 'Como aumentar a perfomance da Automação', playerId: '68f8cddabdc66d89c2c0fef1', accountId: '17e2196c-5794-49ef-bd61-857538a02fa6' },
   ]
 
   const currentEpisode = episodes.find((e) => e.id === activeEpisode)!
@@ -533,7 +531,7 @@ export default function SeriesPagePublic() {
               </div>
               <div className="px-4 pb-4 pt-2 flex items-center gap-3">
                 <a
-                  href="https://drive.google.com/drive/folders/1aNuto8dai003b55qIH6z8dw6-9l7RmAz?usp=sharing"
+                  href="https://drive.google.com/drive/folders/1CtFOIF3mxnxoVrR0BvDlaWYRdhcx4Ld9?usp=sharing"
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-disabled={!acceptedTerms}
