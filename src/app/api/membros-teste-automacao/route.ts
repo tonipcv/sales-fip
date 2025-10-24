@@ -5,6 +5,36 @@ function onlyDigits(s: string) {
   return (s || "").replace(/\D/g, "");
 }
 
+export async function GET(req: Request) {
+  try {
+    const { searchParams } = new URL(req.url);
+    const referralCode = (searchParams.get('referralCode') || '').trim();
+    const whatsappRaw = (searchParams.get('whatsapp') || '').toString();
+    const whatsappDigits = onlyDigits(whatsappRaw);
+
+    if (!referralCode && !whatsappDigits) {
+      return NextResponse.json({ error: 'Informe referralCode ou whatsapp.' }, { status: 400 });
+    }
+
+    const member = await prisma.member.findFirst({
+      where: referralCode
+        ? { referralCode }
+        : { whatsapp: whatsappDigits },
+    });
+
+    if (!member) {
+      return NextResponse.json({ total: 0, member: null });
+    }
+
+    const total = await prisma.referral.count({ where: { referrerId: member.id } });
+
+    return NextResponse.json({ total, member: { id: member.id, name: member.name, referralCode: member.referralCode, whatsapp: member.whatsapp } });
+  } catch (error: any) {
+    console.error('/api/membros-teste-automacao GET error', error);
+    return NextResponse.json({ error: error?.message || 'Erro interno.' }, { status: 500 });
+  }
+}
+
 function genReferralCodeFromPhone(phone: string) {
   const digits = onlyDigits(phone);
   const base = digits.slice(-6) || digits || Math.random().toString().slice(2, 8);

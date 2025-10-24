@@ -36,10 +36,17 @@ function formatDate(dt?: string | null) {
 
 function maskPhone(phone: string) {
   const d = (phone || '').replace(/\D/g, '')
-  if (d.length < 10) return phone || '—'
-  const area = d.slice(0, 2)
-  const first = d.slice(2, 7)
-  const last = d.slice(7)
+  let local = d
+  // Remove DDI do Brasil (55) se vier com country code e sobrar pelo menos 10 dígitos
+  if (local.startsWith('55') && local.length > 11) {
+    local = local.slice(2)
+  }
+  if (local.length < 10) return phone || '—'
+  const area = local.slice(0, 2)
+  // Se tiver 11 dígitos (celular), primeiro bloco com 5 dígitos; se 10, usa 4
+  const isEleven = local.length >= 11
+  const first = isEleven ? local.slice(2, 7) : local.slice(2, 6)
+  const last = isEleven ? local.slice(7) : local.slice(6)
   return `(${area}) ${first}-${last}`
 }
 
@@ -57,6 +64,15 @@ export default function AdminTopIndicadoresPage() {
   const [detailsLoading, setDetailsLoading] = useState(false)
   const [detailsError, setDetailsError] = useState<string | null>(null)
   const [details, setDetails] = useState<Details | null>(null)
+  const [authed, setAuthed] = useState<boolean | null>(null)
+
+  const totalIndicacoesGeral = useMemo(() => {
+    try {
+      return items.reduce((sum, it) => sum + (Number(it.totalIndicacoes) || 0), 0)
+    } catch {
+      return 0
+    }
+  }, [items])
 
   const queryString = useMemo(() => {
     const p = new URLSearchParams()
@@ -98,7 +114,17 @@ export default function AdminTopIndicadoresPage() {
     }
   }
 
-  useEffect(() => { load() }, [])
+  useEffect(() => {
+    // Early auth guard: ensure admin_token exists before loading data
+    const token = typeof window !== 'undefined' ? localStorage.getItem('admin_token') : null
+    if (!token) {
+      setAuthed(false)
+      router.push('/admin/login')
+      return
+    }
+    setAuthed(true)
+    load()
+  }, [])
 
   const openDetails = async (referrerId: string) => {
     setDetailsOpen(true)
@@ -158,6 +184,19 @@ export default function AdminTopIndicadoresPage() {
       </header>
 
       <main className="max-w-5xl mx-auto px-4 py-6 space-y-4">
+        {authed === false && (
+          <section className="bg-neutral-950/70 border border-neutral-800 rounded-xl p-4 text-center text-neutral-400">
+            Redirecionando para login...
+          </section>
+        )}
+        <section className="bg-neutral-950/70 border border-neutral-800 rounded-xl p-4 flex items-center justify-between">
+          <div>
+            <div className="text-xs text-neutral-400">Total de indicações</div>
+            <div className="text-2xl font-semibold">
+              {totalIndicacoesGeral.toLocaleString('pt-BR')}
+            </div>
+          </div>
+        </section>
         <section className="bg-neutral-950/70 border border-neutral-800 rounded-xl p-4">
           <div className="grid grid-cols-1 md:grid-cols-5 gap-3">
             <div className="md:col-span-1">

@@ -153,6 +153,7 @@ export default function SeriesPagePublic() {
   const [selectedCountry, setSelectedCountry] = useState<typeof countries[number]>(
     countries.find(c => c.code === 'BR') || countries[0]
   )
+  const [totalIndicacoes, setTotalIndicacoes] = useState<number | null>(null)
 
   useEffect(() => {
     try {
@@ -162,6 +163,24 @@ export default function SeriesPagePublic() {
       if (savedReferral) setReferralCode(savedReferral)
     } catch {}
   }, [])
+
+  // Load total indications for this member when we have a referralCode
+  useEffect(() => {
+    let aborted = false
+    async function loadTotal() {
+      if (!referralCode) { setTotalIndicacoes(null); return }
+      try {
+        const res = await fetch(`/api/membros-teste-automacao?referralCode=${encodeURIComponent(referralCode)}`, { cache: 'no-store' })
+        if (!res.ok) throw new Error('Falha ao carregar total de indicações')
+        const data = await res.json()
+        if (!aborted) setTotalIndicacoes(typeof data?.total === 'number' ? data.total : 0)
+      } catch {
+        if (!aborted) setTotalIndicacoes(null)
+      }
+    }
+    loadTotal()
+    return () => { aborted = true }
+  }, [referralCode])
 
   const formatWhatsapp = (value: string) => {
     const digits = value.replace(/\D/g, '')
@@ -332,7 +351,12 @@ export default function SeriesPagePublic() {
         <div className="block md:hidden px-4 mt-2">
           <section className="bg-gray-900/40 p-3 rounded-lg border border-gray-800">
             {referralCode ? (
-              <div className="flex items-center justify-center">
+              <div className="flex flex-col items-center justify-center">
+                {typeof totalIndicacoes === 'number' && totalIndicacoes > 0 && (
+                  <div className="mb-2 text-sm text-gray-200">
+                    Total de indicações: <span className="font-semibold text-orange-300">{totalIndicacoes}</span>
+                  </div>
+                )}
                 <button
                   type="button"
                   onClick={() => setShowReferralModal(true)}
@@ -441,7 +465,12 @@ export default function SeriesPagePublic() {
           <div className="hidden md:space-y-4 lg:space-y-4 px-4 md:p-4 lg:p-4 md:block">
             <section className="bg-gray-900/40 p-3 lg:p-4 rounded-lg border border-gray-800">
               {referralCode ? (
-                <div className="flex items-center justify-center">
+                <div className="flex flex-col items-center justify-center">
+                  {typeof totalIndicacoes === 'number' && totalIndicacoes > 0 && (
+                    <div className="mb-2 text-sm md:text-base text-gray-200">
+                      Total de indicações: <span className="font-semibold text-orange-300">{totalIndicacoes}</span>
+                    </div>
+                  )}
                   <button
                     type="button"
                     onClick={() => setShowReferralModal(true)}
